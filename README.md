@@ -1,15 +1,17 @@
 <div align="center">
 
-# ⚖️ Nombre del proyecto
+# 📊 Qadra
 
-### Sistema SaaS para la Gestión Procesal de Despachos Legales y Financieros
+### PSA Lite que sí cuadra: presupuesto, capacidad y facturación alineados
+
+**Sistema SaaS para Gestión de Servicios Profesionales**
 
 [![Laravel](https://img.shields.io/badge/Laravel-12-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
 [![Livewire](https://img.shields.io/badge/Livewire-3-FB70A9?style=for-the-badge&logo=livewire&logoColor=white)](https://livewire.laravel.com)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
-*Transformando la gestión legal con tecnología de vanguardia*
+*Optimiza tu negocio de servicios profesionales con presupuesto, capacidad y facturación alineados*
 
 [🚀 Demo](#demo) • [📖 Documentación](#documentación) • [✨ Características](#características) • [🛠️ Instalación](#instalación)
 
@@ -72,65 +74,65 @@ Antes de trabajar en este proyecto, **DEBES** leer:
 
 ## 🎯 Acerca del Proyecto
 
-**LegalFlow Pro** es una plataforma SaaS (Software as a Service) diseñada específicamente para revolucionar la gestión procesal en despachos legales y financieros. Desarrollado como parte del curso de **Ingeniería de Software**, este proyecto combina las mejores prácticas de desarrollo moderno con una comprensión profunda de las necesidades del sector legal.
+**Qadra** es una plataforma SaaS (Software as a Service) tipo PSA (Professional Services Automation) diseñada para empresas de servicios profesionales que necesitan alinear presupuesto, capacidad y facturación. Desarrollado como parte del curso de **Ingeniería de Software**, este proyecto combina las mejores prácticas de desarrollo moderno con una solución práctica y eficiente.
 
 ### 🎨 Problema que Resuelve
 
-Los despachos legales y financieros enfrentan desafíos diarios:
-- 📊 **Gestión desorganizada** de expedientes y casos
-- ⏰ **Pérdida de plazos** y fechas críticas
-- 👥 **Comunicación fragmentada** entre abogados y clientes
-- 📄 **Documentación dispersa** y difícil de rastrear
-- 💰 **Facturación manual** propensa a errores
+Las empresas de servicios profesionales enfrentan desafíos diarios:
+- 📊 **Desalineación** entre presupuesto, capacidad del equipo y facturación
+- ⏰ **Gestión ineficiente** de proyectos y recursos
+- 👥 **Falta de visibilidad** de la rentabilidad por proyecto
+- 📄 **Control financiero disperso** y difícil de rastrear
+- 💰 **Facturación manual** y propensa a errores
 
 ### 💡 Nuestra Solución
 
-LegalFlow Pro centraliza todas las operaciones del despacho en una única plataforma intuitiva y potente:
-- ✅ **Gestión integral de casos** con seguimiento en tiempo real
-- 🔔 **Notificaciones automáticas** de plazos y audiencias
-- 📱 **Portal del cliente** para comunicación directa
-- 🗂️ **Repositorio documental** organizado y seguro
-- 💳 **Facturación automatizada** y control financiero
+Qadra centraliza y alinea las operaciones críticas en una única plataforma:
+- ✅ **Presupuestos precisos** vinculados a capacidad real del equipo
+- 📈 **Seguimiento de proyectos** con control de horas y costos
+- 👥 **Gestión de recursos** y asignación optimizada
+- 💳 **Facturación automatizada** basada en progreso real
+- 📊 **Reportes de rentabilidad** en tiempo real
 
 ---
 
 ## ✨ Características Principales
 
-### 🏛️ Gestión de Casos
-- **Dashboard intuitivo** con vista general de todos los expedientes
-- **Seguimiento de plazos** procesales con alertas automáticas
-- **Asignación de tareas** a miembros del equipo
-- **Historial completo** de actuaciones y movimientos
+### 💼 Gestión de Presupuestos
+- **Creación rápida** de presupuestos vinculados a capacidad del equipo
+- **Cálculo automático** de costos basado en tarifas por hora
+- **Seguimiento de aprobación** y versionado de presupuestos
+- **Conversión directa** a proyectos activos
 
-### 👤 Gestión de Clientes
-- **Portal del cliente** con acceso 24/7 a su información
-- **Sistema de mensajería** integrado
-- **Generación automática** de contratos y documentos
-- **Historial de comunicaciones** y consultas
+### 📊 Gestión de Proyectos
+- **Dashboard de proyectos** con vista general de estado y rentabilidad
+- **Asignación de recursos** optimizada por disponibilidad
+- **Seguimiento de horas** y progreso en tiempo real
+- **Alertas de desvío** de presupuesto y capacidad
 
-### 📂 Gestión Documental
-- **Almacenamiento seguro** en la nube
-- **Versionado de documentos** con control de cambios
-- **Búsqueda avanzada** por múltiples criterios
-- **Plantillas personalizables** para escritos y demandas
+### 👥 Gestión de Recursos
+- **Control de capacidad** del equipo por periodo
+- **Asignación inteligente** a proyectos según skills
+- **Seguimiento de utilización** y disponibilidad
+- **Planificación de recursos** a mediano plazo
 
-### 💰 Gestión Financiera
-- **Facturación electrónica** automatizada
-- **Control de honorarios** y gastos procesales
-- **Reportes financieros** detallados
-- **Integración con sistemas de pago**
+### 💰 Facturación Automatizada
+- **Generación automática** basada en horas registradas
+- **Facturación por hitos** de proyecto
+- **Control de pagos** y seguimiento de cobros
+- **Integración con sistemas contables**
 
-### 📊 Reportes y Análisis
-- **Dashboards personalizables** con métricas clave
-- **Reportes de productividad** del equipo
-- **Análisis de rentabilidad** por caso
-- **Exportación a Excel/PDF**
+### 📈 Reportes y Análisis
+- **Dashboard ejecutivo** con KPIs principales
+- **Rentabilidad por proyecto** en tiempo real
+- **Análisis de utilización** de recursos
+- **Reportes de desempeño** del equipo
 
-### 🔒 Seguridad y Cumplimiento
-- **Autenticación de dos factores** (2FA)
-- **Encriptación end-to-end** de datos sensibles
-- **Auditoría completa** de acciones y cambios
-- **Cumplimiento GDPR** y protección de datos
+### 🔒 Seguridad y Control
+- **Autenticación segura** con roles y permisos
+- **Auditoría de cambios** en presupuestos y facturación
+- **Backup automático** de información crítica
+- **Control de acceso** por proyecto y cliente
 
 ---
 
@@ -179,8 +181,8 @@ Antes de comenzar, asegúrate de tener instalado:
 ### 1. Clonar el Repositorio
 
 ```bash
-git clone https://github.com/tu-usuario/legalflow-pro.git
-cd legalflow-pro
+git clone https://github.com/eddndev/qadra.git
+cd qadra
 ```
 
 ### 2. Instalar Dependencias PHP
@@ -210,7 +212,7 @@ Edita el archivo `.env` con tus credenciales de base de datos:
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=legalflow
+DB_DATABASE=qadra
 DB_USERNAME=tu_usuario
 DB_PASSWORD=tu_contraseña
 ```
@@ -395,39 +397,39 @@ Este proyecto fue desarrollado por:
 <table>
   <tr>
     <td align="center">
-      <a href="https://github.com/colaborador1">
-        <img src="https://github.com/colaborador1.png" width="100px;" alt="Colaborador 1"/><br />
-        <sub><b>Nombre Colaborador 1</b></sub>
+      <a href="https://github.com/eddndev">
+        <img src="https://github.com/eddndev.png" width="100px;" alt="Eduardo"/><br />
+        <sub><b>Eduardo</b></sub>
+      </a><br />
+      <sub>Tech Lead & Full Stack Developer</sub>
+    </td>
+    <td align="center">
+      <a href="https://github.com/vhhatziry">
+        <img src="https://github.com/vhhatziry.png" width="100px;" alt="Hatziry"/><br />
+        <sub><b>Hatziry</b></sub>
       </a><br />
       <sub>Full Stack Developer</sub>
     </td>
     <td align="center">
-      <a href="https://github.com/colaborador2">
-        <img src="https://github.com/colaborador2.png" width="100px;" alt="Colaborador 2"/><br />
-        <sub><b>Nombre Colaborador 2</b></sub>
+      <a href="https://github.com/Arzubide">
+        <img src="https://github.com/Arzubide.png" width="100px;" alt="Gael"/><br />
+        <sub><b>Gael</b></sub>
       </a><br />
       <sub>Backend Developer</sub>
     </td>
     <td align="center">
-      <a href="https://github.com/colaborador3">
-        <img src="https://github.com/colaborador3.png" width="100px;" alt="Colaborador 3"/><br />
-        <sub><b>Nombre Colaborador 3</b></sub>
+      <a href="https://github.com/Karlaelenaht">
+        <img src="https://github.com/Karlaelenaht.png" width="100px;" alt="Karla"/><br />
+        <sub><b>Karla</b></sub>
       </a><br />
       <sub>Frontend Developer</sub>
     </td>
     <td align="center">
-      <a href="https://github.com/colaborador4">
-        <img src="https://github.com/colaborador4.png" width="100px;" alt="Colaborador 4"/><br />
-        <sub><b>Nombre Colaborador 4</b></sub>
+      <a href="https://github.com/Dvan88">
+        <img src="https://github.com/Dvan88.png" width="100px;" alt="Diego"/><br />
+        <sub><b>Diego</b></sub>
       </a><br />
       <sub>UI/UX Designer</sub>
-    </td>
-    <td align="center">
-      <a href="https://github.com/colaborador5">
-        <img src="https://github.com/colaborador5.png" width="100px;" alt="Colaborador 5"/><br />
-        <sub><b>Nombre Colaborador 5</b></sub>
-      </a><br />
-      <sub>QA Engineer</sub>
     </td>
   </tr>
 </table>
@@ -451,9 +453,9 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para
 
 ¿Preguntas o sugerencias?
 
-- 📧 Email: contacto@legalflow.com
-- 🐛 Issues: [GitHub Issues](https://github.com/tu-usuario/legalflow-pro/issues)
-- 💬 Discusiones: [GitHub Discussions](https://github.com/tu-usuario/legalflow-pro/discussions)
+- 🐛 Issues: [GitHub Issues](https://github.com/eddndev/qadra/issues)
+- 💬 Discusiones: [GitHub Discussions](https://github.com/eddndev/qadra/discussions)
+- 📊 Proyecto: [GitHub Project](https://github.com/users/eddndev/projects/3)
 
 ---
 
@@ -461,8 +463,8 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para
 
 **⭐ Si este proyecto te fue útil, no olvides darle una estrella ⭐**
 
-Hecho con ❤️ por el equipo de LegalFlow Pro
+Hecho con ❤️ por el equipo de Qadra
 
-[⬆ Volver arriba](#️-legalflow-pro)
+[⬆ Volver arriba](#-qadra)
 
 </div>

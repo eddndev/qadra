@@ -31,9 +31,8 @@ docs/
 **⚠️ IMPORTANTE: Leer en este orden:**
 
 1. **`AGENTS.md`** - La metodología completa del proyecto. **INQUEBRANTABLE e INAMOVIBLE.**
-2. **`SETUP-PAT.md`** - Configurar el Personal Access Token para automatización
-3. **`workflow/01-team-workflow.md`** - Entender el flujo de trabajo en equipo
-4. **`01-manifest.md`** - Visión y alcance del proyecto
+2. **`workflow/01-team-workflow.md`** - Entender el flujo de trabajo en equipo
+3. **`01-manifest.md`** - Visión y alcance del proyecto
 
 ### 2. Acción Requerida: Configurar PAT
 
