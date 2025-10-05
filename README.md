@@ -46,8 +46,7 @@
 Antes de trabajar en este proyecto, **DEBES** leer:
 
 1. **[📚 /docs/AGENTS.md](/docs/AGENTS.md)** - Metodología completa (INQUEBRANTABLE)
-2. **[🔑 /docs/SETUP-PAT.md](/docs/SETUP-PAT.md)** - Configurar Personal Access Token
-3. **[👥 /docs/workflow/01-team-workflow.md](/docs/workflow/01-team-workflow.md)** - Flujo de trabajo en equipo
+2. **[👥 /docs/workflow/01-team-workflow.md](/docs/workflow/01-team-workflow.md)** - Flujo de trabajo en equipo
 4. **[📂 /docs/README.md](/docs/README.md)** - Índice completo de la documentación
 
 ### 🎯 Filosofía: Docs-First
