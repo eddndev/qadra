@@ -9,15 +9,13 @@ Bienvenido a la documentación central del proyecto Qadra. Esta carpeta contiene
 ```
 docs/
 ├── AGENTS.md                    # 🔴 METODOLOGÍA INQUEBRANTABLE - Leer primero
-├── SETUP-PAT.md                 # 🔑 Configuración del Personal Access Token
 ├── 01-manifest.md               # 📋 Constitución del proyecto (visión, objetivos, alcance)
 ├── 02-design-system.md          # 🎨 Sistema de diseño (colores, tipografía, componentes)
 ├── 03-database-schema.md        # 🗄️ Esquema de la base de datos (diagrama ERD)
 ├── 04-user-stories.md           # 📝 Backlog de historias de usuario
 ├── workflow/                    # 🔄 Documentación de procesos de trabajo
 │   ├── 01-team-workflow.md      # 👥 Flujo de trabajo en equipo
-│   ├── 02-branch-protection.md  # 🔒 Protección de la rama main
-│   └── 03-github-projects-setup.md  # 📊 Setup de GitHub Projects
+│   └── 02-branch-protection.md  # 🔒 Protección de la rama main
 └── sprints/                     # 🚀 Diarios de sprints
     └── [sprint-number]-[sprint-name].md
 ```
@@ -34,14 +32,7 @@ docs/
 2. **`workflow/01-team-workflow.md`** - Entender el flujo de trabajo en equipo
 3. **`01-manifest.md`** - Visión y alcance del proyecto
 
-### 2. Acción Requerida: Configurar PAT
-
-Para que la automatización funcione:
-1. Lee `SETUP-PAT.md`
-2. Crea el Personal Access Token
-3. Agrégalo como secret `PROJECT_PAT` en el repositorio
-
-### 3. Documentos por Completar
+### 2. Documentos por Completar
 
 Los siguientes documentos son **templates** que deben ser completados con la información real del proyecto:
 
@@ -65,12 +56,11 @@ Este proyecto sigue la filosofía **"Docs-First"**:
 ## 📊 GitHub Project
 
 - **Proyecto:** [Qadra - Development](https://github.com/users/eddndev/projects/3)
-- **PROJECT_ID:** `PVT_kwHOCUkKF84BExJu`
-- **Workflow:** `.github/workflows/project-board-automation.yml`
+- **Gestión:** Las issues son asignadas y movidas en el Kanban por el Tech Lead (@eddndev)
 
-### Automatizaciones Activas (requiere PAT configurado):
+### Automatizaciones Activas:
 
-- ✅ Nueva issue → se añade al proyecto y mueve a "Todo"
+- ✅ Nueva issue → se añade al proyecto en "Todo"
 - ✅ Asignar issue → se mueve a "In Progress"
 - ✅ Cerrar issue → se mueve a "Done"
 - ❌ Issues con label `Epic` NO se añaden al tablero Kanban
