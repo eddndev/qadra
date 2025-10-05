@@ -27,3 +27,31 @@
 *.config.js @eddndev
 *.config.ts @eddndev
 .env.example @eddndev
+
+# Código fuente - Archivos de programación
+*.php @eddndev
+*.js @eddndev
+*.jsx @eddndev
+*.ts @eddndev
+*.tsx @eddndev
+*.vue @eddndev
+*.html @eddndev
+*.css @eddndev
+*.scss @eddndev
+*.sass @eddndev
+*.sql @eddndev
+
+# APIs y controladores
+**/api/ @eddndev
+**/controllers/ @eddndev
+**/routes/ @eddndev
+**/services/ @eddndev
+**/models/ @eddndev
+
+# Tests - Importante para calidad
+**/tests/ @eddndev
+**/test/ @eddndev
+*.test.js @eddndev
+*.test.ts @eddndev
+*.spec.js @eddndev
+*.spec.ts @eddndev
