@@ -400,35 +400,30 @@ Este proyecto fue desarrollado por:
         <img src="https://github.com/eddndev.png" width="100px;" alt="Eduardo"/><br />
         <sub><b>Eduardo</b></sub>
       </a><br />
-      <sub>Tech Lead & Full Stack Developer</sub>
     </td>
     <td align="center">
       <a href="https://github.com/vhhatziry">
         <img src="https://github.com/vhhatziry.png" width="100px;" alt="Hatziry"/><br />
         <sub><b>Hatziry</b></sub>
       </a><br />
-      <sub>Full Stack Developer</sub>
     </td>
     <td align="center">
       <a href="https://github.com/Arzubide">
         <img src="https://github.com/Arzubide.png" width="100px;" alt="Gael"/><br />
         <sub><b>Gael</b></sub>
       </a><br />
-      <sub>Backend Developer</sub>
     </td>
     <td align="center">
       <a href="https://github.com/Karlaelenaht">
         <img src="https://github.com/Karlaelenaht.png" width="100px;" alt="Karla"/><br />
         <sub><b>Karla</b></sub>
       </a><br />
-      <sub>Frontend Developer</sub>
     </td>
     <td align="center">
       <a href="https://github.com/Dvan88">
         <img src="https://github.com/Dvan88.png" width="100px;" alt="Diego"/><br />
         <sub><b>Diego</b></sub>
       </a><br />
-      <sub>UI/UX Designer</sub>
     </td>
   </tr>
 </table>
