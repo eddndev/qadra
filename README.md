@@ -21,6 +21,7 @@
 
 ## 📋 Tabla de Contenidos
 
+- [Equipo](#-equipo)
 - [⚠️ Metodología AGENTS.md](#️-metodología-agentsmd)
 - [Acerca del Proyecto](#-acerca-del-proyecto)
 - [Características Principales](#-características-principales)
@@ -32,8 +33,55 @@
 - [Arquitectura](#-arquitectura)
 - [Roadmap](#-roadmap)
 - [Contribución](#-contribución)
-- [Equipo](#-equipo)
 - [Licencia](#-licencia)
+
+---
+
+## 👥 Equipo
+
+Este proyecto fue desarrollado por:
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/eddndev">
+        <img src="https://github.com/eddndev.png" width="100px;" alt="Eduardo"/><br />
+        <sub><b>Eduardo</b></sub>
+      </a><br />
+    </td>
+    <td align="center">
+      <a href="https://github.com/vhhatziry">
+        <img src="https://github.com/vhhatziry.png" width="100px;" alt="Hatziry"/><br />
+        <sub><b>Hatziry</b></sub>
+      </a><br />
+    </td>
+    <td align="center">
+      <a href="https://github.com/Arzubide">
+        <img src="https://github.com/Arzubide.png" width="100px;" alt="Gael"/><br />
+        <sub><b>Gael</b></sub>
+      </a><br />
+    </td>
+    <td align="center">
+      <a href="https://github.com/Karlaelenaht">
+        <img src="https://github.com/Karlaelenaht.png" width="100px;" alt="Karla"/><br />
+        <sub><b>Karla</b></sub>
+      </a><br />
+    </td>
+    <td align="center">
+      <a href="https://github.com/Dvan88">
+        <img src="https://github.com/Dvan88.png" width="100px;" alt="Diego"/><br />
+        <sub><b>Diego</b></sub>
+      </a><br />
+    </td>
+  </tr>
+</table>
+
+### Información Académica
+
+- **Profesor:** Ismael Rojas Mexicano
+- **Materia:** Ingeniería de Software
+- **Institución:** ESCOM - IPN
+- **Semestre:** 7mo semestre - 2026-1
 
 ---
 
@@ -386,54 +434,6 @@ ing-soft/
 - Usamos **ESLint** para JavaScript
 - Commits siguiendo **Conventional Commits**
 - Tests obligatorios para nuevas features
-
----
-
-## 👥 Equipo
-
-Este proyecto fue desarrollado por:
-
-<table>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/eddndev">
-        <img src="https://github.com/eddndev.png" width="100px;" alt="Eduardo"/><br />
-        <sub><b>Eduardo</b></sub>
-      </a><br />
-    </td>
-    <td align="center">
-      <a href="https://github.com/vhhatziry">
-        <img src="https://github.com/vhhatziry.png" width="100px;" alt="Hatziry"/><br />
-        <sub><b>Hatziry</b></sub>
-      </a><br />
-    </td>
-    <td align="center">
-      <a href="https://github.com/Arzubide">
-        <img src="https://github.com/Arzubide.png" width="100px;" alt="Gael"/><br />
-        <sub><b>Gael</b></sub>
-      </a><br />
-    </td>
-    <td align="center">
-      <a href="https://github.com/Karlaelenaht">
-        <img src="https://github.com/Karlaelenaht.png" width="100px;" alt="Karla"/><br />
-        <sub><b>Karla</b></sub>
-      </a><br />
-    </td>
-    <td align="center">
-      <a href="https://github.com/Dvan88">
-        <img src="https://github.com/Dvan88.png" width="100px;" alt="Diego"/><br />
-        <sub><b>Diego</b></sub>
-      </a><br />
-    </td>
-  </tr>
-</table>
-
-### Información Académica
-
-- **Profesor:** [Nombre del Profesor]
-- **Materia:** Ingeniería de Software
-- **Institución:** [Tu Universidad]
-- **Semestre:** [Semestre/Año]
 
 ---
 
