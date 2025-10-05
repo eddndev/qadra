@@ -19,6 +19,7 @@
 
 ## 📋 Tabla de Contenidos
 
+- [⚠️ Metodología AGENTS.md](#️-metodología-agentsmd)
 - [Acerca del Proyecto](#-acerca-del-proyecto)
 - [Características Principales](#-características-principales)
 - [Stack Tecnológico](#-stack-tecnológico)
@@ -31,6 +32,41 @@
 - [Contribución](#-contribución)
 - [Equipo](#-equipo)
 - [Licencia](#-licencia)
+
+---
+
+## ⚠️ Metodología AGENTS.md
+
+**IMPORTANTE:** Este proyecto sigue la metodología **AGENTS.md**, un sistema de gestión inquebrantable e inamovible para el desarrollo de software.
+
+### 🔴 Lectura Obligatoria para Desarrolladores
+
+Antes de trabajar en este proyecto, **DEBES** leer:
+
+1. **[📚 /docs/AGENTS.md](/docs/AGENTS.md)** - Metodología completa (INQUEBRANTABLE)
+2. **[🔑 /docs/SETUP-PAT.md](/docs/SETUP-PAT.md)** - Configurar Personal Access Token
+3. **[👥 /docs/workflow/01-team-workflow.md](/docs/workflow/01-team-workflow.md)** - Flujo de trabajo en equipo
+4. **[📂 /docs/README.md](/docs/README.md)** - Índice completo de la documentación
+
+### 🎯 Filosofía: Docs-First
+
+- ✅ **La documentación precede al código** - Planificar antes de implementar
+- ✅ **GitHub como única fuente de verdad** - Todo vive en el ecosistema de GitHub
+- ✅ **Issues con criterios de aceptación** - Tareas claras y medibles
+- ✅ **Sprints documentados** - Bitácora en `/docs/sprints/`
+
+### 📊 GitHub Project
+
+- **Proyecto:** [Qadra - Development](https://github.com/users/eddndev/projects/3)
+- **Automatización:** Issues se mueven automáticamente (requiere PAT configurado)
+- **Kanban:** Todo → In Progress → Done
+
+### 🔗 Enlaces Importantes
+
+- 📋 [Issues](https://github.com/eddndev/qadra/issues) - Ver tareas pendientes
+- 🔀 [Pull Requests](https://github.com/eddndev/qadra/pulls) - Revisar código
+- 📊 [Project Board](https://github.com/users/eddndev/projects/3) - Kanban visual
+- 📚 [Documentación](/docs) - Toda la documentación del proyecto
 
 ---
 

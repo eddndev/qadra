@@ -18,12 +18,12 @@ on:
     types: [opened, labeled, assigned, closed, reopened]
 
 env:
-  # ⚠️ REEMPLAZAR CON TUS IDs REALES
-  PROJECT_ID: YOUR_PROJECT_ID_HERE              # Ejemplo: PVT_kwHOCUkKF84BEw60
-  STATUS_FIELD_ID: YOUR_STATUS_FIELD_ID_HERE    # Ejemplo: PVTSSF_lAHOCUkKF84BEw60zg2S-xI
-  TODO_OPTION_ID: YOUR_TODO_OPTION_ID_HERE      # Ejemplo: f75ad846
-  IN_PROGRESS_OPTION_ID: YOUR_IN_PROGRESS_ID    # Ejemplo: 47fc9ee4
-  DONE_OPTION_ID: YOUR_DONE_OPTION_ID_HERE      # Ejemplo: 98236657
+  # ✅ IDs configurados para el proyecto Qadra - Development
+  PROJECT_ID: PVT_kwHOCUkKF84BExJu              # ID del proyecto
+  STATUS_FIELD_ID: PVTSSF_lAHOCUkKF84BExJuzg2TI_g    # ID del campo Status
+  TODO_OPTION_ID: f75ad846      # ID de la opción "Todo"
+  IN_PROGRESS_OPTION_ID: 47fc9ee4    # ID de la opción "In Progress"
+  DONE_OPTION_ID: 98236657      # ID de la opción "Done"
 
 jobs:
   update-project-status:
@@ -77,8 +77,8 @@ jobs:
 
           if [ -z "$ITEM_ID" ]; then
             echo "Issue not in project, adding it first..."
-            # ⚠️ REEMPLAZAR [OWNER] con tu username u organización
-            gh project item-add ${{ env.PROJECT_ID }} --owner [OWNER] --url ${{ github.event.issue.html_url }}
+            # ✅ Owner configurado
+            gh project item-add ${{ env.PROJECT_ID }} --owner eddndev --url ${{ github.event.issue.html_url }}
 
             # Get the item ID again after adding
             ITEM_ID=$(gh api graphql -f query='
