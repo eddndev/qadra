@@ -278,7 +278,7 @@ El sistema tiene dos niveles de usuarios: **usuarios del sistema (nosotros)** y 
 
 ### Multi-Tenancy
 * **Estrategia:** Single Database + tenant_id (approach recomendado para v1.0)
-* **Paquete:** Custom implementation con Spatie Permission para 
+* **Paquete:** Custom implementation con Spatie Permission para scoping
 
 ### Otros
 * **Control de Versiones:** Git + GitHub
