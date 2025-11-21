@@ -1,371 +1,400 @@
-# Sistema de Diseño: Qadra - Plataforma SaaS de Gestión Procesal Penal
+# Sistema de Diseño: [NOMBRE DEL PROYECTO]
 
-**Versión:** 1.0  
-**Fecha:** 20 de noviembre de 2025  
-**Proyecto:** Qadra  
-**Enlace al Proyecto:** [Repositorio/Figma]  
-**Stack Tecnológico:** Tailwind CSS v4, Laravel Blade, Livewire 3  
+**Versión:** 1.0
+**Fecha:** [Fecha de creación]
+**Enlace al Proyecto de Figma/Diseño:** [URL del proyecto de diseño]
 
 ---
 
-## 1. Filosofía y Paleta de Colores
+## 1. Paleta de Colores
 
-La identidad visual de **Qadra** se basa en la **autoridad**, la **seguridad** y la **precisión procesal**.  
-Se usan azules profundos para transmitir confianza institucional y un tono **“Legal Brown”** para estados críticos, diferenciándose del rojo genérico de error.
+[Describe la filosofía de tu paleta de colores. Por ejemplo: si funciona en modo claro y oscuro, qué representa cada color, etc.]
 
-### 1.1 Colores de Marca (Brand Colors)
+### Colores Primarios ([Nombre de la paleta])
+[Descripción del uso principal de estos colores]
 
-| Nombre Token      | Hex       | Uso Principal                                                       |
-| :---------------- | :-------- | :------------------------------------------------------------------ |
-| **Navy Deep**     | `#111344` | Sidebar, fondos en modo oscuro, títulos principales                 |
-| **Justice Blue**  | `#1E40AF` | **Color primario**, botones CTA, enlaces, foco                      |
-| **Slate Blue**    | `#2C5282` | Elementos secundarios, bordes activos, fondos de tarjetas           |
-| **Legal Brown**   | `#A52A2A` | **Crítico/acento**, plazos por vencer, alertas de alta prioridad    |
-| **Verdict Green** | `#2F855A` | **Éxito**, casos ganados, pasos completados                         |
-
-### 1.2 Colores Primarios (Brand - Justice Blue)
-
-Usados para botones, enlaces, estados de foco y elementos de marca.
-
-```css
-/* Definición en Tailwind v4 (CSS variables) */
---color-brand-50:  #eef2ff;
---color-brand-100: #e0e7ff;
---color-brand-200: #c7d2fe;
---color-brand-500: #1E40AF; /* Primary Action */
---color-brand-600: #1e3a8a;
---color-brand-700: #2C5282; /* Secondary / Hover */
---color-brand-900: #111344; /* Navy Deep - Sidebar/Header */
---color-brand-950: #0a0b26;
+```
+Ejemplo de cómo documentar colores:
+- Color-50: #HEXCODE
+- Color-100: #HEXCODE
+- Color-200: #HEXCODE
+... hasta Color-950
 ```
 
-### 1.3 Colores de Acento (Critical - Legal Brown)
+[Opcional: Agregar badges visuales usando shields.io]
+![color-50](https://img.shields.io/badge/--HEXCODE?style=for-the-badge&logoColor=black&color=HEXCODE)
 
-Usados exclusivamente para **plazos de término**, errores críticos y acciones destructivas.
+### Colores de Acento ([Nombre de la paleta])
+[Descripción de cuándo usar estos colores de acento]
 
-```css
---color-legal-50:  #fdf2f2;
---color-legal-100: #fde8e8;
---color-legal-500: #A52A2A; /* Base Alert Color */
---color-legal-600: #9b2226;
---color-legal-900: #7f1d1d;
+```
+- Accent-200: #HEXCODE
+- Accent-400: #HEXCODE
+- Accent-600: #HEXCODE
 ```
 
-### 1.4 Colores Neutrales (Slate)
+### Colores Neutrales ([Nombre de la paleta])
+[Descripción: Típicamente usados para textos, fondos, bordes, etc.]
 
-Usados para textos, fondos y bordes.
-
-```css
---color-slate-50:  #f8fafc;  /* Fondo App (light) */
---color-slate-100: #f1f5f9;
---color-slate-200: #e2e8f0;  /* Bordes */
---color-slate-500: #64748b;  /* Texto secundario */
---color-slate-800: #1e293b;  /* Texto tarjetas dark */
---color-slate-900: #0f172a;  /* Texto principal */
+```
+- Neutral-50: #HEXCODE
+- Neutral-100: #HEXCODE
+... hasta Neutral-950
 ```
 
-### 1.5 Colores Semánticos
+### Colores Semánticos
+[Colores para estados y feedback del usuario]
 
-- **Éxito (`success`):** `#2F855A` (Verdict Green – sentencias favorables, pasos completados)  
-- **Peligro (`danger`):** `#A52A2A` (Legal Brown – errores y plazos vencidos)  
-- **Advertencia (`warning`):** `#D97706` (ámbar – advertencias no fatales)  
-- **Información (`info`):** `#2C5282` (Slate Blue – notas informativas)
+* **Éxito (`success`):** ![Success](https://img.shields.io/badge/--HEXCODE?style=for-the-badge&logoColor=white&color=HEXCODE)
+* **Peligro (`danger`):** ![Danger](https://img.shields.io/badge/--HEXCODE?style=for-the-badge&logoColor=white&color=HEXCODE)
+* **Advertencia (`warning`):** ![Warning](https://img.shields.io/badge/--HEXCODE?style=for-the-badge&logoColor=white&color=HEXCODE)
+* **Información (`info`):** ![Info](https://img.shields.io/badge/--HEXCODE?style=for-the-badge&logoColor=white&color=HEXCODE)
 
-### 1.6 Uso en Tema Claro vs. Oscuro
+### Uso en Tema Claro vs. Oscuro
 
-| Uso Semántico       | Modo Claro (`light`)      | Modo Oscuro (`dark`) |
-| :------------------ | :------------------------ | :------------------- |
-| **Fondo Sidebar**   | `bg-[#111344]`            | `bg-[#0a0b26]`       |
-| **Fondo Principal** | `bg-slate-50`             | `bg-[#111344]`       |
-| **Fondo Tarjetas**  | `bg-white`                | `bg-slate-800`       |
-| **Texto Principal** | `text-[#111344]`          | `text-slate-100`     |
-| **Texto Secundario**| `text-slate-600`          | `text-slate-400`     |
-| **Bordes**          | `border-slate-200`        | `border-slate-700`   |
-| **Inputs**          | `bg-white`                | `bg-slate-900`       |
-| **Botón Primario**  | `bg-[#1E40AF] text-white` | igual en dark        |
+[Si tu proyecto soporta temas, documenta cómo cambian los colores]
+
+| Uso Semántico        | Modo Claro (`light`)                               | Modo Oscuro (`dark`)                               |
+| -------------------- | -------------------------------------------------- | -------------------------------------------------- |
+| **Fondo Principal** | `bg-[color-name]-[shade]`                          | `bg-[color-name]-[shade]`                          |
+| **Fondo Tarjetas** | `bg-[color-name]`                                  | `bg-[color-name]-[shade]`                          |
+| **Texto Principal** | `text-[color-name]-[shade]`                        | `text-[color-name]-[shade]`                        |
+| **Texto Secundario** | `text-[color-name]-[shade]`                        | `text-[color-name]-[shade]`                        |
+| **Botón Primario** | `bg-[color] text-white hover:bg-[color-darker]`    | `bg-[color] text-white hover:bg-[color-darker]`    |
+| **Bordes** | `border-[color-name]-[shade]`                      | `border-[color-name]-[shade]`                      |
 
 ---
 
 ## 2. Tipografía
 
-Se prioriza la **legibilidad en pantallas** y la **formalidad en documentos legales**.
+[Define las fuentes y tamaños tipográficos del proyecto]
 
-- **Fuente Principal (UI):** **Inter** (o Roboto)  
-  - Sans-serif moderna, excelente para interfaces densas, tablas y fechas.
-- **Fuente Secundaria (Documentos/PDFs):** **Merriweather** (o Noto Serif)  
-  - Para reportes y documentos que se imprimen, con estética formal jurídica.
+* **Fuente Principal:** [Nombre de la fuente] ([Descripción, ej: Moderna, legible, etc. Fuente desde Google Fonts o sistema])
+* **Fuente Secundaria (opcional):** [Nombre de la fuente]
 
-### 2.1 Escala Tipográfica
+### Escala Tipográfica
 
-| Etiqueta | Clase Tailwind                              | Uso                                   |
-| :------ | :------------------------------------------- | :------------------------------------ |
-| **H1**  | `text-3xl font-bold text-[#111344]`          | Títulos de Dashboard/Módulos          |
-| **H2**  | `text-2xl font-semibold text-[#111344]`      | Título de Expediente/Caso             |
-| **H3**  | `text-lg font-medium text-slate-800`         | Encabezados de tarjetas/widgets       |
-| **H4**  | `text-base font-semibold text-slate-700`     | Subtítulos dentro de tarjetas         |
-| **Body**| `text-base font-normal text-slate-600`       | Texto general, descripciones de hechos|
-| **Small**| `text-sm font-normal text-slate-500`        | Metadatos, notas                      |
-| **Caption**| `text-xs font-medium uppercase tracking-wider` | Badges, etiquetas de tablas     |
+[Define los tamaños y pesos para cada nivel de encabezado y texto]
+
+* **h1:** `text-[size] font-[weight]` ([Tamaño en px])
+* **h2:** `text-[size] font-[weight]` ([Tamaño en px])
+* **h3:** `text-[size] font-[weight]` ([Tamaño en px])
+* **h4:** `text-[size] font-[weight]` ([Tamaño en px])
+* **p (body):** `text-[size] font-[weight]` ([Tamaño en px])
+* **small:** `text-[size] font-[weight]` ([Tamaño en px])
+* **caption:** `text-[size] font-[weight]` ([Tamaño en px])
 
 ---
 
 ## 3. Espaciado y Rejilla (Grid)
 
-Se utiliza la escala base de 4px de Tailwind.
+[Describe el sistema de espaciado que usarás. Ejemplo: escala de Tailwind, sistema personalizado, etc.]
 
-- **Márgenes estándar:** `m-4` (16px) entre componentes, `m-6` (24px) entre secciones.  
-- **Padding en contenedores:** `p-6` o `p-8` para contenedores principales.  
-- **Sidebar:** ancho fijo `w-64` (oculto en móvil).  
-- **Container principal:** `max-w-7xl mx-auto`.
+* `p-1`, `m-1`: [valor]px
+* `p-2`, `m-2`: [valor]px
+* `p-3`, `m-3`: [valor]px
+* `p-4`, `m-4`: [valor]px
+* `p-6`, `m-6`: [valor]px
+* `p-8`, `m-8`: [valor]px
+* `p-12`, `m-12`: [valor]px
 
-### 3.1 Sistema de Grid (Dashboard de Casos)
+### Sistema de Grid
 
-- **Mobile:** `grid-cols-1`  
-- **Tablet (`md`):** `grid-cols-2 gap-4`  
-- **Desktop (`lg`):** `grid-cols-3 gap-6`  
-- **Wide (`xl`+):** `grid-cols-4 gap-6`
+[Opcional: Define cómo se estructura el layout con columnas]
+
+* **Columnas:** [Número de columnas en el grid, ej: 12 columnas]
+* **Gutters:** [Espaciado entre columnas]
+* **Breakpoints:**
+  * `sm`: [valor]px
+  * `md`: [valor]px
+  * `lg`: [valor]px
+  * `xl`: [valor]px
+  * `2xl`: [valor]px
 
 ---
 
 ## 4. Componentes Clave
 
-### 4.1 Botones
+[Define las directrices de diseño para los componentes reutilizables más importantes]
 
-**Primario (Acción principal)**  
-Uso: Crear Caso, Guardar Audiencia, Iniciar trámite.
+### Botones
 
-```html
-<button class="bg-[#1E40AF] text-white hover:bg-[#111344]
-               focus:ring-2 focus:ring-offset-2 focus:ring-[#1E40AF]
-               rounded-md shadow-sm transition-colors px-4 py-2">
-  Acción
-</button>
-```
+[Todos los botones deben seguir estas directrices]
 
-**Secundario (Neutral)**  
-Uso: Cancelar, Filtros, Ver Detalles, Exportar.
+* **Primario:**
+    * **Uso:** [Cuándo usar este tipo de botón]
+    * **Estilo:** `[clases de CSS/Tailwind]`
+    * **Ejemplo:**
+    ```html
+    <button class="[clases aquí]">Texto del botón</button>
+    ```
 
-```html
-<button class="bg-white text-slate-700 border border-slate-300
-               hover:bg-slate-50
-               focus:ring-2 focus:ring-offset-2 focus:ring-slate-500
-               rounded-md shadow-sm px-4 py-2">
-  Cancelar
-</button>
-```
+* **Secundario:**
+    * **Uso:** [Cuándo usar este tipo de botón]
+    * **Estilo:** `[clases de CSS/Tailwind]`
 
-**Destructivo / Urgente (Legal Brown)**  
-Uso: Eliminar evidencia, cerrar caso perdido, marcar plazo vencido.
+* **Terciario/Texto:**
+    * **Uso:** [Cuándo usar este tipo de botón]
+    * **Estilo:** `[clases de CSS/Tailwind]`
 
-```html
-<button class="bg-white text-[#A52A2A] border border-[#A52A2A]
-               hover:bg-red-50
-               focus:ring-2 focus:ring-[#A52A2A]
-               rounded-md px-4 py-2">
-  Eliminar
-</button>
-```
+* **Destructivo/Peligro:**
+    * **Uso:** [Cuándo usar este tipo de botón]
+    * **Estilo:** `[clases de CSS/Tailwind]`
 
-### 4.2 Inputs de Formulario
+### Inputs de Formulario
 
-Diseñados para formularios largos de captura procesal.
+[Define el estilo de los campos de entrada]
 
-**Estado normal**
+* **Estilo General:**
+    * `[clases de CSS/Tailwind para inputs normales]`
+    * **Ejemplo:**
+    ```html
+    <input type="text" class="[clases aquí]" placeholder="Texto de ejemplo">
+    ```
 
-```html
-<input class="block w-full rounded-md border-slate-300 shadow-sm
-              focus:border-[#1E40AF] focus:ring-[#1E40AF] sm:text-sm" />
-```
+* **Estado de Enfoque (Focus):**
+    * `[clases adicionales para el estado focus]`
 
-**Estado de error**
+* **Estado de Error:**
+    * `[clases adicionales para mostrar errores]`
 
-```html
-<input class="block w-full rounded-md border-[#A52A2A] text-[#A52A2A]
-              focus:border-[#A52A2A] focus:ring-[#A52A2A] sm:text-sm" />
-<p class="mt-1 text-sm text-[#A52A2A]">Este campo es obligatorio.</p>
-```
+* **Estado Deshabilitado:**
+    * `[clases adicionales para campos deshabilitados]`
 
-### 4.3 Tarjetas de Caso (Case Cards)
+### Tarjetas (Cards)
 
-Componente central del Dashboard.
+[El contenedor principal para la mayoría del contenido]
 
-- Contenedor base:
+* **Estilo General:**
+    * `[clases de CSS/Tailwind]`
+    * **Ejemplo:**
+    ```html
+    <div class="[clases aquí]">
+      <h3>Título de la tarjeta</h3>
+      <p>Contenido de la tarjeta</p>
+    </div>
+    ```
 
-```html
-<article class="bg-white overflow-hidden rounded-lg shadow-sm
-                border border-slate-200 hover:shadow-md transition-shadow">
-  ...
-</article>
-```
+* **Padding:**
+    * Interior: `p-[valor]`
+    * Margen exterior: `m-[valor]`
 
-- Indicador de estado (borde izquierdo):
+* **Variantes:**
+    * **Con borde:** `[clases]`
+    * **Con sombra:** `[clases]`
+    * **Interactiva (hover):** `[clases]`
 
-```html
-<!-- Normal / Investigación -->
-<article class="border-l-4 border-[#1E40AF] ..."></article>
+### Badges/Etiquetas
 
-<!-- Crítico / Plazo vencido -->
-<article class="border-l-4 border-[#A52A2A] ..."></article>
+[Pequeños elementos para mostrar estados, categorías, etc.]
 
-<!-- Resuelto / Sentencia -->
-<article class="border-l-4 border-[#2F855A] ..."></article>
-```
+* **Estilo Base:**
+    * `[clases de CSS/Tailwind]`
 
-### 4.4 Badges / Etiquetas de Estado
+* **Variantes por Color:**
+    * **Primario:** `[clases]`
+    * **Éxito:** `[clases]`
+    * **Advertencia:** `[clases]`
+    * **Peligro:** `[clases]`
+    * **Neutral:** `[clases]`
 
-- **Investigación:**  
-  `inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10`
+### Modales/Diálogos
 
-- **Intermedia:**  
-  `inline-flex items-center rounded-full bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20`
+[Ventanas emergentes para información importante o formularios]
 
-- **Juicio Oral:**  
-  `inline-flex items-center rounded-full bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10`
+* **Overlay (Fondo oscuro):**
+    * `[clases de CSS/Tailwind]`
 
-- **Alerta de plazo (Legal Brown):**  
-  `inline-flex items-center rounded-full bg-red-50 px-2 py-1 text-xs font-bold text-[#A52A2A] ring-1 ring-inset ring-[#A52A2A]/20`
+* **Contenedor del Modal:**
+    * `[clases de CSS/Tailwind]`
 
-### 4.5 Modales / Diálogos
+* **Encabezado:**
+    * `[clases de CSS/Tailwind]`
 
-- **Overlay:** `bg-slate-900/50 backdrop-blur-sm fixed inset-0`  
-- **Panel principal:** `bg-white rounded-lg shadow-xl transform transition-all sm:max-w-lg sm:w-full`  
-- **Header:** `bg-slate-50 px-4 py-3 border-b border-slate-200`
+* **Cuerpo:**
+    * `[clases de CSS/Tailwind]`
 
-### 4.6 Notificaciones / Toasts
+* **Footer (Acciones):**
+    * `[clases de CSS/Tailwind]`
 
-- **Éxito:** fondo o borde `#2F855A`, icono `CheckCircle`.  
-- **Alerta legal (plazo):** fondo `#A52A2A`, texto blanco, icono `ExclamationTriangle`, mensaje tipo _“Atención: plazo por vencer”_.
+### Notificaciones/Alertas
+
+[Mensajes de feedback para el usuario]
+
+* **Tipo Éxito:**
+    * `[clases de CSS/Tailwind]`
+
+* **Tipo Error:**
+    * `[clases de CSS/Tailwind]`
+
+* **Tipo Advertencia:**
+    * `[clases de CSS/Tailwind]`
+
+* **Tipo Información:**
+    * `[clases de CSS/Tailwind]`
 
 ---
 
 ## 5. Iconografía
 
-Librería: **Heroicons v2**.  
+[Define el sistema de iconos que usarás]
 
-- **Outline:** navegación y elementos generales (stroke 1.5).  
-- **Solid:** acciones primarias y estados activos.
+* **Librería de Iconos:** [Nombre de la librería, ej: Heroicons, Font Awesome, Feather Icons, etc.]
+* **Tamaño por defecto:** `[valor]px` o `w-[valor] h-[valor]`
+* **Estilo:** [Outline, Solid, Duotone, etc.]
+* **Color:** [Hereda del texto padre o colores específicos]
 
-| Contexto           | Icono Heroicons               | Uso                      |
-| :----------------- | :--------------------------- | :----------------------- |
-| Justicia           | `ScaleIcon`                  | Logo, Dashboard general  |
-| Expedientes        | `BriefcaseIcon`              | Listado de casos         |
-| Audiencias         | `CalendarDaysIcon`           | Módulo de audiencias     |
-| Juzgados           | `BuildingLibraryIcon`        | Catálogo de juzgados     |
-| Plazo fatal        | `ClockIcon` / `BellAlertIcon`| Alertas de vencimiento   |
-| Evidencias         | `DocumentMagnifyingGlassIcon`| Gestión de archivos      |
-| Medidas cautelares | `LockClosedIcon`             | Prisión preventiva, etc. |
+### Iconos Comunes
+
+| Acción/Contexto | Icono | Uso |
+|-----------------|-------|-----|
+| Cerrar | `[nombre del icono]` | Cerrar modales, notificaciones |
+| Búsqueda | `[nombre del icono]` | Campo de búsqueda |
+| Usuario | `[nombre del icono]` | Perfil de usuario |
+| Configuración | `[nombre del icono]` | Acceso a ajustes |
+| [Otro] | `[nombre del icono]` | [Uso] |
 
 ---
 
 ## 6. Sombras (Shadows)
 
-Sobrias y controladas:
+[Define los niveles de elevación/sombra]
 
-- **Card normal:** `shadow-sm`  
-- **Card hover:** `shadow`  
-- **Dropdown/Modal:** `shadow-lg`  
-- **Headers fijos (sticky):** `shadow-sm`
+* **Ninguna:** `shadow-none`
+* **Sutil:** `shadow-sm` - [Uso: elementos ligeramente elevados]
+* **Normal:** `shadow` o `shadow-md` - [Uso: tarjetas, botones elevados]
+* **Media:** `shadow-lg` - [Uso: modales, dropdowns]
+* **Alta:** `shadow-xl` - [Uso: elementos muy prominentes]
+* **Extrema:** `shadow-2xl` - [Uso: overlays importantes]
 
 ---
 
-## 7. Bordes y Esquinas
+## 7. Bordes y Esquinas Redondeadas
 
-- **Radio estándar:** `rounded-md` (≈6px) para inputs y botones.  
-- **Tarjetas/Modales:** `rounded-lg` (≈8px).  
-- Evitar radios excesivamente redondeados para mantener una estética seria y profesional.
+[Define el estilo de bordes y border-radius]
+
+* **Grosor de Borde:**
+    * `border` ([valor]px)
+    * `border-2` ([valor]px)
+
+* **Radio de Esquinas:**
+    * `rounded-none` (0px)
+    * `rounded-sm` ([valor]px)
+    * `rounded` o `rounded-md` ([valor]px)
+    * `rounded-lg` ([valor]px)
+    * `rounded-xl` ([valor]px)
+    * `rounded-full` (100% - círculos/píldoras)
 
 ---
 
 ## 8. Animaciones y Transiciones
 
-Uso minimalista:
+[Define las animaciones y transiciones estándar]
 
-- **Hover generales:** `transition-colors duration-200 ease-in-out`  
-- **Skeleton loading:** `animate-pulse` en filas de tabla y tarjetas.  
-- **Alertas críticas:** `animate-bounce` solo en iconos muy puntuales (no permanente).
+* **Duración:**
+    * Rápida: `duration-150` (150ms)
+    * Normal: `duration-200` o `duration-300` (200-300ms)
+    * Lenta: `duration-500` (500ms)
+
+* **Ease:**
+    * `ease-in`
+    * `ease-out`
+    * `ease-in-out`
+    * `linear`
+
+* **Propiedades comunes a animar:**
+    * Colores: `transition-colors`
+    * Opacidad: `transition-opacity`
+    * Transform: `transition-transform`
+    * Todo: `transition-all` (usar con precaución)
+
+### Animaciones Específicas
+
+[Define animaciones personalizadas si aplica]
+
+* **[Nombre de animación]:**
+    * **Uso:** [Cuándo se usa]
+    * **Keyframes/Código:**
+    ```css
+    @keyframes [nombre] {
+      /* ... */
+    }
+    ```
 
 ---
 
 ## 9. Accesibilidad (A11y)
 
-- **Contraste:**  
-  - Texto sobre fondos blancos mínimo `text-slate-600`.  
-  - `#1E40AF` sobre blanco cumple WCAG AA.
+[Directrices de accesibilidad que deben seguirse]
 
-- **Estados de foco:**  
-  - No eliminar el `outline` sin reemplazarlo por un `ring` visible.  
-  - Recomendado: `focus:ring-2 focus:ring-offset-2 focus:ring-[#1E40AF]`.
-
-- **Semántica de estado:**  
-  - Nunca usar solo color para indicar estatus.  
-  - Ejemplo correcto: Badge rojo + texto **“VENCIDO”** + icono de alerta.
+* **Contraste de Colores:** Los textos deben cumplir con WCAG 2.1 AA mínimo (ratio 4.5:1 para texto normal)
+* **Focus States:** Todos los elementos interactivos deben tener un indicador de foco visible
+* **Etiquetas ARIA:** Usar atributos ARIA cuando sea necesario para mejorar la experiencia de lectores de pantalla
+* **Tamaños de Toque:** Los elementos interactivos móviles deben tener mínimo 44x44px
+* **[Otra directriz]:** [Descripción]
 
 ---
 
 ## 10. Responsive Design
 
-Estrategia **mobile-first**, pero optimizado para escritorio (uso en oficinas).
+[Define cómo se adapta el diseño a diferentes tamaños de pantalla]
 
-### Breakpoints clave
+### Breakpoints
 
-- **sm (≥640px):**  
-  - Sidebar oculto, menú hamburguesa.  
-  - Tablas pasan a tarjetas apiladas.
+| Breakpoint | Tamaño | Uso |
+|------------|--------|-----|
+| `xs` (opcional) | < [valor]px | Teléfonos pequeños |
+| `sm` | ≥ [valor]px | Teléfonos |
+| `md` | ≥ [valor]px | Tablets |
+| `lg` | ≥ [valor]px | Desktop pequeño |
+| `xl` | ≥ [valor]px | Desktop grande |
+| `2xl` | ≥ [valor]px | Pantallas extra grandes |
 
-- **md (≥768px):**  
-  - Grid de 2 columnas para tarjetas de casos.
+### Estrategia
 
-- **lg (≥1024px):**  
-  - Sidebar fijo visible.  
-  - Grid de 3 columnas.
+[Mobile-first, Desktop-first, o híbrido]
 
-- **xl (≥1280px):**  
-  - Layout más ancho, hasta 4 columnas de casos.
+* **Enfoque:** [Descripción del enfoque responsivo]
+* **Consideraciones especiales:**
+    * [Punto 1]
+    * [Punto 2]
 
 ---
 
-## 11. Tokens de Diseño (Referencia JSON)
+## 11. Tokens de Diseño (Design Tokens)
 
-Pensado para integrarse en `tailwind.config.js` o sistema de design tokens.
+[Opcional: Si usas un sistema de tokens centralizado]
 
 ```json
 {
-  "colors": {
-    "brand": {
-      "50": "#eef2ff",
-      "100": "#e0e7ff",
-      "200": "#c7d2fe",
-      "500": "#1E40AF",
-      "700": "#2C5282",
-      "900": "#111344"
-    },
-    "legal": {
-      "50": "#fdf2f2",
-      "100": "#fde8e8",
-      "alert": "#A52A2A",
-      "success": "#2F855A"
-    },
-    "slate": {
-      "50": "#f8fafc",
-      "100": "#f1f5f9",
-      "200": "#e2e8f0",
-      "500": "#64748b",
-      "800": "#1e293b",
-      "900": "#0f172a"
+  "color": {
+    "primary": {
+      "500": "#HEXCODE"
     }
   },
-  "fontFamily": {
-    "sans": ["Inter", "system-ui", "sans-serif"],
-    "serif": ["Merriweather", "serif"]
+  "spacing": {
+    "base": "16px"
   },
-  "borderRadius": {
-    "DEFAULT": "0.375rem",
-    "lg": "0.5rem"
+  "typography": {
+    "fontFamily": {
+      "primary": "Font Name"
+    }
   }
 }
 ```
 
 ---
 
-**Notas Finales**  
-Este sistema de diseño debe implementarse mediante componentes reutilizables de **Blade** y **Livewire** (por ejemplo, `<x-button.primary>`, `<x-card.case>`, `<x-badge.etapa>`), para asegurar consistencia visual y semántica en toda la plataforma **Qadra**, especialmente al manejar múltiples carpetas de investigación en paralelo.
+## 12. Recursos y Referencias
+
+[Enlaces útiles relacionados con el diseño]
+
+* **Figma/Sketch:** [URL del proyecto]
+* **Guía de estilo de código:** [URL si aplica]
+* **Librería de componentes:** [URL si aplica, ej: Storybook]
+* **Paleta de colores interactiva:** [URL si aplica]
+
+---
+
+**Notas Finales:**
+[Cualquier información adicional sobre el sistema de diseño, convenciones especiales, o instrucciones para el equipo]
