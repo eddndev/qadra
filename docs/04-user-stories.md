@@ -1409,60 +1409,278 @@
 
 ## Roadmap de Implementación
 
-### Sprint 0: Setup (1 semana)
-- Crear proyecto Laravel 12
-- Instalar dependencias (Breeze, Livewire, Tailwind v4, Nova 5)
-- Setup de DB, migrations base, seeders
+### Vista General de Sprints
 
-### Sprint 1: Foundation (2 semanas)
-- US-01: Registro de Despacho
-- US-02: Invitación de Miembros
-- US-05: Cambio de Tenant
-- US-25: RBAC Base
+| Sprint | Nombre | User Stories | Enfoque |
+|--------|--------|--------------|---------|
+| 1 | Documentación | - | COMPLETADO |
+| 2 | Foundation & Auth | US-01, US-02, US-05, US-25 | Base multi-tenant + RBAC |
+| 3 | Core Legal | US-06, US-07, US-08, US-10 | Casos + Participantes + Etapas |
+| 4 | Agenda & Tiempos | US-09, US-11-US-15 | Dashboard + Audiencias + Plazos |
+| 5 | Evidencias & Documentos | US-16-US-21 | Cadena custodia + Archivos |
+| 6 | CNPP & Actuaciones | US-22, US-23, US-26, US-27 | Medidas + Soluciones + Bitácora |
+| 7 | Billing, Reportes & Portal | US-03, US-04, US-24, US-28-US-30 | Stripe + Audit + Dashboard + Portal |
+| 8 | Testing & QA | - | Tests + Bug fixes |
+| 9 | Deploy & Lanzamiento | - | Producción |
 
-### Sprint 2: Core Legal (2 semanas)
-- US-06: Apertura de Caso
-- US-07: Gestión de Participantes
-- US-10: Listado de Casos
+---
 
-### Sprint 3: Gestión Procesal (2 semanas)
-- US-08: Transición de Etapas
-- US-09: Dashboard del Caso
+### Sprint 1: Documentación y Setup ✅ COMPLETADO
 
-### Sprint 4: Audiencias y Plazos (2 semanas)
+**Periodo:** 2025-10-05 - 2025-11-29
+
+**Entregables:**
+- ✅ Manifiesto del proyecto (`01-manifest.md`)
+- ✅ Sistema de diseño (`02-design-system.md`)
+- ✅ Esquema de base de datos (`03-database-schema.md`)
+- ✅ Historias de usuario (`04-user-stories.md`)
+- ✅ Arquitectura técnica (`00-arquitectura-tecnica.md`)
+- ✅ Tokens CSS implementados (`resources/css/app.css`)
+- ✅ Áreas de trabajo del equipo (`workflow/04-areas-de-trabajo.md`)
+
+---
+
+### Sprint 2: Foundation & Auth
+
+**Objetivo:** Establecer la arquitectura multi-tenant y el sistema de autenticación/autorización.
+
+**User Stories:**
+- US-01: Registro de Nuevo Despacho (Tenant Creation)
+- US-02: Invitación de Miembros al Equipo
+- US-05: Cambio de Tenant (Multi-Workspace)
+- US-25: Gestión de Roles y Permisos (RBAC Base)
+
+**Entregables Técnicos:**
+- Migraciones: `subscription_tiers`, `tenants`, `users`, `tenant_user`, `team_invitations`
+- Modelos: `Tenant`, `User`, `TeamInvitation`
+- Trait: `TenantScoped`
+- Middleware: `IdentifyTenant`, `EnsureTenantScope`
+- Spatie Permission con 6 roles base
+- Seeders: `SubscriptionTiersSeeder`, `PermissionsAndRolesSeeder`
+- Componentes Livewire: `RegisterTenantForm`, `InviteTeamMemberForm`, `TenantSwitcher`
+
+**Dependencias:** Laravel Breeze instalado
+
+---
+
+### Sprint 3: Core Legal
+
+**Objetivo:** Implementar el corazón del sistema - gestión de expedientes penales y participantes.
+
+**User Stories:**
+- US-06: Apertura de Nuevo Caso Penal
+- US-07: Gestión de Participantes del Caso
+- US-08: Transición de Etapa Procesal con Historial
+- US-10: Listado y Filtrado de Casos
+
+**Entregables Técnicos:**
+- Migraciones: `cases`, `procedural_stage_history`, `participants`, `case_participant`
+- Modelos: `LegalCase`, `ProceduralStageHistory`, `Participant`
+- Service: `CaseStageService`
+- Observer: `CaseObserver`
+- Seeders: `CrimeTypesSeeder`
+- Componentes Livewire: `CreateCaseForm`, `CasesTable`, `ParticipantManager`, `StageTransitionModal`
+
+**Dependencias:** Sprint 2 completado
+
+---
+
+### Sprint 4: Agenda & Tiempos
+
+**Objetivo:** Sistema de audiencias, plazos fatales y alertas - crítico para el flujo legal.
+
+**User Stories:**
+- US-09: Dashboard del Caso (Vista Integral)
 - US-11: Programación de Audiencias
-- US-12: Registro de Resultado
-- US-13: Calendario
-- US-14: Plazos
-- US-15: Alertas
+- US-12: Registro de Resultado de Audiencia
+- US-13: Calendario de Audiencias del Despacho
+- US-14: Configuración de Plazos Fatales (Deadlines)
+- US-15: Sistema de Alertas y Notificaciones de Plazos
 
-### Sprint 5: Evidencias y Documentos (2 semanas)
-- US-16, US-17, US-18: Evidencias y Cadena de Custodia
-- US-19, US-20, US-21: Documentos
+**Entregables Técnicos:**
+- Migraciones: `hearings`, `deadlines`
+- Modelos: `Hearing`, `Deadline`
+- Jobs: `CheckDeadlinesJob`, `SendDeadlineReminderJob`
+- Observer: `HearingObserver`
+- Notifications: `DeadlineApproachingNotification`
+- Componentes Livewire: `CaseDetailPage`, `HearingForm`, `HearingsCalendar`, `DeadlineForm`
+- Integración: FullCalendar.js
 
-### Sprint 6: Billing (2 semanas)
-- US-03: Límites por Tier
-- US-04: Stripe Integration
+**Dependencias:** Sprint 3 completado
 
-### Sprint 7: CNPP y Actuaciones (2 semanas)
-- US-22: Medidas Cautelares
-- US-23: Soluciones Alternas
-- US-26, US-27: Actuaciones
+---
 
-### Sprint 8: Reportes y Auditoría (2 semanas)
-- US-24: Audit Logs
-- US-28: Dashboard Ejecutivo
-- US-29: Reportes Avanzados
+### Sprint 5: Evidencias & Documentos
 
-### Sprint 9: Portal de Clientes (1 semana)
-- US-30: Portal de Clientes (Professional)
+**Objetivo:** Gestión de evidencias físicas con cadena de custodia y repositorio documental.
 
-### Sprint 10: Testing y Deploy (1 semana)
-- QA completo
-- Performance optimization
-- Deploy a producción
+**User Stories:**
+- US-16: Registro de Evidencia Material/Digital
+- US-17: Registro de Movimiento de Cadena de Custodia
+- US-18: Listado y Búsqueda de Evidencias
+- US-19: Carga y Clasificación de Documentos
+- US-20: Visualización y Descarga de Documentos
+- US-21: Asociación de Documentos a Entidades Específicas
 
-**Duración Total:** 18 semanas (4.5 meses)
+**Entregables Técnicos:**
+- Migraciones: `evidence`, `chain_of_custody_entries`, `documents`
+- Modelos: `Evidence`, `ChainOfCustodyEntry`, `Document`
+- Storage: Configuración S3/MinIO
+- Componentes Livewire: `EvidenceForm`, `CustodyMovementForm`, `DocumentUploader`
+- Integración: FilePond.js, PDF.js
+
+**Dependencias:** Sprint 4 completado
+
+---
+
+### Sprint 6: CNPP & Actuaciones
+
+**Objetivo:** Funcionalidades específicas del CNPP mexicano y bitácora de gestiones.
+
+**User Stories:**
+- US-22: Control de Medidas Cautelares
+- US-23: Gestión de Soluciones Alternas
+- US-26: Registro de Bitácora de Actuaciones
+- US-27: Filtro de Actividades por Usuario
+
+**Entregables Técnicos:**
+- Migraciones: `precautionary_measures`, `alternative_solutions`, `activities`
+- Modelos: `PrecautionaryMeasure`, `AlternativeSolution`, `Activity`
+- Seeders: `PrecautionaryMeasureTypesSeeder`
+- Componentes Livewire: `PrecautionaryMeasureForm`, `AlternativeSolutionForm`, `ActivityTimeline`
+
+**Dependencias:** Sprint 5 completado
+
+---
+
+### Sprint 7: Billing, Reportes & Portal
+
+**Objetivo:** Monetización, auditoría y portal de clientes (features premium).
+
+**User Stories:**
+- US-03: Gestión de Suscripción y Límites (Billing)
+- US-04: Configuración de Métodos de Pago (Stripe)
+- US-24: Bitácora de Actividades (Audit Trail)
+- US-28: Dashboard Ejecutivo del Despacho
+- US-29: Reportes Avanzados (Tier Professional)
+- US-30: Acceso de Cliente a su Caso (Portal)
+
+**Entregables Técnicos:**
+- Migraciones: `subscriptions`, `subscription_items`, `audit_logs`
+- Integración: Laravel Cashier + Stripe
+- Middleware: `EnsureTenantHasFeature`
+- Jobs: `CheckExpiredTrials`
+- Componentes Livewire: `BillingPortal`, `AuditLogViewer`, `DashboardPage`, `ClientPortal`
+- Charts: Chart.js o ApexCharts
+
+**Dependencias:** Sprint 6 completado
+
+---
+
+### Sprint 8: Testing & QA
+
+**Objetivo:** Asegurar calidad y estabilidad del sistema antes del lanzamiento.
+
+**Actividades:**
+- Tests unitarios para todos los modelos y servicios
+- Tests de feature para flujos críticos (auth, casos, audiencias)
+- Tests de integración para Stripe
+- QA manual de todos los módulos
+- Pruebas de regresión
+- Bug fixes
+- Optimización de queries (eliminar N+1)
+- Validación de seguridad (OWASP top 10)
+
+**Entregables:**
+- Suite de tests con cobertura > 70%
+- Reporte de bugs encontrados y corregidos
+- Checklist de QA completado por módulo
+
+---
+
+### Sprint 9: Deploy & Lanzamiento
+
+**Objetivo:** Puesta en producción y lanzamiento oficial.
+
+**Actividades:**
+- Configuración de servidor de producción
+- Setup de CI/CD para deploy automático
+- Configuración de SSL/HTTPS
+- Setup de monitoreo (Sentry, Laravel Telescope)
+- Configuración de backups automáticos
+- Performance optimization (cache, CDN)
+- Documentación de usuario final
+- Capacitación del equipo
+- Lanzamiento soft (beta)
+- Lanzamiento público
+
+**Entregables:**
+- Aplicación en producción
+- Documentación de operaciones
+- Runbook de emergencias
+- Métricas de monitoreo configuradas
+
+---
+
+### Diagrama de Dependencias
+
+```
+Sprint 1 (Docs) ✅
+      │
+      ▼
+Sprint 2 (Foundation)
+      │
+      ├── Multi-tenant
+      ├── Auth + RBAC
+      └── Team Management
+            │
+            ▼
+Sprint 3 (Core Legal)
+      │
+      ├── Cases
+      ├── Participants
+      └── Stage Transitions
+            │
+            ▼
+Sprint 4 (Agenda)
+      │
+      ├── Hearings
+      ├── Deadlines
+      └── Notifications
+            │
+            ▼
+Sprint 5 (Evidence & Docs)
+      │
+      ├── Chain of Custody
+      └── Document Storage
+            │
+            ▼
+Sprint 6 (CNPP)
+      │
+      ├── Precautionary Measures
+      ├── Alternative Solutions
+      └── Activities Log
+            │
+            ▼
+Sprint 7 (Premium)
+      │
+      ├── Billing (Stripe)
+      ├── Audit Logs
+      ├── Reports
+      └── Client Portal
+            │
+            ▼
+Sprint 8 (Testing)
+      │
+      └── QA + Bug Fixes
+            │
+            ▼
+Sprint 9 (Deploy)
+      │
+      └── Production Launch
+```
+
+**Duración Total Estimada:** 16-18 semanas (4-4.5 meses)
 
 ---
 

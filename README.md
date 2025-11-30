@@ -420,53 +420,84 @@ qadra/
 
 ## 🗺️ Roadmap (9 Sprints)
 
-### Sprint 1 - Foundation 🔄 (En Progreso)
+| Sprint | Nombre | Enfoque | Estado |
+|--------|--------|---------|--------|
+| 1 | Documentación & Setup | Docs-First, Design System, DB Schema | ✅ Completado |
+| 2 | Foundation & Auth | Multi-tenancy, autenticación, RBAC | 🔜 Próximo |
+| 3 | Core Legal | Casos, participantes, etapas CNPP | ⏳ Pendiente |
+| 4 | Agenda & Tiempos | Audiencias, plazos fatales, calendario | ⏳ Pendiente |
+| 5 | Evidencias & Documentos | Cadena custodia, archivos, compartir | ⏳ Pendiente |
+| 6 | CNPP & Actuaciones | Medidas cautelares, soluciones alternas | ⏳ Pendiente |
+| 7 | Billing, Reportes & Portal | Stripe, dashboard, portal clientes | ⏳ Pendiente |
+| 8 | Testing & QA | Pruebas integración, E2E, performance | ⏳ Pendiente |
+| 9 | Deploy & Lanzamiento | CI/CD, producción, documentación final | ⏳ Pendiente |
+
+### Sprint 1 - Documentación & Setup ✅ Completado
+- [x] Manifiesto del proyecto (`01-manifest.md`)
+- [x] Sistema de diseño y tokens (`02-design-system.md`)
+- [x] Esquema de base de datos (`03-database-schema.md`)
+- [x] Historias de usuario (`04-user-stories.md`)
+- [x] Configuración de Design System en CSS (Tailwind v4)
+- [x] Documentación de áreas de trabajo del equipo
+
+### Sprint 2 - Foundation & Auth 🔜 Próximo
+- [ ] Multi-tenancy (Tenant model, tenant_id en tablas)
 - [ ] Sistema de autenticación (Laravel Breeze + Livewire)
-- [ ] Multi-tenancy (workspaces/despachos)
+- [ ] Registro de despachos con owner automático
 - [ ] Gestión de usuarios e invitaciones
-- [ ] RBAC con Spatie Permission
+- [ ] RBAC con Spatie Permission (6 roles)
+- [ ] Seeders de roles, permisos y tiers
 
-### Sprint 2 - Core Legal
-- [ ] CRUD de casos/expedientes
-- [ ] Gestión de participantes
+### Sprint 3 - Core Legal
+- [ ] CRUD de casos/expedientes con NUC
+- [ ] Gestión de participantes (imputados, víctimas, testigos, jueces, MP)
 - [ ] Relación caso-participante con roles
-
-### Sprint 3 - Gestión Procesal
 - [ ] Transición de etapas procesales (CNPP)
-- [ ] Historial inmutable de cambios
-- [ ] Dashboard de casos
+- [ ] Historial inmutable de cambios de etapa
 
-### Sprint 4 - Audiencias y Plazos
-- [ ] Programación de audiencias
-- [ ] Control de plazos fatales
-- [ ] Sistema de alertas y notificaciones
-- [ ] Calendario integrado
+### Sprint 4 - Agenda & Tiempos
+- [ ] Programación de audiencias (tipos CNPP)
+- [ ] Control de plazos fatales con alertas
+- [ ] Términos constitucionales (48/72/144 hrs)
+- [ ] Calendario integrado con filtros
+- [ ] Sistema de notificaciones
 
-### Sprint 5 - Evidencias y Documentos
+### Sprint 5 - Evidencias & Documentos
 - [ ] Gestión de evidencias físicas
-- [ ] Cadena de custodia digital
-- [ ] Almacenamiento de documentos
-- [ ] Compartir con portal de clientes
+- [ ] Cadena de custodia digital inmutable
+- [ ] Almacenamiento seguro de documentos
+- [ ] Categorización de archivos
+- [ ] Compartir documentos con clientes
 
-### Sprint 6 - Billing
-- [ ] Integración con Stripe (Laravel Cashier)
-- [ ] Planes de suscripción (Starter/Professional)
-- [ ] Control de límites por tier
-
-### Sprint 7 - CNPP y Actuaciones
-- [ ] Medidas cautelares
+### Sprint 6 - CNPP & Actuaciones
+- [ ] Medidas cautelares (prisión preventiva, arraigo, etc.)
 - [ ] Soluciones alternas (acuerdos reparatorios, suspensión condicional)
 - [ ] Registro de actuaciones/actividades
+- [ ] Historial de procedimientos especiales
 
-### Sprint 8 - Reportes y Auditoría
-- [ ] Reportes ejecutivos
-- [ ] Logs de auditoría
-- [ ] Exportación PDF/Excel
+### Sprint 7 - Billing, Reportes & Portal
+- [ ] Integración con Stripe (Laravel Cashier)
+- [ ] Planes de suscripción (Starter/Professional)
+- [ ] Dashboard ejecutivo con KPIs
+- [ ] Reportes por etapa procesal y abogado
+- [ ] Portal de clientes con acceso limitado
+- [ ] Exportación a PDF y Excel
 
-### Sprint 9 - Portal de Clientes
-- [ ] Acceso limitado para clientes
-- [ ] Visualización de documentos compartidos
-- [ ] Notificaciones de avances
+### Sprint 8 - Testing & QA
+- [ ] Pruebas unitarias completas
+- [ ] Pruebas de integración
+- [ ] Tests E2E con Playwright/Cypress
+- [ ] Pruebas de carga y rendimiento
+- [ ] Auditoría de seguridad
+- [ ] Corrección de bugs críticos
+
+### Sprint 9 - Deploy & Lanzamiento
+- [ ] Configuración de CI/CD (GitHub Actions)
+- [ ] Setup de servidor de producción
+- [ ] Migración de datos de prueba
+- [ ] Documentación de usuario final
+- [ ] Monitoreo y logging (Sentry, Laravel Telescope)
+- [ ] Lanzamiento MVP
 
 ---
 

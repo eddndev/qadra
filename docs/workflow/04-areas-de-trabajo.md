@@ -19,15 +19,15 @@ El desarrollo de Qadra se organiza en **5 áreas de trabajo** especializadas. Ca
 
 ## Estructura del Equipo
 
-| Miembro | Áreas de Participación | Rol Especial |
-|---------|------------------------|--------------|
-| **Eduardo** | Todas | Tech Lead, Code Reviewer, CI/CD Owner |
-| **Hatziry** | Por asignar | - |
-| **Gael** | Por asignar | - |
-| **Karla** | Por asignar | - |
-| **Diego** | Por asignar | - |
+| Miembro | GitHub | Área Principal | Rol Especial |
+|---------|--------|----------------|--------------|
+| **Eduardo** | @eddndev | Backend, CI/CD | Tech Lead, Code Reviewer |
+| **Hatziry** | @vhhatziry | UX/UI | Diseño de interfaces |
+| **Karla** | @Karlaelenaht | Frontend | Implementación Livewire/Blade |
+| **Gael** | @Arzubide | Backend | Modelos, Migraciones, APIs |
+| **Diego** | @Dvan88 | Testing | QA, Tests unitarios e integración |
 
-> **Nota:** Eduardo participa en todas las áreas como Code Reviewer y es responsable exclusivo de CI/CD.
+> **Nota:** Eduardo participa en Backend y es responsable exclusivo de CI/CD. También actúa como Code Reviewer para todos los PRs.
 
 ---
 
@@ -560,5 +560,6 @@ gh label create "Area: CI/CD" --color "FEF2C0" --description "Infraestructura y 
 
 ---
 
-**Última actualización:** 29 de noviembre de 2025
+**Última actualización:** 30 de noviembre de 2025
 **Autor:** Equipo Qadra
+**Asignaciones confirmadas:** Sprint 2

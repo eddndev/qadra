@@ -1,15 +1,15 @@
-# ⚠️ TEMPLATE - Configurar antes de usar
+# ✅ CONFIGURADO - Proyecto Qadra - Development
 #
 # Este workflow automatiza el movimiento de issues en GitHub Projects v2
 #
-# PASOS PARA CONFIGURAR:
-# 1. Crear Personal Access Token con scopes 'repo' y 'project'
-# 2. Agregar como secret 'PROJECT_PAT' en el repositorio
-# 3. Obtener los IDs necesarios ejecutando:
-#    - PROJECT_ID: gh project list --owner [OWNER]
-#    - STATUS_FIELD_ID y OPTION_IDs: Ver docs/workflow/03-github-projects-setup.md
-# 4. Reemplazar los valores en la sección 'env' con tus IDs reales
-# 5. Reemplazar [OWNER] en línea 67 con tu username/org
+# VARIABLES CONFIGURADAS:
+# - PROJECT_NUMBER: 3 (número del proyecto, para gh project item-add)
+# - PROJECT_ID: PVT_kwHOCUkKF84BExJu (ID del proyecto, para GraphQL)
+# - PROJECT_OWNER: eddndev
+#
+# REQUISITOS:
+# - Secret 'PROJECT_PAT' con scopes 'repo' y 'project'
+# - O usar GITHUB_TOKEN con permisos de proyecto habilitados
 
 name: Project Board Automation
 
@@ -19,7 +19,9 @@ on:
 
 env:
   # ✅ IDs configurados para el proyecto Qadra - Development
-  PROJECT_ID: PVT_kwHOCUkKF84BExJu              # ID del proyecto
+  PROJECT_NUMBER: 3                                   # Número del proyecto (para gh project item-add)
+  PROJECT_ID: PVT_kwHOCUkKF84BExJu                    # ID del proyecto (para GraphQL)
+  PROJECT_OWNER: eddndev                              # Owner del proyecto
   STATUS_FIELD_ID: PVTSSF_lAHOCUkKF84BExJuzg2TI_g    # ID del campo Status
   TODO_OPTION_ID: f75ad846      # ID de la opción "Todo"
   IN_PROGRESS_OPTION_ID: 47fc9ee4    # ID de la opción "In Progress"
@@ -77,8 +79,8 @@ jobs:
 
           if [ -z "$ITEM_ID" ]; then
             echo "Issue not in project, adding it first..."
-            # ✅ Owner configurado
-            gh project item-add ${{ env.PROJECT_ID }} --owner eddndev --url ${{ github.event.issue.html_url }}
+            # ✅ Usar PROJECT_NUMBER (no PROJECT_ID) para gh project item-add
+            gh project item-add ${{ env.PROJECT_NUMBER }} --owner ${{ env.PROJECT_OWNER }} --url ${{ github.event.issue.html_url }}
 
             # Get the item ID again after adding
             ITEM_ID=$(gh api graphql -f query='
