@@ -79,28 +79,22 @@ jobs:
 
           if [ -z "$ITEM_ID" ]; then
             echo "Issue not in project, adding it first..."
-            # ✅ Usar PROJECT_NUMBER (no PROJECT_ID) para gh project item-add
-            gh project item-add ${{ env.PROJECT_NUMBER }} --owner ${{ env.PROJECT_OWNER }} --url ${{ github.event.issue.html_url }}
-
-            # Get the item ID again after adding
+            # ✅ Usar GraphQL API para agregar item (más confiable que gh project item-add)
             ITEM_ID=$(gh api graphql -f query='
-              query($projectId: ID!) {
-                node(id: $projectId) {
-                  ... on ProjectV2 {
-                    items(first: 100) {
-                      nodes {
-                        id
-                        content {
-                          ... on Issue {
-                            id
-                          }
-                        }
-                      }
-                    }
+              mutation($projectId: ID!, $contentId: ID!) {
+                addProjectV2ItemById(input: {
+                  projectId: $projectId
+                  contentId: $contentId
+                }) {
+                  item {
+                    id
                   }
                 }
               }' -f projectId="${{ env.PROJECT_ID }}" \
-                 --jq ".data.node.items.nodes[] | select(.content.id == \"${ISSUE_NODE_ID}\") | .id")
+                 -f contentId="${ISSUE_NODE_ID}" \
+                 --jq '.data.addProjectV2ItemById.item.id')
+
+            echo "Added issue to project with item ID: ${ITEM_ID}"
           fi
 
           echo "ITEM_ID=${ITEM_ID}" >> $GITHUB_OUTPUT
