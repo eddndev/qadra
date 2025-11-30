@@ -1,17 +1,17 @@
 <div align="center">
 
-# 📊 Qadra
+# ⚖️ Qadra
 
-### PSA Lite que sí cuadra: presupuesto, capacidad y facturación alineados
+### Sistema de Gestión Procesal Penal para el CNPP Mexicano
 
-**Sistema SaaS para Gestión de Servicios Profesionales**
+**Plataforma SaaS Multi-Tenant para Despachos de Abogados Penalistas**
 
 [![Laravel](https://img.shields.io/badge/Laravel-12-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
 [![Livewire](https://img.shields.io/badge/Livewire-3-FB70A9?style=for-the-badge&logo=livewire&logoColor=white)](https://livewire.laravel.com)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
-*Optimiza tu negocio de servicios profesionales con presupuesto, capacidad y facturación alineados*
+*Gestiona expedientes penales, audiencias, plazos fatales y evidencias bajo el Código Nacional de Procedimientos Penales*
 
 [🚀 Demo](#demo) • [📖 Documentación](#documentación) • [✨ Características](#características) • [🛠️ Instalación](#instalación)
 
@@ -121,65 +121,79 @@ Antes de trabajar en este proyecto, **DEBES** leer:
 
 ## 🎯 Acerca del Proyecto
 
-**Qadra** es una plataforma SaaS (Software as a Service) tipo PSA (Professional Services Automation) diseñada para empresas de servicios profesionales que necesitan alinear presupuesto, capacidad y facturación. Desarrollado como parte del curso de **Ingeniería de Software**, este proyecto combina las mejores prácticas de desarrollo moderno con una solución práctica y eficiente.
+**Qadra** es una plataforma SaaS (Software as a Service) especializada en la gestión de casos penales bajo el **Código Nacional de Procedimientos Penales (CNPP)** de México. Diseñada para despachos de abogados penalistas, permite gestionar expedientes, audiencias, plazos procesales y evidencias de manera eficiente y segura. Desarrollado como parte del curso de **Ingeniería de Software**, este proyecto implementa arquitectura multi-tenant con las mejores prácticas de desarrollo moderno.
 
 ### 🎨 Problema que Resuelve
 
-Las empresas de servicios profesionales enfrentan desafíos diarios:
-- 📊 **Desalineación** entre presupuesto, capacidad del equipo y facturación
-- ⏰ **Gestión ineficiente** de proyectos y recursos
-- 👥 **Falta de visibilidad** de la rentabilidad por proyecto
-- 📄 **Control financiero disperso** y difícil de rastrear
-- 💰 **Facturación manual** y propensa a errores
+Los despachos de abogados penalistas enfrentan desafíos críticos:
+- ⏰ **Plazos fatales** del CNPP que no pueden perderse (términos constitucionales)
+- 📁 **Gestión dispersa** de múltiples expedientes y carpetas de investigación
+- 🔒 **Cadena de custodia** de evidencias sin trazabilidad adecuada
+- 📅 **Audiencias múltiples** difíciles de coordinar entre casos
+- 👥 **Colaboración deficiente** entre abogados del mismo despacho
+- 📊 **Falta de visibilidad** del estado procesal de cada caso
 
 ### 💡 Nuestra Solución
 
-Qadra centraliza y alinea las operaciones críticas en una única plataforma:
-- ✅ **Presupuestos precisos** vinculados a capacidad real del equipo
-- 📈 **Seguimiento de proyectos** con control de horas y costos
-- 👥 **Gestión de recursos** y asignación optimizada
-- 💳 **Facturación automatizada** basada en progreso real
-- 📊 **Reportes de rentabilidad** en tiempo real
+Qadra centraliza la gestión procesal penal en una única plataforma:
+- ⚖️ **Expedientes digitales** con seguimiento de etapas procesales (CNPP)
+- ⏱️ **Alertas de plazos fatales** para términos constitucionales y procesales
+- 📅 **Calendario de audiencias** integrado con notificaciones
+- 🔐 **Cadena de custodia digital** para evidencias físicas
+- 👥 **Multi-tenant** para aislar datos entre despachos
+- 📈 **Dashboard ejecutivo** con KPIs de casos activos
 
 ---
 
 ## ✨ Características Principales
 
-### 💼 Gestión de Presupuestos
-- **Creación rápida** de presupuestos vinculados a capacidad del equipo
-- **Cálculo automático** de costos basado en tarifas por hora
-- **Seguimiento de aprobación** y versionado de presupuestos
-- **Conversión directa** a proyectos activos
+### ⚖️ Gestión de Expedientes (Casos Penales)
+- **Carpetas de investigación** con NUC y número de causa penal
+- **Seguimiento de etapas procesales** (Investigación → Intermedia → Juicio → Ejecución)
+- **Historial inmutable** de cambios de etapa procesal
+- **Asignación de abogados** responsables por caso
 
-### 📊 Gestión de Proyectos
-- **Dashboard de proyectos** con vista general de estado y rentabilidad
-- **Asignación de recursos** optimizada por disponibilidad
-- **Seguimiento de horas** y progreso en tiempo real
-- **Alertas de desvío** de presupuesto y capacidad
+### 👥 Gestión de Participantes
+- **Base de datos de personas** (imputados, víctimas, testigos, jueces, MP)
+- **Roles por caso** con información específica de cada participante
+- **Datos de contacto** y documentación asociada
+- **Historial de participación** en múltiples casos
 
-### 👥 Gestión de Recursos
-- **Control de capacidad** del equipo por periodo
-- **Asignación inteligente** a proyectos según skills
-- **Seguimiento de utilización** y disponibilidad
-- **Planificación de recursos** a mediano plazo
+### 📅 Audiencias y Calendario
+- **Programación de audiencias** con tipos del CNPP (inicial, vinculación, intermedia, juicio oral)
+- **Calendario integrado** con vista por día/semana/mes
+- **Notificaciones y recordatorios** previos a audiencias
+- **Registro de resultados** y acuerdos de cada audiencia
 
-### 💰 Facturación Automatizada
-- **Generación automática** basada en horas registradas
-- **Facturación por hitos** de proyecto
-- **Control de pagos** y seguimiento de cobros
-- **Integración con sistemas contables**
+### ⏱️ Plazos Fatales y Términos
+- **Control de plazos procesales** con alertas configurables
+- **Términos constitucionales** (48/72/144 horas) con countdown
+- **Clasificación de urgencia** (fatales vs. no fatales)
+- **Dashboard de vencimientos** próximos
 
-### 📈 Reportes y Análisis
-- **Dashboard ejecutivo** con KPIs principales
-- **Rentabilidad por proyecto** en tiempo real
-- **Análisis de utilización** de recursos
-- **Reportes de desempeño** del equipo
+### 🔐 Evidencias y Cadena de Custodia
+- **Registro de evidencias físicas** con folio de custodia
+- **Historial inmutable** de movimientos (quién entrega, quién recibe)
+- **Ubicación actual** de cada evidencia
+- **Documentos digitales** asociados a evidencias
 
-### 🔒 Seguridad y Control
-- **Autenticación segura** con roles y permisos
-- **Auditoría de cambios** en presupuestos y facturación
-- **Backup automático** de información crítica
-- **Control de acceso** por proyecto y cliente
+### 📄 Gestión Documental
+- **Almacenamiento seguro** de documentos por caso
+- **Categorización** (sentencias, amparos, oficios, actas)
+- **Compartir con clientes** a través del portal
+- **Versionado y auditoría** de cambios
+
+### 📊 Reportes y Dashboard
+- **Dashboard ejecutivo** con KPIs de casos activos
+- **Reportes por etapa procesal** y por abogado
+- **Análisis de carga de trabajo** del despacho
+- **Exportación** a PDF y Excel
+
+### 🔒 Seguridad Multi-Tenant
+- **Aislamiento total** de datos entre despachos
+- **RBAC** con 6 roles predefinidos (owner, litigante, asociado, paralegal, administrativo, cliente)
+- **Auditoría completa** de acciones del sistema
+- **Encriptación** de datos sensibles
 
 ---
 
@@ -321,59 +335,73 @@ AWS_BUCKET=tu-bucket
 
 Después de ejecutar los seeders, puedes iniciar sesión con:
 
-**Administrador:**
-- Email: `admin@legalflow.com`
+**Owner (Dueño del Despacho):**
+- Email: `owner@qadra.legal`
 - Password: `password`
 
-**Abogado:**
-- Email: `abogado@legalflow.com`
+**Litigante (Abogado Principal):**
+- Email: `litigante@qadra.legal`
 - Password: `password`
 
 **Cliente:**
-- Email: `cliente@legalflow.com`
+- Email: `cliente@qadra.legal`
 - Password: `password`
 
 ### Flujo de Trabajo Básico
 
-1. **Crear un Nuevo Caso**
+1. **Crear un Nuevo Expediente**
    - Ve a "Casos" → "Nuevo Caso"
-   - Completa la información del cliente y detalles del caso
-   - Asigna abogados y establece plazos
+   - Ingresa el NUC (si ya existe) o el folio interno
+   - Selecciona el tipo de delito y etapa procesal inicial
+   - Asigna al abogado responsable
 
-2. **Gestionar Documentos**
-   - Dentro del caso, ve a la pestaña "Documentos"
-   - Sube archivos relevantes y organízalos por categorías
-   - Comparte documentos con el cliente según sea necesario
+2. **Registrar Participantes**
+   - Dentro del caso, ve a "Participantes"
+   - Agrega imputados, víctimas, testigos según corresponda
+   - Define el rol específico de cada persona en el caso
 
-3. **Facturación**
-   - Ve a "Finanzas" → "Nueva Factura"
-   - Selecciona el cliente y añade conceptos
-   - Genera y envía la factura automáticamente
+3. **Programar Audiencias**
+   - Ve a "Audiencias" → "Nueva Audiencia"
+   - Selecciona el tipo de audiencia (inicial, vinculación, intermedia, juicio oral)
+   - El sistema creará automáticamente los plazos asociados
+
+4. **Controlar Plazos Fatales**
+   - El dashboard muestra plazos próximos a vencer
+   - Configura alertas para términos constitucionales (48/72/144 hrs)
+   - Marca plazos como cumplidos cuando corresponda
 
 ---
 
 ## 🏗️ Arquitectura
 
-El proyecto sigue una **arquitectura MVC** (Model-View-Controller) mejorada con:
+El proyecto sigue una **arquitectura MVC** (Model-View-Controller) con **Multi-Tenancy** y componentes **Livewire**:
 
 ```
-ing-soft/
+qadra/
 ├── app/
 │   ├── Http/
 │   │   ├── Controllers/      # Controladores de la aplicación
-│   │   ├── Middleware/       # Middleware personalizado
+│   │   ├── Middleware/       # Middleware (TenantScope, etc.)
 │   │   └── Livewire/         # Componentes Livewire
-│   ├── Models/               # Modelos Eloquent
+│   ├── Models/               # Modelos Eloquent (Case, Participant, Hearing...)
+│   │   └── Traits/           # TenantScoped, HasAuditLog
 │   ├── Services/             # Lógica de negocio
-│   └── Repositories/         # Capa de acceso a datos
+│   ├── Policies/             # Políticas de autorización
+│   └── Observers/            # Observers para auditoría
 ├── database/
-│   ├── migrations/           # Migraciones de base de datos
-│   ├── seeders/              # Datos de prueba
+│   ├── migrations/           # Migraciones (23 tablas)
+│   ├── seeders/              # Tiers, Permissions, Roles, CrimeTypes
 │   └── factories/            # Factories para testing
 ├── resources/
-│   ├── views/                # Vistas Blade
-│   ├── js/                   # JavaScript y Alpine.js
-│   └── css/                  # Estilos Tailwind
+│   ├── views/                # Vistas Blade + Componentes
+│   │   ├── components/       # Componentes reutilizables
+│   │   ├── livewire/         # Vistas de componentes Livewire
+│   │   └── layouts/          # Layouts (app, guest, sidebar)
+│   ├── js/                   # Alpine.js
+│   └── css/                  # Tailwind v4 + Design System Tokens
+├── docs/                     # Documentación del proyecto
+│   ├── sprints/              # Diarios de sprint
+│   └── workflow/             # Flujos de trabajo del equipo
 ├── routes/
 │   ├── web.php               # Rutas web
 │   └── api.php               # Rutas API
@@ -390,31 +418,55 @@ ing-soft/
 
 ---
 
-## 🗺️ Roadmap
+## 🗺️ Roadmap (9 Sprints)
 
-### Fase 1 - MVP ✅ (Completado)
-- [x] Sistema de autenticación
-- [x] CRUD de clientes
-- [x] Gestión básica de casos
-- [x] Dashboard principal
+### Sprint 1 - Foundation 🔄 (En Progreso)
+- [ ] Sistema de autenticación (Laravel Breeze + Livewire)
+- [ ] Multi-tenancy (workspaces/despachos)
+- [ ] Gestión de usuarios e invitaciones
+- [ ] RBAC con Spatie Permission
 
-### Fase 2 - Core Features 🔄 (En Progreso)
-- [x] Sistema de notificaciones
-- [ ] Gestión documental avanzada
-- [ ] Facturación automatizada
-- [ ] Portal del cliente
+### Sprint 2 - Core Legal
+- [ ] CRUD de casos/expedientes
+- [ ] Gestión de participantes
+- [ ] Relación caso-participante con roles
 
-### Fase 3 - Mejoras (Planificado)
-- [ ] Integración con e-firma
-- [ ] API RESTful completa
-- [ ] App móvil (iOS/Android)
-- [ ] Inteligencia artificial para análisis de documentos
+### Sprint 3 - Gestión Procesal
+- [ ] Transición de etapas procesales (CNPP)
+- [ ] Historial inmutable de cambios
+- [ ] Dashboard de casos
 
-### Fase 4 - Escalabilidad (Futuro)
-- [ ] Multi-tenancy completo
-- [ ] Integración con sistemas judiciales
-- [ ] Reportes avanzados con BI
-- [ ] Módulo de CRM integrado
+### Sprint 4 - Audiencias y Plazos
+- [ ] Programación de audiencias
+- [ ] Control de plazos fatales
+- [ ] Sistema de alertas y notificaciones
+- [ ] Calendario integrado
+
+### Sprint 5 - Evidencias y Documentos
+- [ ] Gestión de evidencias físicas
+- [ ] Cadena de custodia digital
+- [ ] Almacenamiento de documentos
+- [ ] Compartir con portal de clientes
+
+### Sprint 6 - Billing
+- [ ] Integración con Stripe (Laravel Cashier)
+- [ ] Planes de suscripción (Starter/Professional)
+- [ ] Control de límites por tier
+
+### Sprint 7 - CNPP y Actuaciones
+- [ ] Medidas cautelares
+- [ ] Soluciones alternas (acuerdos reparatorios, suspensión condicional)
+- [ ] Registro de actuaciones/actividades
+
+### Sprint 8 - Reportes y Auditoría
+- [ ] Reportes ejecutivos
+- [ ] Logs de auditoría
+- [ ] Exportación PDF/Excel
+
+### Sprint 9 - Portal de Clientes
+- [ ] Acceso limitado para clientes
+- [ ] Visualización de documentos compartidos
+- [ ] Notificaciones de avances
 
 ---
 
