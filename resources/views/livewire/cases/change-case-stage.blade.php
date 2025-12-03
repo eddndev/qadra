@@ -3,7 +3,7 @@
         Cambiar Etapa / Estatus
     </button>
 
-    <x-modal name="change-stage-modal" :show="$showModal" focusable>
+    <x-modal name="change-stage-modal" focusable>
         <div class="p-6">
             <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
                 Actualizar Situación Procesal

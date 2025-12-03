@@ -55,7 +55,7 @@ class ChangeCaseStage extends Component
     public function openModal()
     {
         $this->resetForm();
-        $this->showModal = true;
+        $this->dispatch('open-modal', 'change-stage-modal');
     }
 
     public function save()
@@ -91,11 +91,9 @@ class ChangeCaseStage extends Component
             ]);
         });
 
-        $this->showModal = false;
+        $this->dispatch('close-modal', 'change-stage-modal');
         
-        // Dispatch event to refresh parent component if needed
-        // Or just redirect to show a success message?
-        // For now, redirect works best to refresh the whole view state
+        // Redirect to refresh full state
         return redirect()->route('cases.show', $this->case->id)->with('status', 'Etapa actualizada correctamente.');
     }
 

@@ -62,7 +62,7 @@
     </div>
 
     <!-- Modal -->
-    <x-modal name="create-participant" :show="$isCreating" focusable>
+    <x-modal name="create-participant" focusable>
         <div class="p-6">
             <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
                 Agregar Nuevo Participante

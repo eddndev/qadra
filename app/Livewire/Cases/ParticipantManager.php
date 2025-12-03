@@ -38,12 +38,12 @@ class ParticipantManager extends Component
     public function openCreateModal()
     {
         $this->resetForm();
-        $this->isCreating = true;
+        $this->dispatch('open-modal', 'create-participant');
     }
 
     public function closeCreateModal()
     {
-        $this->isCreating = false;
+        $this->dispatch('close-modal', 'create-participant');
     }
 
     public function resetForm()
