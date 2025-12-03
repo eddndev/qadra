@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'verified', EnsureTenantScope::class])->group(function () {
+    Route::view('/team', 'team.index')->name('team.index');
     Route::get('/team/invite', [TeamInvitationController::class, 'create'])->name('team.invite');
     Route::post('/team/invite', [TeamInvitationController::class, 'store'])->name('team.invite.store');
 });

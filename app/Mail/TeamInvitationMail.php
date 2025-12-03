@@ -17,13 +17,15 @@ class TeamInvitationMail extends Mailable
 
     public $invitation;
     public $acceptUrl;
+    public $message;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(TeamInvitation $invitation)
+    public function __construct(TeamInvitation $invitation, $message = null)
     {
         $this->invitation = $invitation;
+        $this->message = $message;
         
         // Generate signed URL for security
         $this->acceptUrl = URL::signedRoute('team.join', ['token' => $invitation->token]);

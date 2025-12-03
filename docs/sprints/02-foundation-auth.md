@@ -112,7 +112,49 @@ Establecer la arquitectura multi-tenant del sistema y el sistema de autenticaci�
 
 ---
 
-## 5. Dependencias
+## 5. Infraestructura y CI/CD
+
+Se configuró un pipeline de despliegue automatizado en GitHub Actions (`.github/workflows/deploy.yml`) para Hostgator (cPanel).
+
+### Configuración de Secretos (GitHub Secrets)
+
+Para que el despliegue funcione, se deben configurar los siguientes secretos en el repositorio:
+
+| Secreto | Descripción |
+|---------|-------------|
+| `SSH_HOST` | IP o dominio del servidor Hostgator. |
+| `SSH_USERNAME` | Usuario SSH/cPanel. |
+| `SSH_PRIVATE_KEY` | Llave privada SSH (el servidor debe tener la pública en `authorized_keys`). |
+| `PROJECT_PATH` | Ruta absoluta del proyecto en el servidor (ej: `/home/user/public_html/qadra`). |
+| `NOVA_USERNAME` | Correo de la licencia de Laravel Nova. |
+| `NOVA_LICENSE_KEY` | Llave de licencia de Laravel Nova. |
+
+### Flujo del Pipeline
+
+1.  **Checkout & Setup:** Descarga el código y configura Node.js.
+2.  **Build Assets:** Instala dependencias NPM y compila con Vite (`npm run build`).
+3.  **Deploy Backend (SSH):**
+    *   Autentica Composer con Laravel Nova (usando credenciales globales del servidor).
+    *   Descarga código actualizado (`git pull`).
+    *   Instala dependencias PHP (`composer install`).
+    *   Ejecuta migraciones (`migrate --force`).
+    *   Ejecuta seeders (`db:seed --force`).
+    *   Limpia cachés (`optimize:clear`, `config:cache`, etc.).
+4.  **Upload Assets:** Sube la carpeta `public/build` compilada al servidor vía SCP.
+
+### Configuración del Servidor (Requisitos)
+
+*   **PHP 8.3:** Configurado como versión por defecto o ruta explícita.
+*   **Composer:** Instalado globalmente.
+*   **Autenticación Nova:** Ejecutar una vez en el servidor: `composer config --global http-basic.nova.laravel.com "email" "license"`.
+*   **Wildcard Subdomains:**
+    *   DNS: Registro `A` para `*` apuntando a la IP del servidor.
+    *   cPanel: Subdominio `*` apuntando a la carpeta `public` del proyecto.
+    *   SSL: AutoSSL ejecutado para cubrir el wildcard.
+
+---
+
+## 6. Dependencias
 
 ### Paquetes a Instalar
 
@@ -136,7 +178,7 @@ composer require laravel/helpers
 
 ---
 
-## 6. Asignación de Tareas por Área
+## 7. Asignación de Tareas por Área
 
 | Área | Responsable | GitHub | Tareas |
 |------|-------------|--------|--------|
@@ -165,7 +207,7 @@ composer require laravel/helpers
 
 ---
 
-## 7. Criterios de Aceptación del Sprint
+## 8. Criterios de Aceptación del Sprint
 
 El Sprint 2 se considera **COMPLETADO** cuando:
 
@@ -181,7 +223,7 @@ El Sprint 2 se considera **COMPLETADO** cuando:
 
 ---
 
-## 8. Resultado del Sprint (A completar al final)
+## 9. Resultado del Sprint (A completar al final)
 
 *   **Tareas Completadas:** [ ] X de Y
 *   **Resumen:** [Escribe un resumen ejecutivo del resultado del sprint. ¿Se cumplió el objetivo?]
@@ -191,7 +233,7 @@ El Sprint 2 se considera **COMPLETADO** cuando:
 
 ---
 
-## 9. Referencias
+## 10. Referencias
 
 - **Documentación de User Stories:** `/docs/04-user-stories.md` (US-01, US-02, US-05, US-25)
 - **Esquema de Base de Datos:** `/docs/03-database-schema.md`

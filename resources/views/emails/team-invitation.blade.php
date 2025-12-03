@@ -8,6 +8,13 @@
     <p>Has sido invitado a unirte al despacho <strong>{{ $invitation->tenant->name }}</strong> en Qadra.</p>
     
     <p>Rol asignado: {{ ucfirst($invitation->role) }}</p>
+
+    @if($message)
+        <div style="background-color: #f3f4f6; padding: 15px; border-left: 4px solid #4f46e5; margin: 20px 0;">
+            <strong>Mensaje de invitación:</strong><br>
+            {{ $message }}
+        </div>
+    @endif
     
     <p>Para aceptar la invitación, haz clic en el siguiente enlace:</p>
     
