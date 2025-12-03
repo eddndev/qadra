@@ -28,6 +28,22 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $user = Auth::user();
+        
+        // Redirect to user's first tenant subdomain if available
+        if ($user->tenants->isNotEmpty()) {
+            $tenant = $user->tenants->first();
+            $centralDomain = parse_url(config('app.url'), PHP_URL_HOST) ?? config('app.url');
+            $protocol = $request->secure() ? 'https://' : 'http://';
+            
+            // Check if we are already on the correct subdomain to avoid unnecessary redirect
+            // But usually login happens on central domain
+            
+            $tenantUrl = $protocol . $tenant->slug . '.' . $centralDomain . '/dashboard';
+            
+            return redirect()->intended($tenantUrl);
+        }
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
