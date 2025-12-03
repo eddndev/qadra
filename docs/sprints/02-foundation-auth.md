@@ -24,21 +24,21 @@ Establecer la arquitectura multi-tenant del sistema y el sistema de autenticaci�
 ### Entregables Técnicos
 
 #### Migraciones (Database)
-- [ ] `create_subscription_tiers_table` - Planes de suscripción (Starter, Professional)
-- [ ] `create_tenants_table` - Tabla principal de despachos/workspaces
-- [ ] `modify_users_table` - Agregar campos ULID y multi-tenant
-- [ ] `create_tenant_user_table` - Relación many-to-many users-tenants
-- [ ] `create_team_invitations_table` - Invitaciones pendientes
+- [x] `create_subscription_tiers_table` - Planes de suscripción (Starter, Professional)
+- [x] `create_tenants_table` - Tabla principal de despachos/workspaces
+- [x] `modify_users_table` - Agregar campos ULID y multi-tenant
+- [x] `create_tenant_user_table` - Relación many-to-many users-tenants
+- [x] `create_team_invitations_table` - Invitaciones pendientes
 
 #### Modelos (Eloquent)
-- [ ] `SubscriptionTier` - Plan de suscripción con límites y features
-- [ ] `Tenant` - Despacho/workspace con datos fiscales
-- [ ] `User` - Usuario con soporte multi-tenant
-- [ ] `TeamInvitation` - Invitación a unirse al despacho
+- [x] `SubscriptionTier` - Plan de suscripción con límites y features
+- [x] `Tenant` - Despacho/workspace con datos fiscales
+- [x] `User` - Usuario con soporte multi-tenant
+- [x] `TeamInvitation` - Invitación a unirse al despacho
 
 #### Traits
-- [ ] `TenantScoped` - Global scope para filtrar por tenant_id automáticamente
-- [ ] `HasTenants` - Relación de usuario con múltiples tenants
+- [x] `TenantScoped` - Global scope para filtrar por tenant_id automáticamente
+- [x] `HasTenants` - Relación de usuario con múltiples tenants
 
 #### Middleware
 - [ ] `IdentifyTenant` - Detectar y establecer tenant actual en sesión
@@ -95,8 +95,8 @@ Establecer la arquitectura multi-tenant del sistema y el sistema de autenticaci�
 
 *Esta sección es un log vivo. Se actualiza a medida que se toman decisiones durante el sprint.*
 
-*   **[FECHA]:** [Descripción de la decisión técnica.]
-    *   **Razón:** [Justificación clara y concisa de por qué se tomó esa decisión.]
+*   **2025-12-02:** Implementación inicial de migraciones, modelos y traits para el núcleo multi-tenant.
+    *   **Razón:** Se crearon las tablas `subscription_tiers`, `tenants`, `tenant_user`, `team_invitations`. La tabla `users` fue modificada para usar ULIDs como PK y añadir campos de perfil. Los modelos `SubscriptionTier`, `Tenant`, `User` (modificado) y `TeamInvitation` fueron creados. Se implementaron los traits `HasTenants` (para `User`) y `TenantScoped` (para modelos relacionados con `Tenant`), usando `session('current_tenant_id')` como base para el scoping global. El modelo `User` también fue actualizado para incluir el trait `HasRoles` de Spatie, que será requerido para la gestión de permisos. Se ha notificado al equipo sobre la necesidad de instalar el paquete `spatie/laravel-permission`.
 
 ---
 
