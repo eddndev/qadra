@@ -9,10 +9,10 @@
     
     <p>Rol asignado: {{ ucfirst($invitation->role) }}</p>
 
-    @if($message)
+    @if($invitationMessage)
         <div style="background-color: #f3f4f6; padding: 15px; border-left: 4px solid #4f46e5; margin: 20px 0;">
             <strong>Mensaje de invitación:</strong><br>
-            {{ $message }}
+            {{ $invitationMessage }}
         </div>
     @endif
     
