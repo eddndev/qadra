@@ -16,35 +16,34 @@ class IdentifyTenant
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // For now, let's assume the tenant is identified by a subdomain
-        // Example: {tenant_slug}.qadra.test
         $hostname = $request->getHost();
-        $domainParts = explode('.', $hostname);
-
-        // This logic needs to be refined based on actual domain structure (e.g., local setup vs production)
-        // For local development with `qadra.test` or similar
-        // if ($request->getHost() === config('app.central_domain')) { // e.g., qadra.test
-        //     // If it's the central domain, perhaps show a marketing page or registration
-        //     return $next($request);
-        // }
         
-        if (count($domainParts) > 2) { // Assuming subdomain.domain.tld
-            $slug = $domainParts[0];
-        } else { // No subdomain, might be central domain or no tenant context
-            // Default to no tenant or handle central domain specific routes
+        // Get central domain host from config
+        // Removes protocol (http://) and path, keeps only host (domain.test.com)
+        $centralDomain = parse_url(config('app.url'), PHP_URL_HOST) ?? config('app.url');
+
+        // If we are on the central domain, skip tenant identification
+        if ($hostname === $centralDomain) {
             session()->forget('current_tenant_id');
             session()->forget('current_tenant_slug');
-            Tenant::setGlobalTenant(null); // Clear global static tenant if set
-
-            // Allow access to routes that don't require a tenant (e.g., public pages, registration)
+            Tenant::setGlobalTenant(null);
+            
             return $next($request);
         }
+
+        // If NOT central domain, assume subdomain is tenant slug
+        $domainParts = explode('.', $hostname);
+        $slug = $domainParts[0];
 
         $tenant = Tenant::where('slug', $slug)->first();
 
         if (!$tenant) {
-            // If tenant not found, redirect to central registration or error page
-            return redirect(config('app.url') . '/register')->withErrors('Tenant not found.');
+            // If tenant not found in subdomain, redirect to central domain home or register
+            // Using route() ensures we use the APP_URL base
+            // return redirect(config('app.url') . '/register')->withErrors('Tenant not found.');
+            // Better: just 404 or let it pass as "no tenant" if that's valid? 
+            // For now, redirect to central register to be safe and helpful
+            return redirect(config('app.url') . '/register');
         }
 
         // Set the current tenant in the session
