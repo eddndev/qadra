@@ -96,9 +96,17 @@ class TeamInvitationController extends Controller
         
         // Simplest MVP:
         if (!Auth::check()) {
-            // Redirect to login/register with intent
-            session(['invitation_token' => $token]);
-            return redirect()->route('register'); // Assume new user for now
+            // Check if user exists
+            if (User::where('email', $invitation->email)->exists()) {
+                // Redirect to login with intended url so they come back here? 
+                // Or just tell them to login.
+                // Ideally: Login -> Redirect back to THIS accept route.
+                session(['url.intended' => url()->full()]); // Return here after login
+                return redirect()->route('login')->with('status', 'Por favor inicia sesión para aceptar la invitación.');
+            } else {
+                // User does NOT exist -> Go to custom registration
+                return redirect()->route('register.invited', ['token' => $token]);
+            }
         }
 
         $user = Auth::user();
