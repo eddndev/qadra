@@ -27,7 +27,7 @@
         @endforeach
 
         <div class="border-t border-gray-200 dark:border-gray-600 mt-1 pt-1">
-            <a href="{{ route('register') }}" class="block px-4 py-2 text-sm text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 hover:bg-gray-100 dark:hover:bg-gray-600">
+            <a href="{{ route('tenant.create') }}" class="block px-4 py-2 text-sm text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 hover:bg-gray-100 dark:hover:bg-gray-600">
                 + Crear Nuevo Despacho
             </a>
         </div>

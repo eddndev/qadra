@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\TenantRegistrationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TeamInvitationController;
 use App\Http\Middleware\EnsureTenantScope;
@@ -17,6 +18,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Create New Tenant (Authenticated)
+    Route::get('/tenant/create', [TenantRegistrationController::class, 'create'])->name('tenant.create');
+    Route::post('/tenant/store', [TenantRegistrationController::class, 'store'])->name('tenant.store');
 });
 
 Route::middleware(['auth', 'verified', EnsureTenantScope::class])->group(function () {
