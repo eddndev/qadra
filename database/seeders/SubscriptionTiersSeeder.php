@@ -13,7 +13,7 @@ class SubscriptionTiersSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('subscription_tiers')->insert([
+        DB::table('subscription_tiers')->upsert([
             [
                 'name' => 'Starter',
                 'slug' => 'starter',
@@ -31,7 +31,7 @@ class SubscriptionTiersSeeder extends Seeder
                 ]),
                 'is_active' => true,
                 'sort_order' => 1,
-                'created_at' => now(),
+                'created_at' => now(), // upsert ignores created_at on update usually, or we can omit it from update list
                 'updated_at' => now(),
             ],
             [
@@ -54,6 +54,9 @@ class SubscriptionTiersSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-        ]);
+        ], 
+        ['slug'], // Unique column to check
+        ['name', 'description', 'price_monthly', 'price_yearly', 'max_users', 'max_storage_gb', 'max_active_cases', 'features', 'is_active', 'sort_order', 'updated_at'] // Columns to update
+        );
     }
 }
