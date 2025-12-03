@@ -3,7 +3,7 @@
 **Versión:** 1.0  
 **Fecha:** 20 de noviembre de 2025  
 **Proyecto:** Qadra  
-**Enlace al Proyecto:** [Repositorio/Figma]  
+**Enlace al Proyecto:** [https://www.figma.com/design/4iOSfcAmiv8zABqbYlixi6/qadra?node-id=0-1&p=f&t=pDk9uQhPEaYgEcRB-0]  
 **Stack Tecnológico:** Tailwind CSS v4, Laravel Blade, Livewire 3  
 
 ---
