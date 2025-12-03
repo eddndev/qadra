@@ -35,6 +35,7 @@ Route::middleware(['auth', 'verified', EnsureTenantScope::class])->group(functio
     // Case Management
     Route::get('/cases', CaseList::class)->name('cases.index');
     Route::get('/cases/create', CreateCaseForm::class)->name('cases.create');
+    Route::get('/cases/{case}', App\Livewire\Cases\ShowCase::class)->name('cases.show');
 });
 
 // Public route for joining (middleware handling inside controller for auth redirect)
