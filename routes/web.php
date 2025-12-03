@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TeamInvitationController;
+use App\Http\Middleware\EnsureTenantScope;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,5 +18,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::middleware(['auth', 'verified', EnsureTenantScope::class])->group(function () {
+    Route::get('/team/invite', [TeamInvitationController::class, 'create'])->name('team.invite');
+    Route::post('/team/invite', [TeamInvitationController::class, 'store'])->name('team.invite.store');
+});
+
+// Public route for joining (middleware handling inside controller for auth redirect)
+Route::get('/team/join/{token}', [TeamInvitationController::class, 'accept'])->name('team.join');
 
 require __DIR__.'/auth.php';

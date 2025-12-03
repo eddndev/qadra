@@ -24,35 +24,35 @@ Establecer la arquitectura multi-tenant del sistema y el sistema de autenticaci�
 ### Entregables Técnicos
 
 #### Migraciones (Database)
-- [ ] `create_subscription_tiers_table` - Planes de suscripción (Starter, Professional)
-- [ ] `create_tenants_table` - Tabla principal de despachos/workspaces
-- [ ] `modify_users_table` - Agregar campos ULID y multi-tenant
-- [ ] `create_tenant_user_table` - Relación many-to-many users-tenants
-- [ ] `create_team_invitations_table` - Invitaciones pendientes
+- [x] `create_subscription_tiers_table` - Planes de suscripción (Starter, Professional)
+- [x] `create_tenants_table` - Tabla principal de despachos/workspaces
+- [x] `modify_users_table` - Agregar campos ULID y multi-tenant
+- [x] `create_tenant_user_table` - Relación many-to-many users-tenants
+- [x] `create_team_invitations_table` - Invitaciones pendientes
 
 #### Modelos (Eloquent)
-- [ ] `SubscriptionTier` - Plan de suscripción con límites y features
-- [ ] `Tenant` - Despacho/workspace con datos fiscales
-- [ ] `User` - Usuario con soporte multi-tenant
-- [ ] `TeamInvitation` - Invitación a unirse al despacho
+- [x] `SubscriptionTier` - Plan de suscripción con límites y features
+- [x] `Tenant` - Despacho/workspace con datos fiscales
+- [x] `User` - Usuario con soporte multi-tenant
+- [x] `TeamInvitation` - Invitación a unirse al despacho
 
 #### Traits
-- [ ] `TenantScoped` - Global scope para filtrar por tenant_id automáticamente
-- [ ] `HasTenants` - Relación de usuario con múltiples tenants
+- [x] `TenantScoped` - Global scope para filtrar por tenant_id automáticamente
+- [x] `HasTenants` - Relación de usuario con múltiples tenants
 
 #### Middleware
-- [ ] `IdentifyTenant` - Detectar y establecer tenant actual en sesión
-- [ ] `EnsureTenantScope` - Verificar que usuario pertenece al tenant
+- [x] `IdentifyTenant` - Detectar y establecer tenant actual en sesión
+- [x] `EnsureTenantScope` - Verificar que usuario pertenece al tenant
 
 #### Spatie Permission
-- [ ] Configurar teams (tenant_id) en config/permission.php
-- [ ] Crear 6 roles base: owner, litigante, asociado, paralegal, administrativo, cliente
-- [ ] Crear 40+ permisos granulares
+- [x] Configurar teams (tenant_id) en config/permission.php
+- [x] Crear 6 roles base: owner, litigante, asociado, paralegal, administrativo, cliente
+- [x] Crear 40+ permisos granulares
 
 #### Seeders
-- [ ] `SubscriptionTiersSeeder` - Starter y Professional con límites
-- [ ] `PermissionsSeeder` - Todos los permisos del sistema
-- [ ] `RolesSeeder` - 6 roles con permisos asignados
+- [x] `SubscriptionTiersSeeder` - Starter y Professional con límites
+- [x] `PermissionsSeeder` - Todos los permisos del sistema
+- [x] `RolesSeeder` - 6 roles con permisos asignados
 
 #### Componentes Livewire
 - [ ] `RegisterTenantForm` - Formulario de registro de despacho
@@ -68,10 +68,10 @@ Establecer la arquitectura multi-tenant del sistema y el sistema de autenticaci�
 - [ ] `components/tenant-switcher.blade.php` - Componente de navbar
 
 #### Otros
-- [ ] Jobs: `DeleteExpiredInvitationsJob` (corre diariamente)
+- [x] Jobs: `DeleteExpiredInvitationsJob` (corre diariamente)
 - [ ] Notifications: `TeamInvitationNotification`, `InvitationAcceptedNotification`
-- [ ] Events: `TenantCreated`, `MemberJoined`
-- [ ] Policies: `TenantPolicy`, `TeamInvitationPolicy`
+- [x] Events: `TenantCreated`, `MemberJoined`
+- [x] Policies: `TenantPolicy`, `TeamInvitationPolicy`
 
 #### Tests (Area: Testing)
 - [ ] **Unit Tests:**
@@ -95,8 +95,10 @@ Establecer la arquitectura multi-tenant del sistema y el sistema de autenticaci�
 
 *Esta sección es un log vivo. Se actualiza a medida que se toman decisiones durante el sprint.*
 
-*   **[FECHA]:** [Descripción de la decisión técnica.]
-    *   **Razón:** [Justificación clara y concisa de por qué se tomó esa decisión.]
+*   **2025-12-02:** Implementación inicial de migraciones, modelos y traits para el núcleo multi-tenant.
+    *   **Razón:** Se crearon las tablas `subscription_tiers`, `tenants`, `tenant_user`, `team_invitations`. La tabla `users` fue modificada para usar ULIDs como PK y añadir campos de perfil. Los modelos `SubscriptionTier`, `Tenant`, `User` (modificado) y `TeamInvitation` fueron creados. Se implementaron los traits `HasTenants` (para `User`) y `TenantScoped` (para modelos relacionados con `Tenant`), usando `session('current_tenant_id')` como base para el scoping global. El modelo `User` también fue actualizado para incluir el trait `HasRoles` de Spatie, que será requerido para la gestión de permisos. Se ha notificado al equipo sobre la necesidad de instalar el paquete `spatie/laravel-permission`.
+*   **2025-12-03:** Configuración de Middleware de Tenancy y Spatie Permission.
+    *   **Razón:** Se implementaron los middleware `IdentifyTenant` (para detectar y setear el tenant global) y `EnsureTenantScope` (seguridad). Se configuró Spatie Permission con `teams=true` y se modificó su migración para soportar ULIDs en `team_foreign_key` (tenant_id) y `model_morph_key`. Se crearon Seeders para Planes de Suscripción y Permisos Base (globales). Se implementaron Jobs (`DeleteExpiredInvitationsJob`) y Eventos (`TenantCreated`, `MemberJoined`) junto con sus Listeners y Policies.
 
 ---
 
@@ -104,9 +106,9 @@ Establecer la arquitectura multi-tenant del sistema y el sistema de autenticaci�
 
 *Esta sección documenta los problemas inesperados y cómo se resolvieron.*
 
-*   **[FECHA]:**
-    *   **Problema:** [Descripción del bloqueo.]
-    *   **Solución:** [Cómo se resolvió el problema.]
+*   **2025-12-03:**
+    *   **Problema:** Conflicto de conexión de base de datos (SQLite vs MySQL) al ejecutar migraciones y seeders, debido a un fallback incorrecto en `config/database.php` y `config/cache.php` cuando falta la variable de entorno `DB_CACHE_CONNECTION`.
+    *   **Solución:** Se modificó `config/database.php` para usar `mysql` como fallback default. Se modificó `config/cache.php` para usar `mysql` si `env('DB_CACHE_CONNECTION')` es null. Se comentó temporalmente la limpieza de caché en las migraciones de Spatie para desbloquear el proceso inicial.
 
 ---
 
