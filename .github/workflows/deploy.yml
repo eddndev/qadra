@@ -26,15 +26,11 @@ jobs:
 
       - name: Deploy Backend via SSH
         uses: appleboy/ssh-action@master
-        env:
-          NOVA_USERNAME: ${{ secrets.NOVA_USERNAME }}
-          NOVA_LICENSE_KEY: ${{ secrets.NOVA_LICENSE_KEY }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 2222
-          envs: NOVA_USERNAME,NOVA_LICENSE_KEY
           script: |
             set -e
             
@@ -55,14 +51,6 @@ jobs:
 
             # 3. Instalar dependencias
             export COMPOSER_ALLOW_SUPERUSER=1
-            
-            # Autenticar Nova (usando variables de entorno pasadas desde GitHub Secrets)
-            # Esto evita que intente clonar via git/ssh
-            if [ ! -z "$NOVA_USERNAME" ] && [ ! -z "$NOVA_LICENSE_KEY" ]; then
-                echo "🔑 Configurando autenticación de Laravel Nova..."
-                $PHP_BIN $COMPOSER_BIN config http-basic.nova.laravel.com "$NOVA_USERNAME" "$NOVA_LICENSE_KEY"
-            fi
-
             echo "📦 Instalando dependencias..."
             $PHP_BIN $COMPOSER_BIN install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
