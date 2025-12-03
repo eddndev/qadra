@@ -61,8 +61,20 @@ Validar el correcto funcionamiento de la arquitectura multi-tenant, el sistema d
 
 ---
 
-## 4. Notas Técnicas
+## 4. Notas Técnicas Post-Implementación
 
 - **Manejo de Sesión:** La sesión se comparte entre subdominios (`.dominio.com`), pero el middleware `IdentifyTenant` valida el acceso basándose en el host actual.
 - **Registro de Invitados:** Se implementó un flujo dedicado (`InvitedUserController`) para evitar conflictos con el registro público de despachos.
 - **Límites:** Los límites se validan contra `SubscriptionTier` + conteo de usuarios activos + invitaciones pendientes.
+- **UI:** Se deshabilitó `Alpine.js` manual en `app.js` para evitar conflictos con Livewire 3.
+
+## 5. Cierre de Pruebas
+
+**Fecha de Cierre:** 03 de Diciembre 2025  
+**Validado por:** Equipo de Desarrollo Backend & QA
+**Resultado Final:**  
+El módulo cumple con todos los criterios de aceptación definidos en las User Stories del Sprint 2. El sistema es estable en entorno productivo con subdominios.
+
+**Siguientes Pasos:**
+- Proceder al Sprint 3 (Core Legal).
+- Frontend puede iniciar el rediseño visual (UI Kit).
