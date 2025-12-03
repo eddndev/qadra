@@ -24,10 +24,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/tenant/store', [TenantRegistrationController::class, 'store'])->name('tenant.store');
 });
 
+use App\Livewire\Cases\CaseList;
+use App\Livewire\Cases\CreateCaseForm;
+
 Route::middleware(['auth', 'verified', EnsureTenantScope::class])->group(function () {
     Route::view('/team', 'team.index')->name('team.index');
     Route::get('/team/invite', [TeamInvitationController::class, 'create'])->name('team.invite');
     Route::post('/team/invite', [TeamInvitationController::class, 'store'])->name('team.invite.store');
+
+    // Case Management
+    Route::get('/cases', CaseList::class)->name('cases.index');
+    Route::get('/cases/create', CreateCaseForm::class)->name('cases.create');
 });
 
 // Public route for joining (middleware handling inside controller for auth redirect)
