@@ -26,43 +26,51 @@ jobs:
 
       - name: Deploy Backend via SSH
         uses: appleboy/ssh-action@master
+        env:
+          NOVA_USERNAME: ${{ secrets.NOVA_USERNAME }}
+          NOVA_LICENSE_KEY: ${{ secrets.NOVA_LICENSE_KEY }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 2222
+          envs: NOVA_USERNAME,NOVA_LICENSE_KEY
           script: |
             set -e
             
             # --- CONFIGURACIÓN DE RUTAS ---
-            # Tu PHP 8.3 real
             PHP_BIN="/opt/cpanel/ea-php83/root/usr/bin/php"
-            # La ruta de Composer que encontraste
             COMPOSER_BIN="/opt/cpanel/composer/bin/composer"
 
-            echo "🚀 Iniciando despliegue usando PHP 8.3 y Composer de sistema..."
+            echo "🚀 Iniciando despliegue..."
             
             cd ${{ secrets.PROJECT_PATH }}
 
             # 1. Poner en mantenimiento
             $PHP_BIN artisan down || true
 
-            # 2. Descartar cambios locales y descargar código
+            # 2. Actualizar código
             git reset --hard HEAD
             git pull origin main
 
             # 3. Instalar dependencias
-            # Usamos $PHP_BIN delante de $COMPOSER_BIN para asegurar que Composer
-            # se ejecute con la versión 8.3 y no con la del sistema por defecto.
             export COMPOSER_ALLOW_SUPERUSER=1
+            
+            # Autenticar Nova (usando variables de entorno pasadas desde GitHub Secrets)
+            # Esto evita que intente clonar via git/ssh
+            if [ ! -z "$NOVA_USERNAME" ] && [ ! -z "$NOVA_LICENSE_KEY" ]; then
+                echo "🔑 Configurando autenticación de Laravel Nova..."
+                $PHP_BIN $COMPOSER_BIN config http-basic.nova.laravel.com "$NOVA_USERNAME" "$NOVA_LICENSE_KEY"
+            fi
+
+            echo "📦 Instalando dependencias..."
             $PHP_BIN $COMPOSER_BIN install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
-            # 4. Migraciones, Seeds y Limpieza
-            echo "🗄️  Ejecutando migraciones..."
+            # 4. Base de datos y Limpieza
+            echo "🗄️  Migrando base de datos..."
             $PHP_BIN artisan migrate --force
 
-            echo "🌱 Sembrando base de datos..."
-            # Usamos --force para producción y --class=DatabaseSeeder para correr todo
+            echo "🌱 Sembrando datos..."
             $PHP_BIN artisan db:seed --force
             
             echo "🧹 Limpiando cachés..."
