@@ -34,7 +34,8 @@ return new class extends Migration
             // $table->engine('InnoDB');
             $table->bigIncrements('id'); // role id
             if ($teams || config('permission.testing')) { // permission.testing is a fix for sqlite testing
-                $table->unsignedBigInteger($columnNames['team_foreign_key'])->nullable();
+                // Modified for Qadra ULID support
+                $table->char($columnNames['team_foreign_key'], 26)->nullable();
                 $table->index($columnNames['team_foreign_key'], 'roles_team_foreign_key_index');
             }
             $table->string('name');       // For MyISAM use string('name', 225); // (or 166 for InnoDB with Redundant/Compact row format)
@@ -51,7 +52,8 @@ return new class extends Migration
             $table->unsignedBigInteger($pivotPermission);
 
             $table->string('model_type');
-            $table->unsignedBigInteger($columnNames['model_morph_key']);
+            // Modified for Qadra ULID support
+            $table->char($columnNames['model_morph_key'], 26);
             $table->index([$columnNames['model_morph_key'], 'model_type'], 'model_has_permissions_model_id_model_type_index');
 
             $table->foreign($pivotPermission)
@@ -59,7 +61,8 @@ return new class extends Migration
                 ->on($tableNames['permissions'])
                 ->onDelete('cascade');
             if ($teams) {
-                $table->unsignedBigInteger($columnNames['team_foreign_key']);
+                // Modified for Qadra ULID support
+                $table->char($columnNames['team_foreign_key'], 26);
                 $table->index($columnNames['team_foreign_key'], 'model_has_permissions_team_foreign_key_index');
 
                 $table->primary([$columnNames['team_foreign_key'], $pivotPermission, $columnNames['model_morph_key'], 'model_type'],
@@ -75,7 +78,8 @@ return new class extends Migration
             $table->unsignedBigInteger($pivotRole);
 
             $table->string('model_type');
-            $table->unsignedBigInteger($columnNames['model_morph_key']);
+            // Modified for Qadra ULID support
+            $table->char($columnNames['model_morph_key'], 26);
             $table->index([$columnNames['model_morph_key'], 'model_type'], 'model_has_roles_model_id_model_type_index');
 
             $table->foreign($pivotRole)
@@ -83,7 +87,8 @@ return new class extends Migration
                 ->on($tableNames['roles'])
                 ->onDelete('cascade');
             if ($teams) {
-                $table->unsignedBigInteger($columnNames['team_foreign_key']);
+                // Modified for Qadra ULID support
+                $table->char($columnNames['team_foreign_key'], 26);
                 $table->index($columnNames['team_foreign_key'], 'model_has_roles_team_foreign_key_index');
 
                 $table->primary([$columnNames['team_foreign_key'], $pivotRole, $columnNames['model_morph_key'], 'model_type'],
@@ -111,9 +116,9 @@ return new class extends Migration
             $table->primary([$pivotPermission, $pivotRole], 'role_has_permissions_permission_id_role_id_primary');
         });
 
-        app('cache')
-            ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)
-            ->forget(config('permission.cache.key'));
+        // app('cache')
+        //    ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)
+        //    ->forget(config('permission.cache.key'));
     }
 
     /**

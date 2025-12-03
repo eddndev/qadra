@@ -14,6 +14,9 @@ class Tenant extends Model
 {
     use HasFactory, HasUlids, SoftDeletes;
 
+    // Static property to hold the globally identified tenant
+    public static ?Tenant $currentTenant = null;
+
     protected $fillable = [
         'name',
         'slug',
@@ -57,5 +60,21 @@ class Tenant extends Model
     public function onTrial(): bool
     {
         return $this->trial_ends_at && $this->trial_ends_at->isFuture();
+    }
+
+    /**
+     * Set the globally identified tenant.
+     */
+    public static function setGlobalTenant(?Tenant $tenant): void
+    {
+        static::$currentTenant = $tenant;
+    }
+
+    /**
+     * Get the globally identified tenant.
+     */
+    public static function getGlobalTenant(): ?Tenant
+    {
+        return static::$currentTenant;
     }
 }
