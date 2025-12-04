@@ -63,7 +63,8 @@ class BillingPortal extends Component
     public function manage()
     {
         $tenant = Tenant::getGlobalTenant();
-        return $tenant->redirectToBillingPortal(route('billing.index'));
+        $url = $tenant->billingPortalUrl(route('billing.index'));
+        return redirect($url);
     }
 
     public function render()
