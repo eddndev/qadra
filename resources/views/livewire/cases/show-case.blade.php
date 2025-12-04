@@ -34,6 +34,9 @@
                         'participants' => 'Participantes',
                         'hearings' => 'Audiencias',
                         'deadlines' => 'Plazos y Términos',
+                        'measures' => 'Medidas Cautelares',
+                        'solutions' => 'Soluciones Alternas',
+                        'activities' => 'Actuaciones (Bitácora)',
                         'evidence' => 'Evidencias',
                         'documents' => 'Documentos',
                     ];
@@ -97,6 +100,12 @@
                 <livewire:hearings.case-hearings-list :case="$case" />
             @elseif($activeTab === 'deadlines')
                 <livewire:deadlines.case-deadlines-list :case="$case" />
+            @elseif($activeTab === 'measures')
+                <livewire:measures.precautionary-measure-form :case="$case" />
+            @elseif($activeTab === 'solutions')
+                <livewire:solutions.alternative-solution-form :case="$case" />
+            @elseif($activeTab === 'activities')
+                <livewire:activities.activity-timeline :case="$case" />
             @elseif($activeTab === 'evidence')
                 <div class="flex justify-end mb-4">
                     <a href="{{ route('evidence.create', ['case_id' => $case->id]) }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded text-sm">
