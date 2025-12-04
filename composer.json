@@ -8,10 +8,12 @@
     "require": {
         "php": "^8.2",
         "ebess/advanced-nova-media-library": "^5.1",
+        "laravel/cashier": "^16.1",
         "laravel/framework": "^12.0",
         "laravel/nova": "~5.0",
         "laravel/socialite": "^5.23",
         "laravel/tinker": "^2.10.1",
+        "league/flysystem-aws-s3-v3": "3.0",
         "livewire/livewire": "^3.6",
         "spatie/laravel-medialibrary": "^11.15",
         "spatie/laravel-permission": "^6.23"

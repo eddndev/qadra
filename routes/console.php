@@ -10,3 +10,6 @@ Artisan::command('inspire', function () {
 
 // Schedule the DeleteExpiredInvitationsJob to run daily
 Schedule::job(new \App\Jobs\DeleteExpiredInvitationsJob)->daily();
+
+// Schedule the CheckDeadlinesJob to run daily at 8:00 AM to notify users
+Schedule::job(new \App\Jobs\CheckDeadlinesJob)->dailyAt('08:00');

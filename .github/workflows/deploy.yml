@@ -3,7 +3,7 @@ name: Deploy to Hostgator (Production)
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   build-and-deploy:
@@ -47,7 +47,7 @@ jobs:
 
             # 2. Actualizar código
             git reset --hard HEAD
-            git pull origin main
+            git pull origin develop
 
             # 3. Instalar dependencias
             export COMPOSER_ALLOW_SUPERUSER=1

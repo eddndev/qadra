@@ -13,8 +13,28 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        
+        <!-- FilePond -->
+        <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+        <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
     </head>
     <body class="font-sans antialiased">
+        @php
+            $globalTenant = \App\Models\Tenant::getGlobalTenant();
+        @endphp
+
+        @if($globalTenant && $globalTenant->onTrial() && !$globalTenant->subscribed('default'))
+            <div class="bg-indigo-600 text-white px-4 py-2 text-center text-sm font-medium relative">
+                <span>
+                    Estás disfrutando de tu periodo de prueba gratuito. 
+                    Te quedan <strong>{{ $globalTenant->trial_ends_at->diffInDays(now()) }} días</strong>.
+                </span>
+                <a href="{{ route('billing.index') }}" class="underline ml-2 hover:text-indigo-100">
+                    Suscribirme ahora
+                </a>
+            </div>
+        @endif
+
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @include('layouts.navigation')
 
@@ -32,5 +52,11 @@
                 {{ $slot }}
             </main>
         </div>
+
+        <!-- FilePond Scripts -->
+        <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+        <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+        <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+        <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
     </body>
 </html>
