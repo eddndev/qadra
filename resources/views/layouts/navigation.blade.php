@@ -21,6 +21,9 @@
                     <x-nav-link :href="route('cases.index')" :active="request()->routeIs('cases.index')">
                         {{ __('Expedientes') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')">
+                        {{ __('Calendario') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -84,6 +87,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('cases.index')" :active="request()->routeIs('cases.index')">
                 {{ __('Expedientes') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')">
+                {{ __('Calendario') }}
             </x-responsive-nav-link>
         </div>
 

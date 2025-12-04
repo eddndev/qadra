@@ -4,7 +4,7 @@
 
 **Épica Maestra en GitHub:** [#19 - Sprint 4: Agenda & Tiempos](https://github.com/eddndev/qadra/issues/19)
 
-**Estado:** PENDIENTE
+**Estado:** EN PROGRESO
 
 ---
 
@@ -26,19 +26,19 @@ Implementar el sistema de audiencias, plazos fatales y alertas - crítico para e
 ### Entregables Técnicos
 
 #### Migraciones (Database)
-- [ ] `create_hearings_table` - Audiencias programadas
-- [ ] `create_deadlines_table` - Plazos procesales
+- [x] `create_hearings_table` - Audiencias programadas
+- [x] `create_deadlines_table` - Plazos procesales
 
 #### Modelos (Eloquent)
-- [ ] `Hearing` - Audiencia con tipos CNPP
-- [ ] `Deadline` - Plazo con configuración de alertas
+- [x] `Hearing` - Audiencia con tipos CNPP
+- [x] `Deadline` - Plazo con configuración de alertas
 
 #### Jobs (Queue)
 - [ ] `CheckDeadlinesJob` - Verificar plazos próximos (scheduler 8:00 AM)
 - [ ] `SendDeadlineReminderJob` - Enviar notificación de plazo
 
 #### Observers
-- [ ] `HearingObserver` - Auto-crear deadline al programar audiencia
+- [x] `HearingObserver` - Auto-crear deadline al programar audiencia
 
 #### Notifications
 - [ ] `DeadlineApproachingNotification` - Email + In-app notification
@@ -81,6 +81,10 @@ Implementar el sistema de audiencias, plazos fatales y alertas - crítico para e
 ## 3. Registro de Decisiones Técnicas
 
 *Esta sección es un log vivo. Se actualiza durante el sprint.*
+
+*   **2025-12-03:** Implementación de la capa de datos para Audiencias y Plazos.
+    *   **Razón:** Se crearon las tablas `hearings` y `deadlines` según el esquema definido. Se implementaron los modelos Eloquent correspondientes utilizando el trait `TenantScoped` para asegurar el aislamiento de datos. Se estableció la relación One-to-Many entre `Hearing` y `Deadline` para permitir recordatorios automáticos.
+    *   **Automatización:** Se implementó `HearingObserver` para crear automáticamente un `Deadline` (recordatorio) cuando se programa una nueva audiencia, cumpliendo con el requerimiento de la US-11 para evitar olvidos de términos.
 
 ---
 

@@ -36,6 +36,9 @@ Route::middleware(['auth', 'verified', EnsureTenantScope::class])->group(functio
     Route::get('/cases', CaseList::class)->name('cases.index');
     Route::get('/cases/create', CreateCaseForm::class)->name('cases.create');
     Route::get('/cases/{case}', App\Livewire\Cases\ShowCase::class)->name('cases.show');
+
+    // Calendar
+    Route::get('/calendar', App\Livewire\Hearings\HearingsCalendar::class)->name('calendar');
 });
 
 // Public route for joining (middleware handling inside controller for auth redirect)

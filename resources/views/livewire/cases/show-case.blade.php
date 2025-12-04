@@ -32,7 +32,8 @@
                     $tabs = [
                         'overview' => 'Resumen e Historial',
                         'participants' => 'Participantes',
-                        'hearings' => 'Audiencias', // Futuro
+                        'hearings' => 'Audiencias',
+                        'deadlines' => 'Plazos y Términos',
                         'documents' => 'Documentos', // Futuro
                     ];
                 @endphp
@@ -92,7 +93,11 @@
             @elseif($activeTab === 'participants')
                 <livewire:cases.participant-manager :case="$case" />
             @elseif($activeTab === 'hearings')
-                <div class="text-center py-8 text-gray-500">Módulo de Audiencias en construcción...</div>
+                <livewire:hearings.case-hearings-list :case="$case" />
+            @elseif($activeTab === 'deadlines')
+                <livewire:deadlines.case-deadlines-list :case="$case" />
+            @elseif($activeTab === 'documents')
+                 <div class="text-center py-8 text-gray-500">Módulo de Documentos en construcción...</div>
             @endif
         </div>
 

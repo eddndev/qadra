@@ -74,4 +74,14 @@ class LegalCase extends Model
             ->withPivot(['role', 'alias', 'is_detained', 'defense_attorney_name', 'notes'])
             ->withTimestamps();
     }
+
+    public function hearings()
+    {
+        return $this->hasMany(Hearing::class, 'case_id');
+    }
+
+    public function deadlines()
+    {
+        return $this->hasMany(Deadline::class, 'case_id');
+    }
 }
