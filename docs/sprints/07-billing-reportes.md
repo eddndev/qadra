@@ -1,100 +1,76 @@
-# Diario del Sprint 7: Billing, Reportes y Portal
+# Diario del Sprint 7: Monetización y Control
 
-**Periodo:** [Fecha de Inicio] - [Fecha de Fin]
+**Periodo:** 04 de Diciembre 2025 - [En Curso]
 
-**Épica Maestra en GitHub:** [Pendiente de Creación]
-
-**Estado:** ⏳ PENDIENTE
+**Estado:** 🚧 EN PROGRESO
 
 ---
 
 ## 1. Objetivo del Sprint
 
-Implementar la capa de inteligencia de negocios (Dashboard/Reportes), auditoría de seguridad y la infraestructura de monetización SaaS (Stripe). Este sprint cierra las funcionalidades "Premium" del sistema.
+Transformar la plataforma en un SaaS rentable mediante la integración de pasarela de pagos (Stripe), asegurar la integridad de datos con auditoría (Audit Logs) y proporcionar inteligencia de negocios mediante Dashboards y Reportes.
 
 ## 2. Alcance y Tareas Incluidas
 
 ### User Stories Incluidas
 
+- [x] `[US-03] Gestión de Suscripción y Límites (Billing)` (Lógica base implementada)
+- [x] `[US-04] Configuración de Métodos de Pago (Stripe)` (Integración Cashier lista)
+- [ ] `[US-24] Bitácora de Actividades (Audit Trail)`
 - [ ] `[US-28] Dashboard Ejecutivo del Despacho`
 - [ ] `[US-29] Reportes Avanzados`
-- [ ] `[US-24] Bitácora de Actividades (Audit Trail)`
-- [ ] `[US-03] Gestión de Suscripción y Límites (Billing)`
-- [ ] `[US-04] Configuración de Métodos de Pago (Stripe)`
+- [ ] `[US-30] Portal de Clientes`
 
 ### Entregables Técnicos
 
-#### Migraciones (Database)
-- [ ] `create_audit_logs_table` - Registro de seguridad (Spatie Activitylog)
-- [ ] `create_subscriptions_table` - Tablas de Cashier (si no existen)
+#### Facturación (Billing)
+- [x] Instalación y configuración de `laravel/cashier`
+- [x] Migraciones de tablas de suscripción (`subscriptions`, `subscription_items`)
+- [x] Actualización de modelo `Tenant` con trait `Billable`
+- [x] Componente `BillingPortal` para gestión de planes y redirección a Stripe
+- [x] Middleware `EnsureTenantIsSubscribed` (Paywall)
+- [ ] Configuración final de Webhooks en Producción/Staging
 
-#### Integraciones
-- [ ] **Stripe:** Configuración de Laravel Cashier, Webhooks, Planes (Products/Prices)
-- [ ] **Gráficos:** Instalación de ApexCharts o Chart.js
+#### Auditoría
+- [ ] Instalación de `spatie/laravel-activitylog`
+- [ ] Configuración de Observers para modelos críticos (`Case`, `Evidence`, `Hearing`)
+- [ ] Vista de `AuditLogViewer`
 
-#### Componentes Livewire
-- [ ] `DashboardPage` - KPIs y Gráficos (Casos, Tiempos, Carga)
-- [ ] `BillingPortal` - Gestión de suscripción y métodos de pago
-- [ ] `AuditLogViewer` - Visualizador de logs de seguridad
-- [ ] `ReportsGenerator` - Filtros y exportación (Excel/PDF)
+#### Reportes y Dashboard
+- [ ] Componente `DashboardPage` con gráficas (Chart.js)
+- [ ] Cálculo de KPIs (Casos activos, próximos vencimientos)
+- [ ] Generación de PDFs con `barryvdh/laravel-dompdf`
 
-#### Lógica de Negocio
-- [ ] `SubscriptionPolicy` - Bloqueo de features según plan (Starter vs Pro)
-- [ ] `LimitCheckService` - Validación de cuotas (Storage, Usuarios, Casos)
-
-#### Vistas Blade
-- [ ] `reports/index.blade.php`
-- [ ] `billing/index.blade.php`
-- [ ] `audit/index.blade.php`
-
-#### Tests
-- [ ] **Unit Tests:** Cálculo de límites, generación de reportes
-- [ ] **Feature Tests:** Flujo de suscripción, acceso a reportes premium
-- [ ] **Integration Tests:** Webhooks de Stripe (mocked)
+#### Portal de Clientes
+- [ ] Guard y Middleware para acceso de clientes externos
+- [ ] Vista simplificada de "Mi Caso"
 
 ---
 
 ## 3. Registro de Decisiones Técnicas
 
-*Esta sección es un log vivo. Se actualiza durante el sprint.*
-
----
+- **Modelo de Facturación:** Se optó por facturar al modelo `Tenant` en lugar de `User` para centralizar el cobro por despacho.
+- **Paywall:** Se implementó un middleware estricto (`EnsureTenantIsSubscribed`) que bloquea el acceso a toda la app (excepto facturación) si el trial venció o no hay suscripción.
+- **Trial:** La lógica de trial se maneja dualmente: base de datos (`trial_ends_at`) para acceso sin tarjeta, y lógica de Stripe (`trialUntil`) para respetar días restantes al suscribirse.
 
 ## 4. Registro de Bloqueos y Soluciones
 
-*Esta sección documenta problemas y soluciones.*
+- **Conflicto Livewire/Cashier:** `redirectToBillingPortal` retornaba un objeto incompatible con Livewire. Se solucionó obteniendo la URL y redirigiendo manualmente.
+- **Stripe Webhooks:** En entornos de Staging con subdominios, se requiere configurar el webhook al dominio central para evitar fallos de identificación de tenant.
 
 ---
 
-## 5. Dependencias
+## 5. Progreso Actual
 
-- ✅ Sprint 6 completado
-- 🔑 Cuenta de Stripe (Test Mode)
-
----
-
-## 6. Asignación de Tareas por Área
-
-| Área | Responsable | GitHub | Tareas |
-|------|-------------|--------|--------|
-| **Backend** | Gael, Eduardo | @Arzubide, @eddndev | Stripe Integration, Audit Logs, Queries de Reportes |
-| **Frontend** | Karla | @Karlaelenaht | Dashboard Charts, Billing UI |
-| **UX/UI** | Hatziry | @vhhatziry | Diseño de Dashboard Ejecutivo, Reportes PDF |
-| **Testing** | Diego | @Dvan88 | Tests de facturación y seguridad |
-| **CI/CD** | Eduardo | @eddndev | Variables de entorno Stripe |
+| Tarea | Estado | Notas |
+|-------|--------|-------|
+| **Infraestructura Stripe** | ✅ Listo | Llaves configuradas, productos creados |
+| **Portal de Facturación** | ✅ Listo | UI para elegir plan mensual/anual |
+| **Lógica de Trial** | 🟡 En Ajuste | Funciona el bloqueo, falta validar webhook de transición |
+| **Dashboard Ejecutivo** | ⏳ Pendiente | Siguiente prioridad |
+| **Reportes PDF** | ⏳ Pendiente | |
 
 ---
 
-## 7. Criterios de Aceptación del Sprint
-
-- [ ] Owner ve dashboard con gráficas de rendimiento del despacho
-- [ ] Owner puede exportar reportes de productividad a Excel/PDF
-- [ ] Sistema bloquea acciones si se exceden límites del plan
-- [ ] Owner puede suscribirse a planes de pago vía Stripe
-- [ ] Se registran cambios críticos en el Audit Log (quién, qué, cuándo)
-- [ ] Tests pasan con cobertura > 80%
-
----
-
-**Sprint planificado por:** Eduardo (Tech Lead)
-**Fecha de planificación:** 2025-12-03
+**Sprint liderado por:** Eduardo (Tech Lead)
+**Última actualización:** 04 de Diciembre 2025

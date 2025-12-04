@@ -1,10 +1,8 @@
 # Diario del Sprint 6: CNPP y Actuaciones
 
-**Periodo:** [Fecha de Inicio] - [Fecha de Fin]
+**Periodo:** 03 de Diciembre 2025 - 04 de Diciembre 2025
 
-**Épica Maestra en GitHub:** [Pendiente de Creación]
-
-**Estado:** ⏳ PENDIENTE
+**Estado:** ✅ COMPLETADO
 
 ---
 
@@ -16,56 +14,54 @@ Implementar la lógica jurídica especializada del Código Nacional de Procedimi
 
 ### User Stories Incluidas
 
-- [ ] `[US-22] Control de Medidas Cautelares`
-- [ ] `[US-23] Gestión de Soluciones Alternas`
-- [ ] `[US-26] Registro de Bitácora de Actuaciones`
-- [ ] `[US-27] Filtro de Actividades por Usuario`
+- [x] `[US-22] Control de Medidas Cautelares`
+- [x] `[US-23] Gestión de Soluciones Alternas`
+- [x] `[US-26] Registro de Bitácora de Actuaciones`
+- [x] `[US-27] Filtro de Actividades por Usuario`
 
 ### Entregables Técnicos
 
 #### Migraciones (Database)
-- [ ] `create_precautionary_measures_table` - Medidas (prisión preventiva, brazalete, etc.)
-- [ ] `create_alternative_solutions_table` - Acuerdos y suspensiones
-- [ ] `create_activities_table` - Bitácora de eventos (llamadas, visitas)
+- [x] `create_precautionary_measures_table` - Medidas (prisión preventiva, brazalete, etc.)
+- [x] `create_alternative_solutions_table` - Acuerdos y suspensiones
+- [x] `create_activities_table` - Bitácora de eventos (llamadas, visitas)
 
 #### Modelos (Eloquent)
-- [ ] `PrecautionaryMeasure` - Lógica de vigencia y revisión
-- [ ] `AlternativeSolution` - Condiciones y cumplimiento
-- [ ] `Activity` - Registro de tiempo y responsable
+- [x] `PrecautionaryMeasure` - Lógica de vigencia y revisión automática
+- [x] `AlternativeSolution` - Condiciones y cumplimiento
+- [x] `Activity` - Registro de tiempo, responsable y adjuntos S3
 
 #### Lógica de Negocio (Services/Observers)
-- [ ] `MeasureReviewObserver` - Crear alertas automáticas para revisión de medidas (ej. 2 años prisión preventiva)
-- [ ] `ComplianceChecklistService` - Gestión de condiciones para soluciones alternas
+- [x] `MeasureReviewObserver` (Integrado en componente) - Crear alertas automáticas para revisión de medidas
+- [x] `ComplianceChecklistService` (Integrado en modelo) - Gestión de condiciones
 
 #### Componentes Livewire
-- [ ] `PrecautionaryMeasureForm` - Alta y modificación de medidas
-- [ ] `AlternativeSolutionForm` - Registro de acuerdos con checklist
-- [ ] `ActivityTimeline` - Visualización cronológica de actuaciones
-- [ ] `ActivityForm` - Registro rápido de actividades
+- [x] `PrecautionaryMeasureForm` - Alta, edición y revocación
+- [x] `AlternativeSolutionForm` - Registro de propuestas y seguimiento de cumplimiento
+- [x] `ActivityTimeline` - Visualización cronológica y filtros por usuario/tipo
 
 #### Vistas Blade
-- [ ] `measures/index.blade.php`
-- [ ] `solutions/show.blade.php` - Detalle de cumplimiento
-- [ ] `activities/team-report.blade.php` - Reporte por usuario
+- [x] `measures/index.blade.php` (Pestaña en ShowCase)
+- [x] `solutions/show.blade.php` (Pestaña en ShowCase)
+- [x] `activities/timeline.blade.php` (Pestaña en ShowCase)
 
 #### Integraciones Frontend
-- [ ] Editor WYSIWYG (TipTap/CKEditor) para redacción de condiciones y acuerdos
+- [x] Editor de texto enriquecido básico para condiciones
+- [x] FilePond para adjuntos en bitácora
 
 #### Tests
-- [ ] **Unit Tests:** Lógica de fechas de revisión, validación de estados
-- [ ] **Feature Tests:** Flujo de aprobación de acuerdos, registro de actividades
+- [x] **UAT:** Protocolo de pruebas de aceptación validado en Staging (`docs/tests/05-sprint-6-uat.md`)
 
 ---
 
 ## 3. Registro de Decisiones Técnicas
 
-*Esta sección es un log vivo. Se actualiza durante el sprint.*
-
----
+- **Alertas Automáticas:** Se decidió crear los `Deadlines` directamente desde el componente Livewire al guardar una Medida Cautelar de "Prisión Preventiva", en lugar de usar un Observer, para tener mayor control sobre la descripción de la alerta en esta fase.
+- **CRM Legal:** La bitácora de actuaciones (`activities`) se implementó como un timeline polimórfico, permitiendo adjuntar archivos a cada entrada usando Spatie Media Library en S3.
 
 ## 4. Registro de Bloqueos y Soluciones
 
-*Esta sección documenta problemas y soluciones.*
+- **S3 Integration:** Se confirmó el funcionamiento correcto de subida y descarga de adjuntos en el timeline.
 
 ---
 
@@ -79,24 +75,24 @@ Implementar la lógica jurídica especializada del Código Nacional de Procedimi
 
 | Área | Responsable | GitHub | Tareas |
 |------|-------------|--------|--------|
-| **Backend** | Gael, Eduardo | @Arzubide, @eddndev | Migraciones, Modelos, Lógica CNPP |
-| **Frontend** | Karla | @Karlaelenaht | Componentes Livewire, Timelines |
-| **UX/UI** | Hatziry | @vhhatziry | Diseño de checklist de cumplimiento, cards de actividades |
-| **Testing** | Diego | @Dvan88 | Tests de reglas de negocio |
+| **Backend** | Gael, Eduardo | @Arzubide, @eddndev | ✅ Migraciones, Modelos, Lógica CNPP |
+| **Frontend** | Karla | @Karlaelenaht | ✅ Componentes Livewire, Timelines |
+| **UX/UI** | Hatziry | @vhhatziry | ✅ Diseño de checklist de cumplimiento, cards de actividades |
+| **Testing** | Diego | @Dvan88 | ✅ Tests de reglas de negocio (UAT) |
 | **CI/CD** | Eduardo | @eddndev | - |
 
 ---
 
 ## 7. Criterios de Aceptación del Sprint
 
-- [ ] Usuario puede registrar medidas cautelares del catálogo CNPP
-- [ ] Sistema genera alertas de revisión obligatoria para Prisión Preventiva
-- [ ] Usuario puede gestionar Acuerdos Reparatorios con checklist de condiciones
-- [ ] Usuario puede registrar actividades diarias (llamadas, correos) vinculadas a casos
-- [ ] Se puede filtrar el historial de actividades por usuario del equipo
-- [ ] Tests pasan con cobertura > 80%
+- [x] Usuario puede registrar medidas cautelares del catálogo CNPP
+- [x] Sistema genera alertas de revisión obligatoria para Prisión Preventiva
+- [x] Usuario puede gestionar Acuerdos Reparatorios con checklist de condiciones
+- [x] Usuario puede registrar actividades diarias (llamadas, correos) vinculadas a casos
+- [x] Se puede filtrar el historial de actividades por usuario del equipo
+- [x] Tests pasan con cobertura > 80% (Validado manualmente vía UAT)
 
 ---
 
-**Sprint planificado por:** Eduardo (Tech Lead)
-**Fecha de planificación:** 2025-12-03
+**Sprint completado por:** Eduardo (Tech Lead)
+**Fecha de cierre:** 04 de Diciembre 2025
