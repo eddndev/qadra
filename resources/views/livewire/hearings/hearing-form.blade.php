@@ -61,6 +61,32 @@
                     <x-input-error :messages="$errors->get('virtual_link')" class="mt-2" />
                 </div>
 
+                <!-- Status and Result (Only Edit) -->
+                @if($hearing)
+                    <div class="col-span-2 border-t border-gray-200 dark:border-gray-700 pt-4 mt-2">
+                        <h3 class="text-sm font-medium text-gray-900 dark:text-gray-100 mb-3">Resultado de la Audiencia</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <x-input-label for="status" value="Estatus" />
+                                <select wire:model.live="status" id="status" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                                    <option value="programada">Programada</option>
+                                    <option value="celebrada">Celebrada</option>
+                                    <option value="cancelada">Cancelada</option>
+                                    <option value="reprogramada">Reprogramada</option>
+                                </select>
+                                <x-input-error :messages="$errors->get('status')" class="mt-2" />
+                            </div>
+
+                            <div class="md:col-span-2" x-show="$wire.status !== 'programada'">
+                                <x-input-label for="result_summary" value="Resumen de Acuerdos / Resoluciones" />
+                                <textarea wire:model="result_summary" id="result_summary" rows="3" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" placeholder="Escribe aquí los resultados de la audiencia..."></textarea>
+                                <x-input-error :messages="$errors->get('result_summary')" class="mt-2" />
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
             </div>
 
             <div class="mt-6 flex justify-end">

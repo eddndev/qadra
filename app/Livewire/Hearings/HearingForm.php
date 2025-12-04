@@ -20,6 +20,8 @@ class HearingForm extends Component
     public $courtroom;
     public $virtual_link;
     public $judge_participant_id;
+    public $status = 'programada';
+    public $result_summary;
     public $notes; // Not in DB directly? Ah, hearing table doesn't have notes, but has result_summary. 
                    // US-11 says "Notas previas (textarea)". Checking migration... 
                    // Migration doesn't have 'notes'. It has 'result_summary'.
@@ -56,6 +58,8 @@ class HearingForm extends Component
         $this->courtroom = $this->hearing->courtroom;
         $this->virtual_link = $this->hearing->virtual_link;
         $this->judge_participant_id = $this->hearing->judge_participant_id;
+        $this->status = $this->hearing->status;
+        $this->result_summary = $this->hearing->result_summary;
         
         $this->dispatch('open-modal', 'hearing-form-modal');
     }
@@ -69,6 +73,8 @@ class HearingForm extends Component
         $this->courtroom = null;
         $this->virtual_link = null;
         $this->judge_participant_id = null;
+        $this->status = 'programada';
+        $this->result_summary = null;
     }
 
     public function save()
@@ -80,8 +86,21 @@ class HearingForm extends Component
             'courtroom' => 'nullable|string|max:255',
             'virtual_link' => 'nullable|url|max:500',
             'judge_participant_id' => 'nullable|exists:participants,id',
+            'status' => 'required|in:programada,celebrada,cancelada,reprogramada',
+            'result_summary' => 'nullable|string',
         ]);
 
+        // US-12: If status is NOT programada, result_summary is mandatory? 
+        // "Campo obligatorio: Resumen de acuerdos/resoluciones"
+        if ($this->status !== 'programada' && empty($this->result_summary)) {
+            $this->addError('result_summary', 'El resumen es obligatorio al registrar el resultado.');
+            return;
+        }
+
+        // Auto-set status to 'celebrada' if summary provided and status still programada?
+        // Or better trust user selection.
+        // But we must ensure consistency.
+        
         if ($this->hearing) {
             $this->hearing->update($validated);
             $message = 'Audiencia actualizada correctamente.';
