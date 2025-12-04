@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class LegalCase extends Model
+class LegalCase extends Model implements HasMedia
 {
-    use HasFactory, HasUlids, HasTenants, SoftDeletes;
+    use HasFactory, HasUlids, HasTenants, SoftDeletes, InteractsWithMedia;
 
     protected $table = 'legal_cases';
 
@@ -45,6 +47,13 @@ class LegalCase extends Model
         'arraignment_date' => 'datetime',
         'trial_date' => 'datetime',
     ];
+
+    // Media Library Collections
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('documents')
+             ->useDisk('s3'); // Enforce S3 for documents
+    }
 
     // Relationships
 
@@ -83,5 +92,10 @@ class LegalCase extends Model
     public function deadlines()
     {
         return $this->hasMany(Deadline::class, 'case_id');
+    }
+    
+    public function evidence()
+    {
+        return $this->hasMany(Evidence::class, 'case_id');
     }
 }
