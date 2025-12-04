@@ -38,14 +38,9 @@ class BillingPortal extends Component
         $subscriptionBuilder = $tenant->newSubscription('default', $priceId)
             ->allowPromotionCodes();
 
-        // If tenant is still on trial, respect the remaining days
-        if ($tenant->onTrial()) {
-            $trialEnds = $tenant->trial_ends_at;
-            $subscriptionBuilder->trialUntil($trialEnds);
-        } else {
-            // Optional: If you want to give a fresh 30 days trial ONLY if they never had one
-            // $subscriptionBuilder->trialDays(30); 
-            // But since we give trial on registration, we skip this to avoid double dipping.
+        // If tenant is still on trial (generic trial without card), respect the remaining days
+        if ($tenant->trial_ends_at && $tenant->trial_ends_at->isFuture()) {
+            $subscriptionBuilder->trialUntil($tenant->trial_ends_at);
         }
 
         // Redirect to Stripe Checkout
