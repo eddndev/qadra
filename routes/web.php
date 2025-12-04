@@ -26,6 +26,9 @@ Route::middleware('auth')->group(function () {
 
 use App\Livewire\Cases\CaseList;
 use App\Livewire\Cases\CreateCaseForm;
+use App\Livewire\Evidence\EvidenceForm;
+use App\Livewire\Evidence\CustodyMovementForm;
+use App\Livewire\Evidence\EvidenceTable;
 
 Route::middleware(['auth', 'verified', EnsureTenantScope::class])->group(function () {
     Route::view('/team', 'team.index')->name('team.index');
@@ -39,6 +42,11 @@ Route::middleware(['auth', 'verified', EnsureTenantScope::class])->group(functio
 
     // Calendar
     Route::get('/calendar', App\Livewire\Hearings\HearingsCalendar::class)->name('calendar');
+
+    // Evidence Management
+    Route::get('/evidence', EvidenceTable::class)->name('evidence.index');
+    Route::get('/evidence/create', EvidenceForm::class)->name('evidence.create');
+    Route::get('/evidence/{evidence}/move', CustodyMovementForm::class)->name('evidence.move');
 });
 
 // Public route for joining (middleware handling inside controller for auth redirect)
