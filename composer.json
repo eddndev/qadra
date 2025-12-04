@@ -8,6 +8,7 @@
     "require": {
         "php": "^8.2",
         "ebess/advanced-nova-media-library": "^5.1",
+        "laravel/cashier": "^16.1",
         "laravel/framework": "^12.0",
         "laravel/nova": "~5.0",
         "laravel/socialite": "^5.23",

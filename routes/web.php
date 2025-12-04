@@ -29,6 +29,7 @@ use App\Livewire\Cases\CreateCaseForm;
 use App\Livewire\Evidence\EvidenceForm;
 use App\Livewire\Evidence\CustodyMovementForm;
 use App\Livewire\Evidence\EvidenceTable;
+use App\Livewire\Billing\BillingPortal;
 
 Route::middleware(['auth', 'verified', EnsureTenantScope::class])->group(function () {
     Route::view('/team', 'team.index')->name('team.index');
@@ -47,6 +48,9 @@ Route::middleware(['auth', 'verified', EnsureTenantScope::class])->group(functio
     Route::view('/evidence', 'evidence.index')->name('evidence.index');
     Route::get('/evidence/create', EvidenceForm::class)->name('evidence.create');
     Route::get('/evidence/{evidence}/move', CustodyMovementForm::class)->name('evidence.move');
+
+    // Billing
+    Route::get('/billing', BillingPortal::class)->name('billing.index');
 });
 
 // Public route for joining (middleware handling inside controller for auth redirect)
