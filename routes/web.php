@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\TenantRegistrationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TeamInvitationController;
 use App\Http\Middleware\EnsureTenantScope;
+use App\Http\Middleware\EnsureTenantIsSubscribed;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -31,7 +32,8 @@ use App\Livewire\Evidence\CustodyMovementForm;
 use App\Livewire\Evidence\EvidenceTable;
 use App\Livewire\Billing\BillingPortal;
 
-Route::middleware(['auth', 'verified', EnsureTenantScope::class])->group(function () {
+// Grupo Protegido por Tenant Scope y Suscripción
+Route::middleware(['auth', 'verified', EnsureTenantScope::class, EnsureTenantIsSubscribed::class])->group(function () {
     Route::view('/team', 'team.index')->name('team.index');
     Route::get('/team/invite', [TeamInvitationController::class, 'create'])->name('team.invite');
     Route::post('/team/invite', [TeamInvitationController::class, 'store'])->name('team.invite.store');
@@ -49,7 +51,8 @@ Route::middleware(['auth', 'verified', EnsureTenantScope::class])->group(functio
     Route::get('/evidence/create', EvidenceForm::class)->name('evidence.create');
     Route::get('/evidence/{evidence}/move', CustodyMovementForm::class)->name('evidence.move');
 
-    // Billing
+    // Billing (BillingPortal.php handles internally permissions for managing)
+    // Note: Billing route is allowed by middleware exception, but we keep it inside group for tenant scope
     Route::get('/billing', BillingPortal::class)->name('billing.index');
 });
 

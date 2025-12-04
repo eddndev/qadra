@@ -5,6 +5,7 @@ namespace App\Livewire\Billing;
 use App\Models\Tenant;
 use Livewire\Component;
 use Laravel\Cashier\Cashier;
+use Illuminate\Support\Carbon;
 
 class BillingPortal extends Component
 {
@@ -33,14 +34,25 @@ class BillingPortal extends Component
             return;
         }
 
+        // Build subscription
+        $subscriptionBuilder = $tenant->newSubscription('default', $priceId)
+            ->allowPromotionCodes();
+
+        // If tenant is still on trial, respect the remaining days
+        if ($tenant->onTrial()) {
+            $trialEnds = $tenant->trial_ends_at;
+            $subscriptionBuilder->trialUntil($trialEnds);
+        } else {
+            // Optional: If you want to give a fresh 30 days trial ONLY if they never had one
+            // $subscriptionBuilder->trialDays(30); 
+            // But since we give trial on registration, we skip this to avoid double dipping.
+        }
+
         // Redirect to Stripe Checkout
-        $checkout = $tenant->newSubscription('default', $priceId)
-            ->trialDays(30) // Optional: Force trial or rely on DB logic
-            ->allowPromotionCodes()
-            ->checkout([
-                'success_url' => route('billing.index') . '?success=true',
-                'cancel_url' => route('billing.index') . '?cancel=true',
-            ]);
+        $checkout = $subscriptionBuilder->checkout([
+            'success_url' => route('billing.index') . '?success=true',
+            'cancel_url' => route('billing.index') . '?cancel=true',
+        ]);
 
         return redirect($checkout->asStripeCheckoutSession()->url);
     }
