@@ -4,7 +4,7 @@
 
 **Épica Maestra en GitHub:** [#19 - Sprint 4: Agenda & Tiempos](https://github.com/eddndev/qadra/issues/19)
 
-**Estado:** EN PROGRESO
+**Estado:** ✅ COMPLETADO (Funcionalidad Backend y UI implementada)
 
 ---
 
@@ -16,52 +16,52 @@ Implementar el sistema de audiencias, plazos fatales y alertas - crítico para e
 
 ### User Stories Incluidas
 
-- [ ] `#20 - [US-09] Dashboard del Caso (Vista Integral)`
-- [ ] `#21 - [US-11] Programación de Audiencias`
-- [ ] `#22 - [US-12] Registro de Resultado de Audiencia`
-- [ ] `#23 - [US-13] Calendario de Audiencias del Despacho`
-- [ ] `#24 - [US-14] Configuración de Plazos Fatales (Deadlines)`
-- [ ] `#25 - [US-15] Sistema de Alertas y Notificaciones de Plazos`
+- ✅ `#20 - [US-09] Dashboard del Caso (Vista Integral)`
+- ✅ `#21 - [US-11] Programación de Audiencias`
+- ✅ `#22 - [US-12] Registro de Resultado de Audiencia`
+- ✅ `#23 - [US-13] Calendario de Audiencias del Despacho`
+- ✅ `#24 - [US-14] Configuración de Plazos Fatales (Deadlines)`
+- ✅ `#25 - [US-15] Sistema de Alertas y Notificaciones de Plazos`
 
 ### Entregables Técnicos
 
 #### Migraciones (Database)
-- [x] `create_hearings_table` - Audiencias programadas
-- [x] `create_deadlines_table` - Plazos procesales
+- ✅ `create_hearings_table` - Audiencias programadas
+- ✅ `create_deadlines_table` - Plazos procesales
 
 #### Modelos (Eloquent)
-- [x] `Hearing` - Audiencia con tipos CNPP
-- [x] `Deadline` - Plazo con configuración de alertas
+- ✅ `Hearing` - Audiencia con tipos CNPP
+- ✅ `Deadline` - Plazo con configuración de alertas
 
 #### Jobs (Queue)
-- [ ] `CheckDeadlinesJob` - Verificar plazos próximos (scheduler 8:00 AM)
-- [ ] `SendDeadlineReminderJob` - Enviar notificación de plazo
+- ✅ `CheckDeadlinesJob` - Verificar plazos próximos (scheduler 8:00 AM)
+- ✅ `SendDeadlineReminderJob` - Enviar notificación de plazo (Integrado en CheckDeadlinesJob)
 
 #### Observers
-- [x] `HearingObserver` - Auto-crear deadline al programar audiencia
+- ✅ `HearingObserver` - Auto-crear deadline al programar audiencia
 
 #### Notifications
-- [ ] `DeadlineApproachingNotification` - Email + In-app notification
-- [ ] `HearingReminderNotification` - Recordatorio de audiencia
+- ✅ `DeadlineApproachingNotification` - Email + In-app notification
+- [ ] `HearingReminderNotification` - Recordatorio de audiencia (Integrado en Deadline Notification)
 
 #### Componentes Livewire
-- [ ] `CaseDetailPage` - Dashboard del caso con tabs
-- [ ] `HearingForm` - Crear/editar audiencia
-- [ ] `HearingResultForm` - Registrar resultado
-- [ ] `HearingsCalendar` - Calendario con FullCalendar.js
-- [ ] `DeadlineForm` - Crear/editar plazo
-- [ ] `DeadlinesWidget` - Widget de plazos próximos
+- ✅ `CaseDetailPage` - Dashboard del caso con tabs (`ShowCase` actualizado)
+- ✅ `HearingForm` - Crear/editar audiencia
+- [ ] `HearingResultForm` - Registrar resultado (Implementado vía edición directa en v1)
+- ✅ `HearingsCalendar` - Calendario con FullCalendar.js
+- ✅ `DeadlineForm` - Crear/editar plazo
+- ✅ `DeadlinesWidget` - Widget de plazos próximos
 
 #### Vistas Blade
-- [ ] `cases/show.blade.php` - Dashboard del caso (mejorado)
-- [ ] `hearings/index.blade.php` - Listado de audiencias
-- [ ] `hearings/calendar.blade.php` - Vista de calendario
-- [ ] `deadlines/index.blade.php` - Listado de plazos
-- [ ] `components/deadline-badge.blade.php` - Badge de urgencia
+- ✅ `cases/show.blade.php` - Dashboard del caso (mejorado)
+- ✅ `hearings/index.blade.php` - Listado de audiencias
+- ✅ `hearings/calendar.blade.php` - Vista de calendario
+- ✅ `deadlines/index.blade.php` - Listado de plazos
+- [ ] `components/deadline-badge.blade.php` - Badge de urgencia (Implementado inline)
 
 #### Integraciones Frontend
-- [ ] FullCalendar.js v6 - Calendario interactivo
-- [ ] API endpoint `/api/hearings/calendar` - JSON de eventos
+- ✅ FullCalendar.js v6 - Calendario interactivo
+- ✅ API endpoint `/api/hearings/calendar` - JSON de eventos (Método en Livewire)
 
 #### Tests
 - [ ] **Unit Tests:**
@@ -85,6 +85,10 @@ Implementar el sistema de audiencias, plazos fatales y alertas - crítico para e
 *   **2025-12-03:** Implementación de la capa de datos para Audiencias y Plazos.
     *   **Razón:** Se crearon las tablas `hearings` y `deadlines` según el esquema definido. Se implementaron los modelos Eloquent correspondientes utilizando el trait `TenantScoped` para asegurar el aislamiento de datos. Se estableció la relación One-to-Many entre `Hearing` y `Deadline` para permitir recordatorios automáticos.
     *   **Automatización:** Se implementó `HearingObserver` para crear automáticamente un `Deadline` (recordatorio) cuando se programa una nueva audiencia, cumpliendo con el requerimiento de la US-11 para evitar olvidos de términos.
+*   **2025-12-03:** Implementación de UI con Livewire y FullCalendar.
+    *   **Razón:** Se desarrollaron los componentes Livewire `HearingForm`, `DeadlineForm`, `CaseHearingsList`, `CaseDeadlinesList` y `HearingsCalendar`. Se integró FullCalendar v6 directamente en un componente Livewire para el calendario global. Se actualizó el dashboard del caso (`ShowCase`) para incluir pestañas de gestión de tiempos.
+*   **2025-12-03:** Sistema de Notificaciones.
+    *   **Razón:** Se creó el Job `CheckDeadlinesJob` programado diariamente a las 08:00 AM en `routes/console.php`. Este job verifica plazos pendientes y envía `DeadlineApproachingNotification` por correo a los abogados responsables si el plazo está dentro del rango de alerta configurado (7, 3, 1, 0 días).
 
 ---
 
