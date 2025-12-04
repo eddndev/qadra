@@ -34,13 +34,15 @@ class BillingPortal extends Component
         }
 
         // Redirect to Stripe Checkout
-        return $tenant->newSubscription('default', $priceId)
+        $checkout = $tenant->newSubscription('default', $priceId)
             ->trialDays(30) // Optional: Force trial or rely on DB logic
             ->allowPromotionCodes()
             ->checkout([
                 'success_url' => route('billing.index') . '?success=true',
                 'cancel_url' => route('billing.index') . '?cancel=true',
             ]);
+
+        return redirect($checkout->asStripeCheckoutSession()->url);
     }
 
     /**
