@@ -44,6 +44,8 @@ class CheckDeadlinesJob implements ShouldQueue
 
             $daysLeft = (int) now()->diffInDays($deadline->expires_at, false);
             
+            Log::info("Deadline {$deadline->id} (Title: {$deadline->title}): Expires at {$deadline->expires_at} (Now: " . now() . "). Days left: {$daysLeft}. Config: " . json_encode($config['days_before']));
+            
             // If daysLeft is negative, it's expired (handled by query above, but double check)
             // If daysLeft is 0, it means same day (less than 24h, but date part diff is 0)
             
