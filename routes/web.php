@@ -44,7 +44,7 @@ Route::middleware(['auth', 'verified', EnsureTenantScope::class])->group(functio
     Route::get('/calendar', App\Livewire\Hearings\HearingsCalendar::class)->name('calendar');
 
     // Evidence Management
-    Route::get('/evidence', EvidenceTable::class)->name('evidence.index');
+    Route::view('/evidence', 'evidence.index')->name('evidence.index');
     Route::get('/evidence/create', EvidenceForm::class)->name('evidence.create');
     Route::get('/evidence/{evidence}/move', CustodyMovementForm::class)->name('evidence.move');
 });
