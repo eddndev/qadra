@@ -10,103 +10,111 @@
     </div>
 
     @if($deadlines->isEmpty())
-        <div class="text-center py-8 text-gray-500 bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <div class="text-center py-8 text-gray-500 bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200">
             <p>No hay plazos pendientes para este caso.</p>
         </div>
     @else
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg border border-gray-200">
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                    <thead class="bg-gray-50 dark:bg-gray-700">
+                <table class="min-w-full divide-y divide-gray-300">
+                    <thead class="bg-[#eef2ff]">
                         <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-gray-900 sm:pl-6 uppercase tracking-wider">
                                 Título / Descripción
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                            <th scope="col" class="px-3 py-3.5 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">
                                 Vencimiento
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                            <th scope="col" class="px-3 py-3.5 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">
                                 Tipo
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                Estatus
+                            <th scope="col" class="px-3 py-3.5 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">
+                                Estado
                             </th>
-                            <th scope="col" class="relative px-6 py-3">
+                            <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                 <span class="sr-only">Acciones</span>
                             </th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                    <tbody class="divide-y divide-gray-200 bg-white">
                         @foreach($deadlines as $deadline)
                             @php
                                 $daysLeft = now()->diffInDays($deadline->expires_at, false);
                                 $isPast = $deadline->expires_at->isPast();
-                                // Urgency Logic
-                                $urgencyClass = 'bg-green-100 text-green-800';
+                                
+                                // Urgency Styling
+                                $rowClass = 'hover:bg-gray-50';
+                                $dateColor = 'text-gray-700';
+                                $statusBadgeClass = 'bg-blue-50 text-blue-700 ring-blue-700/10';
+
                                 if ($deadline->status !== 'cumplido') {
                                     if ($isPast) {
-                                        $urgencyClass = 'bg-red-100 text-red-800'; // Vencido
-                                    } elseif ($daysLeft <= 1) {
-                                        $urgencyClass = 'bg-red-100 text-red-800'; // Crítico
+                                        $rowClass = 'bg-red-50/30 hover:bg-red-50/60';
+                                        $dateColor = 'text-[#A52A2A] font-bold';
+                                        $statusBadgeClass = 'bg-red-50 text-[#A52A2A] ring-[#A52A2A]/20';
                                     } elseif ($daysLeft <= 3) {
-                                        $urgencyClass = 'bg-orange-100 text-orange-800'; // Alto
-                                    } elseif ($daysLeft <= 7) {
-                                        $urgencyClass = 'bg-yellow-100 text-yellow-800'; // Medio
+                                        $dateColor = 'text-[#D97706] font-bold'; // Amber for warning
+                                        $statusBadgeClass = 'bg-amber-50 text-amber-700 ring-amber-600/20';
+                                        if($daysLeft <= 1) {
+                                             $statusBadgeClass = 'bg-red-50 text-[#A52A2A] ring-[#A52A2A]/20'; // Critical if < 24h/1 day
+                                        }
                                     }
+                                } else {
+                                    $statusBadgeClass = 'bg-green-50 text-green-700 ring-green-600/20';
                                 }
                             @endphp
-                            <tr>
-                                <td class="px-6 py-4">
-                                    <div class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                            <tr class="{{ $rowClass }}">
+                                <td class="py-4 pl-4 pr-3 text-sm sm:pl-6">
+                                    <div class="font-medium text-[#111344]">
                                         {{ $deadline->title }}
                                     </div>
                                     @if($deadline->description)
-                                        <div class="text-sm text-gray-500 dark:text-gray-400 truncate max-w-xs">
+                                        <div class="text-xs text-gray-500 truncate max-w-xs mt-0.5">
                                             {{ $deadline->description }}
                                         </div>
                                     @endif
                                     @if($deadline->hearing)
-                                        <div class="text-xs text-indigo-500 mt-1">
-                                            Vinculado a: {{ $deadline->hearing->type }}
+                                        <div class="text-xs text-indigo-500 mt-1 flex items-center">
+                                            <svg class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                                            </svg>
+                                            Audiencia: {{ $deadline->hearing->type }}
                                         </div>
                                     @endif
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900 dark:text-gray-100">
-                                        {{ $deadline->expires_at->format('d/m/Y H:i') }}
-                                    </div>
-                                    @if($deadline->status !== 'cumplido')
-                                        <div class="text-xs font-bold mt-1 {{ str_replace('bg-', 'text-', $urgencyClass) }}">
-                                            @if($isPast)
-                                                Vencido hace {{ abs((int)$daysLeft) }} días
-                                            @else
-                                                Faltan {{ (int)$daysLeft }} días
-                                            @endif
-                                        </div>
-                                    @endif
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-center {{ $dateColor }}">
+                                    {{ $deadline->expires_at->format('d M Y') }}
+                                    <div class="text-xs font-normal text-gray-500">{{ $deadline->expires_at->format('H:i') }}</div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-center">
                                     @if($deadline->is_fatal)
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                        <span class="inline-flex items-center rounded-full bg-red-50 px-2 py-1 text-xs font-bold text-[#A52A2A] ring-1 ring-inset ring-[#A52A2A]/10">
                                             FATAL
                                         </span>
                                     @else
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                                        <span class="inline-flex items-center rounded-full bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
                                             Ordinario
                                         </span>
                                     @endif
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                        {{ $deadline->status === 'pendiente' ? $urgencyClass : '' }}
-                                        {{ $deadline->status === 'cumplido' ? 'bg-green-100 text-green-800' : '' }}
-                                        {{ $deadline->status === 'vencido' ? 'bg-gray-800 text-white' : '' }}">
-                                        {{ ucfirst($deadline->status) }}
-                                    </span>
+                                <td class="whitespace-nowrap px-3 py-4 text-center text-sm">
+                                    @if($deadline->status === 'pendiente')
+                                         <span class="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset {{ $statusBadgeClass }}">
+                                            @if($isPast)
+                                                Vencido ({{ abs((int)$daysLeft) }}d)
+                                            @else
+                                                Faltan {{ (int)$daysLeft }} días
+                                            @endif
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                                            {{ ucfirst($deadline->status) }}
+                                        </span>
+                                    @endif
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <button wire:click="$dispatch('edit-deadline', { deadlineId: '{{ $deadline->id }}' })" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">
-                                        Ver/Editar
+                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                    <button wire:click="$dispatch('edit-deadline', { deadlineId: '{{ $deadline->id }}' })" class="text-indigo-600 hover:text-indigo-900">
+                                        Editar
                                     </button>
                                 </td>
                             </tr>

@@ -11,9 +11,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -50,6 +50,10 @@ Route::middleware(['auth', 'verified', EnsureTenantScope::class, EnsureTenantIsS
     Route::view('/evidence', 'evidence.index')->name('evidence.index');
     Route::get('/evidence/create', EvidenceForm::class)->name('evidence.create');
     Route::get('/evidence/{evidence}/move', CustodyMovementForm::class)->name('evidence.move');
+
+    // Stats & Reports
+    Route::get('/alerts', [\App\Http\Controllers\AlertsController::class, 'index'])->name('alerts.index');
+    Route::get('/reports', [\App\Http\Controllers\ReportsController::class, 'index'])->name('reports.index');
 
     // Billing (BillingPortal.php handles internally permissions for managing)
     // Note: Billing route is allowed by middleware exception, but we keep it inside group for tenant scope
