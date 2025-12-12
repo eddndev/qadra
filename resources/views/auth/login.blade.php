@@ -1,5 +1,5 @@
     <div class="min-h-screen flex items-center justify-center bg-[#111344] p-4">
-        <div class="w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
+        <div class="w-full max-w-5xl bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
             
             <!-- Left Side (Dark Blue) -->
             <div class="md:w-1/2 bg-[#1E293B] p-12 text-white flex flex-col justify-center relative overflow-hidden">
@@ -119,7 +119,7 @@
                         </div>
 
                         <div class="pt-2">
-                            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-full shadow-sm text-sm font-bold text-white bg-[#334D6E] hover:bg-[#243b55] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-bold text-white bg-[#1E40AF] hover:bg-[#111344] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1E40AF] transition-colors">
                                 Iniciar sesión
                             </button>
                         </div>

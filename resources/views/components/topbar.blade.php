@@ -1,4 +1,4 @@
-<header class="bg-white shadow h-16 flex justify-between items-center px-6">
+<header class="bg-white shadow-sm h-16 flex justify-between items-center px-6">
     <!-- Breadcrumbs / Title -->
     <div class="flex items-center">
         @isset($header)
