@@ -112,98 +112,49 @@
                 <!-- Right Column: Recent Activity & System Alerts -->
                 <div class="space-y-8">
                     
-                    <!-- Actividad Reciente (Replica visual de Activity Feed) -->
+                    <!-- Actividad Reciente -->
                     <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
-                        <h2 class="text-lg font-bold text-[#111344] mb-4">Actividad Reciente</h2>
-                        
-                        <div class="relative pl-4 border-l-2 border-gray-100 space-y-6">
-                            <!-- Item 1 -->
-                            <div class="relative">
-                                <div class="absolute -left-[21px] bg-blue-100 p-1 rounded-full border border-white">
-                                    <svg class="w-3 h-3 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                    </svg>
-                                </div>
-                                <div class="text-sm text-gray-800 font-medium">Audiencia reprogramada</div>
-                                <div class="text-xs text-gray-500">CG-2024-001892 - Juicio Oral movido al 15 Dic 2024</div>
-                                <div class="text-xs text-gray-400 mt-1">Hace 2 horas • <a href="#" class="text-blue-600 hover:underline">Ver detalles</a></div>
-                            </div>
-                            <!-- Item 2 -->
-                            <div class="relative">
-                                <div class="absolute -left-[21px] bg-green-100 p-1 rounded-full border border-white">
-                                    <svg class="w-3 h-3 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                </div>
-                                <div class="text-sm text-gray-800 font-medium">Estado de expediente actualizado</div>
-                                <div class="text-xs text-gray-500">CG-2024-002567 pasó a etapa de Juicio Oral</div>
-                                <div class="text-xs text-gray-400 mt-1">Hace 4 horas • <a href="#" class="text-blue-600 hover:underline">Ver detalles</a></div>
-                            </div>
-                             <!-- Item 3 -->
-                            <div class="relative">
-                                <div class="absolute -left-[21px] bg-orange-100 p-1 rounded-full border border-white">
-                                   <svg class="w-3 h-3 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                </div>
-                                <div class="text-sm text-gray-800 font-medium">Nuevo plazo crítico agregado</div>
-                                <div class="text-xs text-gray-500">CG-2024-001847 - Presentación alegatos finales</div>
-                                <div class="text-xs text-gray-400 mt-1">Hace 6 horas • <a href="#" class="text-blue-600 hover:underline">Ver detalles</a></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- System Alerts -->
-                     <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
                         <div class="flex items-center justify-between mb-4">
-                            <h2 class="text-lg font-bold text-[#111344]">Alertas del Sistema</h2>
-                             <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full font-bold">{{ count($systemAlerts) }}</span>
+                            <h2 class="text-lg font-bold text-[#111344]">Actividad Reciente</h2>
+                            <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full font-bold">{{ count($recentActivities) }}</span>
                         </div>
-
-                        <div class="space-y-4">
-                            @foreach($systemAlerts as $alert)
-                                @php
-                                    $bgColor = match($alert['type']) {
-                                        'error' => 'bg-red-50 border-red-100',
-                                        'warning' => 'bg-amber-50 border-amber-100',
-                                        'info' => 'bg-blue-50 border-blue-100',
-                                        default => 'bg-gray-50 border-gray-100',
-                                    };
-                                    $textColor = match($alert['type']) {
-                                        'error' => 'text-red-800',
-                                        'warning' => 'text-amber-800',
-                                        'info' => 'text-blue-800',
-                                        default => 'text-gray-800',
-                                    };
-                                    $icon = match($alert['type']) {
-                                        'error' => '<svg class="w-4 h-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>',
-                                        'warning' => '<svg class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>',
-                                        'info' => '<svg class="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>',
-                                    };
-                                    $badge = match($alert['type']) {
-                                        'error' => '<span class="text-xs font-bold text-red-600 ml-2">Error</span>',
-                                        'warning' => '<span class="text-xs font-bold text-amber-600 ml-2">Advertencia</span>',
-                                        'info' => '<span class="text-xs font-bold text-blue-600 ml-2">Información</span>',
-                                    };
-                                @endphp
-
-                                <div class="{{ $bgColor }} border rounded-md p-3">
-                                    <div class="flex items-start gap-2">
-                                        <div class="mt-0.5">{!! $icon !!}</div>
-                                        <div>
-                                            <div class="flex items-center">
-                                                <h3 class="text-sm font-bold text-[#111344]">{{ $alert['title'] }}</h3>
-                                                {!! $badge !!}
-                                            </div>
-                                            <p class="text-xs {{ $textColor }} mt-1">
-                                                {{ $alert['description'] }}
-                                            </p>
-                                            <p class="text-[10px] text-gray-500 mt-2 font-medium">{{ $alert['time_ago'] }}</p>
+                        
+                        @if($recentActivities->isEmpty())
+                            <div class="text-sm text-gray-500 text-center py-4">No hay actividad reciente.</div>
+                        @else
+                            <div class="relative pl-4 border-l-2 border-gray-100 space-y-6">
+                                @foreach($recentActivities as $activity)
+                                    @php
+                                        $iconColors = [
+                                            'Llamada Telefónica' => 'bg-blue-100 text-blue-600',
+                                            'Email' => 'bg-green-100 text-green-600',
+                                            'Reunión' => 'bg-purple-100 text-purple-600',
+                                            'Visita a Juzgado' => 'bg-amber-100 text-amber-600',
+                                            'Presentación de Escrito' => 'bg-indigo-100 text-indigo-600',
+                                            'Diligencia' => 'bg-teal-100 text-teal-600',
+                                        ];
+                                        $colorClass = $iconColors[$activity->type] ?? 'bg-gray-100 text-gray-600';
+                                    @endphp
+                                    <div class="relative">
+                                        <div class="absolute -left-[21px] {{ $colorClass }} p-1 rounded-full border border-white">
+                                            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </div>
+                                        <div class="text-sm text-gray-800 font-medium">{{ $activity->title }}</div>
+                                        <div class="text-xs text-gray-500">
+                                            {{ $activity->legalCase->internal_folio ?? 'Sin folio' }} - {{ $activity->type }}
+                                        </div>
+                                        <div class="text-xs text-gray-400 mt-1">
+                                            {{ $activity->created_at->diffForHumans() }}
+                                            @if($activity->legalCase)
+                                                • <a href="{{ route('cases.show', $activity->legalCase->id) }}" class="text-blue-600 hover:underline">Ver expediente</a>
+                                            @endif
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        </div>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
 
                 </div>

@@ -4,48 +4,44 @@ namespace App\Http\Controllers;
 
 use App\Models\LegalCase;
 use App\Models\Hearing;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ReportsController extends Controller
 {
     public function index()
     {
-        // 1. Summary Stats
+        // Summary Stats
         $totalCases = LegalCase::count();
         $closedCases = LegalCase::where('status', 'closed')->count();
         $alertCases = LegalCase::whereHas('deadlines', function ($q) {
-            $q->where('expires_at', '<', now());
+            $q->where('expires_at', '<', now())->where('status', '!=', 'completed');
         })->count();
         $hearingsRealized = Hearing::where('status', 'held')->count();
 
-        // 2. Chart Data: New Cases per Month (Last 6 months)
-        $casesByMonth = LegalCase::select(DB::raw("COUNT(*) as count"), DB::raw("strftime('%Y-%m', created_at) as month_name"))
-            ->where('created_at', '>=', now()->subMonths(6))
-            ->groupBy('month_name')
-            ->orderBy('month_name')
-            ->get();
-        
-        // Mocking if empty for prototype visualization
+        // Chart Data: New Cases per Month (Last 6 months)
+        // Using database-agnostic approach with Carbon for grouping
+        $casesByMonth = LegalCase::where('created_at', '>=', now()->subMonths(6))
+            ->get()
+            ->groupBy(fn ($case) => $case->created_at->format('Y-m'))
+            ->map(fn ($group) => $group->count())
+            ->sortKeys();
+
         if ($casesByMonth->isEmpty()) {
-            $months = collect(['Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov']);
-            $chartLabels = $months;
-            $chartData = collect([14, 21, 18, 24, 28, 25]);
+            // Fallback placeholder data when no cases exist
+            $chartLabels = collect(['Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov']);
+            $chartData = collect([0, 0, 0, 0, 0, 0]);
         } else {
-            $chartLabels = $casesByMonth->pluck('month_name');
-            $chartData = $casesByMonth->pluck('count');
+            $chartLabels = $casesByMonth->keys()->map(fn ($k) => \Carbon\Carbon::parse($k)->translatedFormat('M'));
+            $chartData = $casesByMonth->values();
         }
 
-        // 3. Chart Data: Case Results (Distribution)
-        // Mock distribution based on prototype image (Acuerdo, Ganado, Pendiente, Perdido)
-        $resultsDistribution = [
-            'Acuerdo' => 15,
-            'Ganado' => 25,
-            'Pendiente' => 50,
-            'Perdido' => 10
-        ];
+        // Case Results Distribution (based on actual status field)
+        $resultsDistribution = LegalCase::select('status', DB::raw('count(*) as count'))
+            ->groupBy('status')
+            ->pluck('count', 'status')
+            ->toArray();
 
-        // 4. Case Details Table (Pagination)
+        // Case Details Table with pagination
         $cases = LegalCase::with('deadlines')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
