@@ -1,27 +1,34 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+    <!-- No Header Slot -->
 
-    <div class="py-12">
+    <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
-                <div class="max-w-xl">
+            
+            <div class="flex items-center justify-between mb-4">
+                <h1 class="text-3xl font-bold text-[#111344]">Configuración</h1>
+            </div>
+
+            <p class="text-gray-500 mb-6">Gestiona tu perfil, equipo, notificaciones y preferencias de seguridad</p>
+
+            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg overflow-hidden">
+                <div class="p-8">
+                     <h2 class="text-xl font-bold text-[#111344] dark:text-gray-200 mb-1">Información Personal</h2>
+                     <p class="text-gray-500 dark:text-gray-400 mb-8">Actualiza tus datos personales y profesionales</p>
+
                     @include('profile.partials.update-profile-information-form')
                 </div>
             </div>
 
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
-                <div class="max-w-xl">
+            <!-- Keep Password and Delete sections below for functionality, though prototype focuses on Profile Info -->
+             <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg overflow-hidden">
+                <div class="p-8">
                     @include('profile.partials.update-password-form')
                 </div>
             </div>
 
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
+            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg overflow-hidden">
+                <div class="p-8">
+                     @include('profile.partials.delete-user-form')
                 </div>
             </div>
         </div>
