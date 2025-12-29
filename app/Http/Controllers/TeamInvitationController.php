@@ -22,7 +22,7 @@ class TeamInvitationController extends Controller
     {
         // Ensure user has permission to invite (Check Policy via Gate in route or here)
         // $this->authorize('create', TeamInvitation::class);
-        
+
         return view('team.invite');
     }
 
@@ -93,7 +93,7 @@ class TeamInvitationController extends Controller
         //   - If email matches -> Join
         //   - If email differs -> Logout and ask to login with correct email? Or allow mapping? 
         //     Usually, invite is strictly for that email.
-        
+
         // Simplest MVP:
         if (!Auth::check()) {
             // Check if user exists
@@ -129,7 +129,7 @@ class TeamInvitationController extends Controller
                     'joined_at' => now(),
                     'invited_by' => $invitation->invited_by,
                 ]);
-                
+
                 // Assign Spatie Role
                 setPermissionsTeamId($tenant->id);
                 $user->assignRole($invitation->role);
@@ -142,8 +142,12 @@ class TeamInvitationController extends Controller
         });
 
         // Switch to new tenant context?
-        session(['current_tenant_id' => $invitation->tenant_id]);
-        
-        return redirect()->route('dashboard')->with('status', 'joined-team');
+        // session(['current_tenant_id' => $invitation->tenant_id]); // Session might be lost on cross-domain redirect anyway
+
+        $centralDomain = parse_url(config('app.url'), PHP_URL_HOST) ?? config('app.url');
+        $protocol = $request->secure() ? 'https://' : 'http://';
+        $tenantUrl = $protocol . $invitation->tenant->slug . '.' . $centralDomain . '/dashboard';
+
+        return redirect()->to($tenantUrl)->with('status', 'joined-team');
     }
 }

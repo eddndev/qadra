@@ -4,8 +4,9 @@
             class="flex items-center max-w-xs text-sm font-bold text-gray-700 bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             id="user-menu-button" aria-expanded="false" aria-haspopup="true">
             <span class="sr-only">Abrir menú de despacho</span>
-            <div class="flex items-center px-3 py-2 border border-gray-300 rounded-md">
-                <span class="mr-2">{{ $currentTenant->name ?? 'Seleccionar Despacho' }}</span>
+            <div
+                class="flex items-center px-3 py-2 border border-gray-300 rounded-full bg-white hover:bg-gray-50 transition ease-in-out duration-150">
+                <span class="mr-2 text-gray-700">{{ $currentTenant->name ?? 'Seleccionar Despacho' }}</span>
                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                     fill="currentColor" aria-hidden="true">
                     <path fill-rule="evenodd"

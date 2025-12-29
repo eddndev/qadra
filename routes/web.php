@@ -5,15 +5,14 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TeamInvitationController;
 use App\Http\Middleware\EnsureTenantScope;
 use App\Http\Middleware\EnsureTenantIsSubscribed;
+use App\Http\Middleware\IdentifyTenant;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+// Dashboard moved to tenant group
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -33,7 +32,9 @@ use App\Livewire\Evidence\EvidenceTable;
 use App\Livewire\Billing\BillingPortal;
 
 // Grupo Protegido por Tenant Scope y Suscripción
-Route::middleware(['auth', 'verified', EnsureTenantScope::class, EnsureTenantIsSubscribed::class])->group(function () {
+Route::middleware(['auth', 'verified', IdentifyTenant::class, EnsureTenantScope::class, EnsureTenantIsSubscribed::class])->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+
     Route::view('/team', 'team.index')->name('team.index');
     Route::get('/team/invite', [TeamInvitationController::class, 'create'])->name('team.invite');
     Route::post('/team/invite', [TeamInvitationController::class, 'store'])->name('team.invite.store');
@@ -63,4 +64,4 @@ Route::middleware(['auth', 'verified', EnsureTenantScope::class, EnsureTenantIsS
 // Public route for joining (middleware handling inside controller for auth redirect)
 Route::get('/team/join/{token}', [TeamInvitationController::class, 'accept'])->name('team.join');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
