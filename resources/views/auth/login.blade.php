@@ -3,7 +3,7 @@
         <div class="w-full max-w-5xl bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
 
             <!-- Left Side (Dark Blue) -->
-            <div class="md:w-1/2 bg-[#1E293B] p-12 text-white flex flex-col justify-center relative overflow-hidden">
+            <div class="md:w-1/2 bg-[#111344] p-12 text-white flex flex-col justify-center relative overflow-hidden">
                 <!-- Background Gradient Effect -->
                 <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#111344] to-transparent opacity-80">
                 </div>
@@ -150,9 +150,15 @@
 
                         <div class="text-center mt-4">
                             @if (Route::has('password.request'))
-                                <a class="text-sm font-medium text-gray-500 hover:text-blue-700"
+                                <a class="text-sm font-medium text-gray-500 hover:text-blue-700 block mb-2"
                                     href="{{ route('password.request') }}">
                                     ¿Olvidaste tu contraseña?
+                                </a>
+                            @endif
+                            @if (Route::has('register'))
+                                <a class="text-sm font-bold text-[#1E40AF] hover:text-[#111344]"
+                                    href="{{ route('register') }}">
+                                    ¿No tienes cuenta? <span class="underline">Regístrate</span>
                                 </a>
                             @endif
                         </div>
