@@ -146,6 +146,7 @@
   /* Estilos base del documento */
   html {
     scroll-behavior: smooth;
+    color-scheme: light;
   }
 
   body {
