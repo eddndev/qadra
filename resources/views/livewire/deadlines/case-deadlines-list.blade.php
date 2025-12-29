@@ -1,6 +1,6 @@
 <div>
     <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Plazos y Términos</h3>
+        <h3 class="text-lg font-medium text-gray-900">Plazos y Términos</h3>
         <button 
             x-data=""
             x-on:click.prevent="$dispatch('open-modal', 'deadline-form-modal')"
@@ -10,11 +10,11 @@
     </div>
 
     @if($deadlines->isEmpty())
-        <div class="text-center py-8 text-gray-500 bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200">
+        <div class="text-center py-8 text-gray-500 bg-white rounded-lg shadow-sm p-6 border border-gray-200">
             <p>No hay plazos pendientes para este caso.</p>
         </div>
     @else
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg border border-gray-200">
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-200">
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-300">
                     <thead class="bg-[#eef2ff]">
