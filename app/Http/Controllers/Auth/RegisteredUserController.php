@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Rules\ValidRfc;
 
 class RegisteredUserController extends Controller
 {
@@ -39,19 +40,17 @@ class RegisteredUserController extends Controller
             // Tenant Info
             'company_name' => ['required', 'string', 'max:255'],
             'tax_id' => [
-                'required', 
-                'string', 
-                'max:13', 
-                'regex:/^([A-ZÑ\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1]))([A-Z\d]{3})?$/i'
+                'required',
+                'string',
+                'max:13',
+                new ValidRfc,
             ],
             'plan_id' => ['required', 'exists:subscription_tiers,id'],
-            
+
             // User Info
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ], [
-            'tax_id.regex' => 'El RFC no tiene un formato válido.',
         ]);
 
         $tenant = DB::transaction(function () use ($request) {

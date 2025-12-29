@@ -1,18 +1,19 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Crear Nuevo Despacho') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+
                     <div class="mb-6">
-                        <p class="text-sm text-gray-600 dark:text-gray-400">
-                            Estás creando un nuevo espacio de trabajo asociado a tu cuenta <strong>{{ Auth::user()->email }}</strong>.
+                        <p class="text-sm text-gray-600">
+                            Estás creando un nuevo espacio de trabajo asociado a tu cuenta
+                            <strong>{{ Auth::user()->email }}</strong>.
                             Serás el administrador (Owner) de este nuevo despacho.
                         </p>
                     </div>
@@ -23,24 +24,28 @@
                         <!-- Company Name -->
                         <div>
                             <x-input-label for="company_name" :value="__('Nombre del Despacho')" />
-                            <x-text-input id="company_name" class="block mt-1 w-full" type="text" name="company_name" :value="old('company_name')" required autofocus />
+                            <x-text-input id="company_name" class="block mt-1 w-full" type="text" name="company_name"
+                                :value="old('company_name')" required autofocus />
                             <x-input-error :messages="$errors->get('company_name')" class="mt-2" />
                         </div>
 
                         <!-- RFC -->
                         <div class="mt-4">
                             <x-input-label for="tax_id" :value="__('RFC del Despacho')" />
-                            <x-text-input id="tax_id" class="block mt-1 w-full uppercase" type="text" name="tax_id" :value="old('tax_id')" required placeholder="XAXX010101000" />
+                            <x-text-input id="tax_id" class="block mt-1 w-full uppercase" type="text" name="tax_id"
+                                :value="old('tax_id')" required placeholder="XAXX010101000" />
                             <x-input-error :messages="$errors->get('tax_id')" class="mt-2" />
                         </div>
 
                         <!-- Plan Selection -->
                         <div class="mt-4">
                             <x-input-label for="plan_id" :value="__('Plan')" />
-                            <select id="plan_id" name="plan_id" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                            <select id="plan_id" name="plan_id"
+                                class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                                 @foreach($plans as $plan)
                                     <option value="{{ $plan->id }}" {{ old('plan_id') == $plan->id ? 'selected' : '' }}>
-                                        {{ $plan->name }} - ${{ number_format($plan->price_monthly / 100, 2) }}/mes ({{ $plan->max_users }} usuarios)
+                                        {{ $plan->name }} - ${{ number_format($plan->price_monthly / 100, 2) }}/mes
+                                        ({{ $plan->max_users }} usuarios)
                                     </option>
                                 @endforeach
                             </select>
@@ -48,7 +53,7 @@
                         </div>
 
                         <div class="flex items-center justify-end mt-6">
-                            <a href="{{ route('dashboard') }}" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 mr-4">
+                            <a href="{{ route('dashboard') }}" class="text-sm text-gray-600 hover:text-gray-900 mr-4">
                                 Cancelar
                             </a>
 
