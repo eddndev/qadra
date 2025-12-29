@@ -3,7 +3,7 @@
         <div class="w-full max-w-5xl bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
 
             <!-- Left Side (Dark Blue) -->
-            <div class="md:w-1/2 bg-[#111344] p-12 text-white flex flex-col justify-center relative overflow-hidden">
+            <div class="md:w-1/2 bg-[#1E293B] p-12 text-white flex flex-col justify-center relative overflow-hidden">
                 <!-- Background Gradient Effect -->
                 <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#111344] to-transparent opacity-80">
                 </div>
@@ -15,7 +15,7 @@
                         <span class="text-4xl font-bold tracking-tight">Qadra</span>
                     </div>
 
-                    <h1 class="text-3xl font-bold mb-4 leading-tight">
+                    <h1 class="text-3xl font-bold mb-4 leading-tight text-white">
                         Gestión integral de expedientes y plazos penales
                     </h1>
                     <p class="text-blue-200 mb-8 text-lg">
@@ -79,7 +79,7 @@
 
                         <!-- Email Address -->
                         <div>
-                            <x-input-label for="email" class="mb-1" :value="__('Correo electrónico')" />
+                            <x-input-label for="email" class="mb-1 !text-gray-900 !font-bold" :value="__('Correo electrónico')" />
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24"
@@ -97,7 +97,8 @@
 
                         <!-- Password -->
                         <div x-data="{ show: false }">
-                            <x-input-label for="password" class="mb-1" :value="__('Contraseña')" />
+                            <x-input-label for="password" class="mb-1 !text-gray-900 !font-bold"
+                                :value="__('Contraseña')" />
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24"
