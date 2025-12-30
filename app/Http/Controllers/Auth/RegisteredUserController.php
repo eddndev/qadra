@@ -36,75 +36,76 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // 1. Validate User Info (Always Required)
         $request->validate([
-            // Tenant Info
-            'company_name' => ['required', 'string', 'max:255'],
-            'tax_id' => [
-                'required',
-                'string',
-                'max:13',
-                new ValidRfc,
-            ],
-            'plan_id' => ['required', 'exists:subscription_tiers,id'],
-
-            // User Info
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $tenant = DB::transaction(function () use ($request) {
-            // 1. Create Tenant
-            $slug = Str::slug($request->company_name);
-            // Ensure unique slug (basic implementation)
-            if (Tenant::where('slug', $slug)->exists()) {
-                $slug = $slug . '-' . Str::random(4);
-            }
+        // 2. Check if registering a Firm (Optional)
+        $hasFirm = $request->filled('company_name');
 
-            $tenant = Tenant::create([
-                'name' => $request->company_name,
-                'slug' => $slug,
-                'tax_id' => strtoupper($request->tax_id),
-                'subscription_tier_id' => $request->plan_id,
-                'status' => 'trial', // Start as trial
-                'trial_ends_at' => now()->addDays(30),
-                'current_users_count' => 1,
+        if ($hasFirm) {
+            $request->validate([
+                'company_name' => ['required', 'string', 'max:255'],
+                'tax_id' => ['required', 'string', 'max:13', new ValidRfc],
+                'plan_id' => ['required', 'exists:subscription_tiers,id'],
             ]);
+        }
 
-            // 2. Dispatch TenantCreated event (Creates Roles)
-            // We dispatch it BEFORE creating the user relationship so roles exist
-            event(new TenantCreated($tenant));
+        // 3. Create User (Always)
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
 
-            // 3. Create User
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-            ]);
+        event(new Registered($user));
+        Auth::login($user);
 
-            // 4. Attach User to Tenant as Owner
-            $tenant->users()->attach($user->id, [
-                'role' => 'owner',
-                'is_active' => true,
-                'joined_at' => now(),
-            ]);
+        // 4. Create Tenant (If applicable)
+        if ($hasFirm) {
+            $tenant = DB::transaction(function () use ($request, $user) {
+                $slug = Str::slug($request->company_name);
+                if (Tenant::where('slug', $slug)->exists()) {
+                    $slug = $slug . '-' . Str::random(4);
+                }
 
-            // 5. Assign Spatie Role (Scoped by Tenant)
-            setPermissionsTeamId($tenant->id);
-            $user->assignRole('owner');
+                $tenant = Tenant::create([
+                    'name' => $request->company_name,
+                    'slug' => $slug,
+                    'tax_id' => strtoupper($request->tax_id),
+                    'subscription_tier_id' => $request->plan_id,
+                    'status' => 'trial',
+                    'trial_ends_at' => now()->addDays(30),
+                    'current_users_count' => 1,
+                ]);
 
-            event(new Registered($user));
+                event(new TenantCreated($tenant));
 
-            Auth::login($user);
+                // Attach User as Owner
+                $tenant->users()->attach($user->id, [
+                    'role' => 'owner',
+                    'is_active' => true,
+                    'joined_at' => now(),
+                ]);
 
-            return $tenant;
-        });
+                setPermissionsTeamId($tenant->id);
+                $user->assignRole('owner');
 
-        // Redirect to Tenant Subdomain
-        $centralDomain = parse_url(config('app.url'), PHP_URL_HOST) ?? config('app.url');
-        $protocol = request()->secure() ? 'https://' : 'http://';
-        $tenantUrl = $protocol . $tenant->slug . '.' . $centralDomain . '/dashboard';
+                return $tenant;
+            });
 
-        return redirect()->to($tenantUrl);
+            // Redirect to Tenant Dashboard
+            $centralDomain = parse_url(config('app.url'), PHP_URL_HOST) ?? config('app.url');
+            $protocol = request()->secure() ? 'https://' : 'http://';
+            $tenantUrl = $protocol . $tenant->slug . '.' . $centralDomain . '/dashboard';
+
+            return redirect()->to($tenantUrl);
+        }
+
+        // 5. No Firm -> Redirect to User Portal
+        return redirect()->route('portal');
     }
 }

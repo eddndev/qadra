@@ -43,8 +43,8 @@ class AuthenticatedSessionController extends Controller
             return redirect($tenantUrl);
         }
 
-        // If user has no tenants, redirect to tenant creation as they cannot access dashboard
-        return redirect()->route('tenant.create');
+        // If user has no tenants, redirect to User Portal
+        return redirect()->route('portal');
     }
 
     /**

@@ -22,6 +22,9 @@ Route::middleware('auth')->group(function () {
     // Create New Tenant (Authenticated)
     Route::get('/tenant/create', [TenantRegistrationController::class, 'create'])->name('tenant.create');
     Route::post('/tenant/store', [TenantRegistrationController::class, 'store'])->name('tenant.store');
+
+    // Tenantless Dashboard (User Portal)
+    Route::get('/portal', [\App\Http\Controllers\DashboardController::class, 'index'])->name('portal');
 });
 
 use App\Livewire\Cases\CaseList;
