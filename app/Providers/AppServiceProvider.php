@@ -41,6 +41,10 @@ class AppServiceProvider extends ServiceProvider
                 $centralDomain = parse_url($frontendUrl, PHP_URL_HOST) ?? $frontendUrl;
                 $protocol = request()->secure() ? 'https://' : 'http://';
                 $frontendUrl = $protocol . $tenant->slug . '.' . $centralDomain;
+            } else {
+                // IMPORTANT: For tenantless users, ensure we use the APP_URL (Central Domain)
+                // This prevents signature mismatches if the request originated from a different context
+                $frontendUrl = config('app.url');
             }
 
             // Temporarily force root URL to generate correct signature

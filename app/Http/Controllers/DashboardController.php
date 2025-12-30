@@ -13,6 +13,17 @@ class DashboardController extends Controller
         $tenant = \App\Models\Tenant::getGlobalTenant();
 
         if (!$tenant) {
+            // Check if user actually has tenants but is accessing the central domain portal
+            if (\Illuminate\Support\Facades\Auth::user()->tenants->isNotEmpty()) {
+                $userTenant = \Illuminate\Support\Facades\Auth::user()->tenants->sortByDesc('created_at')->first();
+                $centralDomain = config('app.url');
+                $domainHost = parse_url($centralDomain, PHP_URL_HOST) ?? $centralDomain;
+                $protocol = request()->secure() ? 'https://' : 'http://';
+                $tenantUrl = $protocol . $userTenant->slug . '.' . $domainHost . '/dashboard';
+
+                return redirect($tenantUrl);
+            }
+
             // Tenantless Mode (User Portal)
             return view('dashboard', [
                 'isTenantless' => true,

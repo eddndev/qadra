@@ -1,13 +1,26 @@
-<!-- Dashboard -->
-<a href="{{ route('dashboard') }}"
-    class="{{ request()->routeIs('dashboard') ? 'bg-brand-500 text-white' : 'text-gray-300 hover:bg-brand-500 hover:text-white' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-    <svg class="mr-3 flex-shrink-0 h-6 w-6 {{ request()->routeIs('dashboard') ? 'text-white' : 'text-gray-400 group-hover:text-white' }}"
-        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-    </svg>
-    Dashboard
-</a>
+<!-- Dashboard (Only show if in a Tenant context or if we have a specific Portal ink) -->
+@if(\App\Models\Tenant::getGlobalTenant())
+    <a href="{{ route('dashboard') }}"
+        class="{{ request()->routeIs('dashboard') ? 'bg-brand-500 text-white' : 'text-gray-300 hover:bg-brand-500 hover:text-white' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+        <svg class="mr-3 flex-shrink-0 h-6 w-6 {{ request()->routeIs('dashboard') ? 'text-white' : 'text-gray-400 group-hover:text-white' }}"
+            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+        </svg>
+        Dashboard
+    </a>
+@else
+    <!-- Portal Link for Tenantless Users -->
+    <a href="{{ route('portal') }}"
+        class="{{ request()->routeIs('portal') ? 'bg-brand-500 text-white' : 'text-gray-300 hover:bg-brand-500 hover:text-white' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+        <svg class="mr-3 flex-shrink-0 h-6 w-6 {{ request()->routeIs('portal') ? 'text-white' : 'text-gray-400 group-hover:text-white' }}"
+            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+        </svg>
+        Inicio
+    </a>
+@endif
 
 @if(\App\Models\Tenant::getGlobalTenant())
     <!-- Expedientes -->
