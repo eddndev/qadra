@@ -9,7 +9,7 @@ use App\Http\Middleware\IdentifyTenant;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('public.index');
 });
 
 // Dashboard moved to tenant group
