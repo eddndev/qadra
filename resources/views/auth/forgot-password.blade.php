@@ -1,26 +1,85 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+<x-blank-layout>
+    <div class="min-h-screen flex items-center justify-center bg-[#111344] p-4">
+        <div class="w-full max-w-5xl bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
+
+            <!-- Left Side (Dark Blue) -->
+            <div
+                class="hidden md:flex md:w-1/2 bg-[#1E293B] p-12 text-white flex-col justify-center relative overflow-hidden">
+                <!-- Background Gradient Effect -->
+                <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#111344] to-transparent opacity-80">
+                </div>
+
+                <div class="relative z-10">
+                    <!-- Brand -->
+                    <div class="flex items-center gap-3 mb-8">
+                        <x-application-logo class="h-12 w-12 text-white" />
+                        <span class="text-4xl font-bold tracking-tight">Qadra</span>
+                    </div>
+
+                    <h1 class="text-3xl font-bold mb-4 leading-tight text-white">
+                        Recuperación de Acceso
+                    </h1>
+                    <p class="text-blue-200 mb-8 text-lg">
+                        Restablece tu contraseña de forma segura para recuperar el acceso a tu plataforma de gestión.
+                    </p>
+
+                    <div class="mt-8 flex items-center gap-2 text-sm text-gray-400">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                        <span>Proceso seguro y encriptado</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side (Form) -->
+            <div class="md:w-1/2 bg-[#E2E8F0] p-12 flex flex-col justify-center">
+                <div class="max-w-md mx-auto w-full">
+                    <h2 class="text-3xl font-bold text-[#111344] mb-2">¿Olvidaste tu contraseña?</h2>
+                    <p class="text-gray-600 mb-8">
+                        No hay problema. Indícanos tu correo electrónico y te enviaremos un enlace para restablecerla.
+                    </p>
+
+                    <!-- Session Status -->
+                    <x-auth-session-status class="mb-4" :status="session('status')" />
+
+                    <form method="POST" action="{{ route('password.email') }}" class="space-y-5">
+                        @csrf
+
+                        <!-- Email Address -->
+                        <div>
+                            <x-input-label for="email" class="mb-1 !text-gray-900 !font-bold" :value="__('Correo electrónico')" />
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <x-text-input id="email" type="email" name="email" :value="old('email')" required
+                                    autofocus class="pl-10 pr-3 placeholder-gray-400"
+                                    placeholder="usuario@fiscalia.gob.cl" />
+                            </div>
+                            <x-input-error :messages="$errors->get('email')" class="mt-1" />
+                        </div>
+
+                        <div class="pt-2">
+                            <x-primary-button class="w-full justify-center">
+                                Enviar enlace de recuperación
+                            </x-primary-button>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <a class="text-sm font-medium text-gray-500 hover:text-blue-700"
+                                href="{{ route('login') }}">
+                                ← Volver al inicio de sesión
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('password.email') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
-                autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+</x-blank-layout>
