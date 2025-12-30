@@ -61,9 +61,6 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
-        Auth::login($user);
-
         // 4. Create Tenant (If applicable)
         if ($hasFirm) {
             $tenant = DB::transaction(function () use ($request, $user) {
@@ -102,10 +99,19 @@ class RegisteredUserController extends Controller
             $protocol = request()->secure() ? 'https://' : 'http://';
             $tenantUrl = $protocol . $tenant->slug . '.' . $centralDomain . '/dashboard';
 
+            // Refresh user to ensure relationships are loaded for the Registered event (Verification URL)
+            $user->refresh();
+
+            event(new Registered($user));
+            Auth::login($user);
+
             return redirect()->to($tenantUrl);
         }
 
         // 5. No Firm -> Redirect to User Portal
+        event(new Registered($user));
+        Auth::login($user);
+
         return redirect()->route('portal');
     }
 }

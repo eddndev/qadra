@@ -85,24 +85,54 @@
                 <div class="max-w-md mx-auto w-full">
                     <h2 class="text-2xl md:text-3xl font-bold text-[#111344] mb-2">Crear Cuenta</h2>
                     
-                    <!-- Progress Indicator -->
-                    <div class="flex items-center gap-2 mb-6 text-sm font-medium text-gray-500" x-show="register_firm !== false">
-                        <span :class="step >= 1 ? 'text-blue-600' : ''">Usuario</span>
-                        <span>/</span>
-                        <span :class="step >= 2 ? 'text-blue-600' : ''">Tipo</span>
-                        <span x-show="register_firm === true">
-                            <span>/</span>
-                            <span :class="step >= 3 ? 'text-blue-600' : ''">Despacho</span>
-                            <span>/</span>
-                            <span :class="step >= 4 ? 'text-blue-600' : ''">Plan</span>
-                        </span>
+                    <!-- Modern Progress Bar -->
+                    <div class="mb-8" x-show="register_firm !== false">
+                        <div class="relative flex items-center justify-between w-full">
+                            <div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-full h-1 bg-gray-200 z-0"></div>
+                            
+                            <!-- Step 1: User -->
+                            <div class="relative z-10 flex flex-col items-center">
+                                <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors duration-300"
+                                    :class="step >= 1 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'">
+                                    1
+                                </div>
+                                <span class="text-xs font-medium mt-1" :class="step >= 1 ? 'text-blue-600' : 'text-gray-400'">Usuario</span>
+                            </div>
+
+                            <!-- Step 2: Type -->
+                            <div class="relative z-10 flex flex-col items-center">
+                                <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors duration-300"
+                                    :class="step >= 2 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'">
+                                    2
+                                </div>
+                                <span class="text-xs font-medium mt-1" :class="step >= 2 ? 'text-blue-600' : 'text-gray-400'">Tipo</span>
+                            </div>
+
+                            <!-- Step 3: Firm (Conditional) -->
+                            <div class="relative z-10 flex flex-col items-center" x-show="register_firm === true">
+                                <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors duration-300"
+                                    :class="step >= 3 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'">
+                                    3
+                                </div>
+                                <span class="text-xs font-medium mt-1" :class="step >= 3 ? 'text-blue-600' : 'text-gray-400'">Despacho</span>
+                            </div>
+
+                            <!-- Step 4: Plan (Conditional) -->
+                            <div class="relative z-10 flex flex-col items-center" x-show="register_firm === true">
+                                <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors duration-300"
+                                    :class="step >= 4 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'">
+                                    4
+                                </div>
+                                <span class="text-xs font-medium mt-1" :class="step >= 4 ? 'text-blue-600' : 'text-gray-400'">Plan</span>
+                            </div>
+                        </div>
                     </div>
 
                     <form method="POST" action="{{ route('register') }}" id="registerForm" class="space-y-5">
                         @csrf
 
                         <!-- STEP 1: User Info -->
-                        <div x-show="step === 1" x-transition>
+                        <div x-show="step === 1" x-transition @keydown.enter.prevent="nextStep()">
                              <p class="text-gray-600 mb-6 font-medium">Comencemos con tus datos personales.</p>
                             
                             <!-- Name -->
@@ -166,7 +196,7 @@
                         </div>
 
                         <!-- STEP 3: Firm Info -->
-                        <div x-show="step === 3" x-transition style="display: none;">
+                        <div x-show="step === 3" x-transition style="display: none;" @keydown.enter.prevent="nextStep()">
                             <p class="text-gray-600 mb-6 font-medium">Datos del Despacho.</p>
 
                             <!-- Company Name -->
