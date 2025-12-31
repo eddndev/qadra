@@ -3,7 +3,8 @@
         <div class="w-full max-w-5xl bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
 
             <!-- Left Side (Dark Blue) -->
-            <div class="md:w-1/2 bg-[#1E293B] p-12 text-white flex flex-col justify-center relative overflow-hidden">
+            <div
+                class="hidden md:flex md:w-1/2 bg-[#1E293B] p-12 text-white flex-col justify-center relative overflow-hidden">
                 <!-- Background Gradient Effect -->
                 <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#111344] to-transparent opacity-80">
                 </div>

@@ -9,12 +9,12 @@ use App\Http\Middleware\IdentifyTenant;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('public.index');
 });
 
 // Dashboard moved to tenant group
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -22,6 +22,9 @@ Route::middleware('auth')->group(function () {
     // Create New Tenant (Authenticated)
     Route::get('/tenant/create', [TenantRegistrationController::class, 'create'])->name('tenant.create');
     Route::post('/tenant/store', [TenantRegistrationController::class, 'store'])->name('tenant.store');
+
+    // Tenantless Dashboard (User Portal)
+    Route::get('/portal', [\App\Http\Controllers\DashboardController::class, 'index'])->name('portal');
 });
 
 use App\Livewire\Cases\CaseList;

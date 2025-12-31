@@ -21,7 +21,7 @@ Route::middleware('guest')->group(function () {
     // Invited User Registration
     Route::get('register/invited', [InvitedUserController::class, 'create'])
         ->name('register.invited');
-    
+
     Route::post('register/invited', [InvitedUserController::class, 'store'])
         ->name('register.invited.store');
 
@@ -48,7 +48,7 @@ Route::middleware('auth')->group(function () {
         ->name('verification.notice');
 
     Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-        ->middleware(['signed', 'throttle:6,1'])
+        ->middleware([\App\Http\Middleware\FixAmpSignature::class, 'signed', 'throttle:6,1'])
         ->name('verification.verify');
 
     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])

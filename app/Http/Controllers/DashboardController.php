@@ -10,6 +10,30 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $tenant = \App\Models\Tenant::getGlobalTenant();
+
+        if (!$tenant) {
+            // Check if user actually has tenants but is accessing the central domain portal
+            if (\Illuminate\Support\Facades\Auth::user()->tenants->isNotEmpty()) {
+                $userTenant = \Illuminate\Support\Facades\Auth::user()->tenants->sortByDesc('created_at')->first();
+                $centralDomain = config('app.url');
+                $domainHost = parse_url($centralDomain, PHP_URL_HOST) ?? $centralDomain;
+                $protocol = request()->secure() ? 'https://' : 'http://';
+                $tenantUrl = $protocol . $userTenant->slug . '.' . $domainHost . '/dashboard';
+
+                return redirect($tenantUrl);
+            }
+
+            // Tenantless Mode (User Portal)
+            return view('dashboard', [
+                'isTenantless' => true,
+                'activeCasesCount' => 0,
+                'recentCases' => collect(),
+                'todaysHearingsCount' => 0,
+                'upcomingDeadlinesCount' => 0,
+            ]);
+        }
+
         // Active cases (all non-closed cases scoped to tenant via HasTenants trait)
         $activeCasesCount = LegalCase::where('status', '!=', 'closed')->count();
 
@@ -29,6 +53,7 @@ class DashboardController extends Controller
             ->count();
 
         return view('dashboard', [
+            'isTenantless' => false,
             'activeCasesCount' => $activeCasesCount,
             'recentCases' => $recentCases,
             'todaysHearingsCount' => $todaysHearingsCount,

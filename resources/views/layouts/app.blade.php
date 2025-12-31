@@ -50,7 +50,7 @@
                                 <div class="ml-3 flex-1 md:flex md:justify-between">
                                     <p class="text-sm text-[#1E40AF]">
                                         Estás disfrutando de tu periodo de prueba gratuito. 
-                                        Te quedan <span class="font-bold">{{ $globalTenant->trial_ends_at->diffInDays(now()) }} días</span>.
+                                        Te quedan <span class="font-bold">{{ (int) ceil(now()->floatDiffInDays($globalTenant->trial_ends_at)) }} días</span>.
                                     </p>
                                     <p class="mt-3 text-sm md:mt-0 md:ml-6">
                                         <a href="{{ route('billing.index') }}" class="whitespace-nowrap font-medium text-[#111344] hover:text-[#1E40AF]">
