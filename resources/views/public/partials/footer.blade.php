@@ -14,27 +14,35 @@
             <div>
                 <h4 class="font-semibold text-brand-900 mb-4 text-sm uppercase tracking-wider">Producto</h4>
                 <ul class="space-y-2 text-sm text-neutral-600">
-                    <li><a href="#" class="hover:text-brand-600 transition-colors">Características</a></li>
-                    <li><a href="#" class="hover:text-brand-600 transition-colors">Seguridad</a></li>
-                    <li><a href="#" class="hover:text-brand-600 transition-colors">Precios</a></li>
-                    <li><a href="#" class="hover:text-brand-600 transition-colors">Roadmap</a></li>
+                    <li><a href="{{ route('public.features') }}"
+                            class="hover:text-brand-600 transition-colors">Características</a></li>
+                    <li><a href="{{ route('public.security') }}"
+                            class="hover:text-brand-600 transition-colors">Seguridad</a></li>
+                    <li><a href="{{ route('public.pricing') }}"
+                            class="hover:text-brand-600 transition-colors">Precios</a></li>
+                    <li><a href="{{ route('public.roadmap') }}"
+                            class="hover:text-brand-600 transition-colors">Roadmap</a></li>
                 </ul>
             </div>
 
             <div>
                 <h4 class="font-semibold text-brand-900 mb-4 text-sm uppercase tracking-wider">Recursos</h4>
                 <ul class="space-y-2 text-sm text-neutral-600">
-                    <li><a href="#" class="hover:text-brand-600 transition-colors">Documentación</a></li>
+                    <li><a href="{{ route('public.documentation') }}"
+                            class="hover:text-brand-600 transition-colors">Documentación</a></li>
                     <li><a href="#" class="hover:text-brand-600 transition-colors">Guías Legales</a></li>
-                    <li><a href="#" class="hover:text-brand-600 transition-colors">Soporte</a></li>
+                    <li><a href="{{ route('public.support') }}"
+                            class="hover:text-brand-600 transition-colors">Soporte</a></li>
                 </ul>
             </div>
 
             <div>
                 <h4 class="font-semibold text-brand-900 mb-4 text-sm uppercase tracking-wider">Legal</h4>
                 <ul class="space-y-2 text-sm text-neutral-600">
-                    <li><a href="#" class="hover:text-brand-600 transition-colors">Privacidad</a></li>
-                    <li><a href="#" class="hover:text-brand-600 transition-colors">Términos</a></li>
+                    <li><a href="{{ route('public.privacy') }}"
+                            class="hover:text-brand-600 transition-colors">Privacidad</a></li>
+                    <li><a href="{{ route('public.terms') }}"
+                            class="hover:text-brand-600 transition-colors">Términos</a></li>
                 </ul>
             </div>
         </div>
