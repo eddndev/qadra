@@ -8,9 +8,9 @@
 
         <!-- Desktop Navigation -->
         <nav class="hidden md:flex items-center gap-8">
-            <a href="#features"
+            <a href="{{ route('public.features') }}"
                 class="text-sm font-medium text-neutral-600 hover:text-brand-600 transition-colors">Características</a>
-            <a href="#pricing"
+            <a href="{{ route('public.pricing') }}"
                 class="text-sm font-medium text-neutral-600 hover:text-brand-600 transition-colors">Precios</a>
         </nav>
 
