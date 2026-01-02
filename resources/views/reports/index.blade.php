@@ -8,8 +8,7 @@
             
             <div class="flex items-center justify-between mb-2">
                 <div>
-                    <h1 class="text-3xl font-bold text-[#111344]">Reportes</h1>
-                    <p class="text-sm text-gray-500 mt-1">Análisis de desempeño y métricas de expedientes</p>
+                    <h1 class="text-3xl font-bold text-[#111344]">Análisis de desempeño y métricas de expedientes</h1>
                 </div>
                 
                 <div class="flex gap-2">
