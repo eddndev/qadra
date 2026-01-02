@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        Inicio > Dashboard
+        Dashboard
     </x-slot>
 
     <div class="space-y-8">

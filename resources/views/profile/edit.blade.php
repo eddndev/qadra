@@ -1,5 +1,7 @@
 <x-app-layout>
-    <!-- No Header Slot -->
+    <x-slot name="header">
+        Configuración
+    </x-slot>
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">

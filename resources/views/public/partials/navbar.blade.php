@@ -1,4 +1,4 @@
-<header class="bg-white border-b border-neutral-200 sticky top-0 z-50">
+<header class="bg-white/90 backdrop-blur-sm border-b border-neutral-200 sticky top-0 z-50 shadow-sm">
     <div class="container-app h-16 flex items-center justify-between">
         <!-- Logo -->
         <a href="{{ url('/') }}" class="flex items-center gap-2 group">

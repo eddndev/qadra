@@ -1,7 +1,7 @@
 <div class="max-w-7xl mx-auto p-6">
     <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
         <h2 class="text-2xl font-bold text-gray-800">
-            Inventario de Evidencias
+            Inventario Global de Evidencias
         </h2>
         <a href="{{ route('evidence.create') }}"
             class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium transition">
