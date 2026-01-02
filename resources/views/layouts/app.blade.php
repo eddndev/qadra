@@ -42,21 +42,21 @@
                     @endphp
 
                     @if($globalTenant && $globalTenant->onTrial() && !$globalTenant->subscribed('default'))
-                        <div class="mb-6 rounded-md bg-blue-50 p-4 border border-blue-200">
-                            <div class="flex">
+                        <div class="mb-6 rounded-md bg-[#111344] p-4 border border-blue-900 shadow-sm">
+                            <div class="flex items-center">
                                 <div class="flex-shrink-0">
-                                    <svg class="h-5 w-5 text-[#1E40AF]" viewBox="0 0 20 20" fill="currentColor">
+                                    <svg class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
                                     </svg>
                                 </div>
-                                <div class="ml-3 flex-1 md:flex md:justify-between">
-                                    <p class="text-sm text-[#1E40AF]">
+                                <div class="ml-4 flex-1 md:flex md:justify-between md:items-center">
+                                    <p class="text-sm text-blue-100">
                                         Estás disfrutando de tu periodo de prueba gratuito. 
-                                        Te quedan <span class="font-bold">{{ (int) ceil(now()->floatDiffInDays($globalTenant->trial_ends_at)) }} días</span>.
+                                        Te quedan <span class="font-bold text-white">{{ (int) ceil(now()->floatDiffInDays($globalTenant->trial_ends_at)) }} días</span>.
                                     </p>
                                     <p class="mt-3 text-sm md:mt-0 md:ml-6">
-                                        <a href="{{ route('billing.index') }}" class="whitespace-nowrap font-medium text-[#111344] hover:text-[#1E40AF]">
-                                            Suscribirme ahora <span aria-hidden="true">&rarr;</span>
+                                        <a href="{{ route('billing.index') }}" class="inline-flex items-center px-4 py-2 bg-[#1E40AF] border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 shadow-md whitespace-nowrap">
+                                            Suscribirme ahora 
                                         </a>
                                     </p>
                                 </div>
