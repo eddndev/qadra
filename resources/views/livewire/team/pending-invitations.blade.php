@@ -37,13 +37,16 @@
                                 {{ $invitation->created_at->diffForHumans() }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{ $invitation->expires_at->format('d/m/Y') }}
+                                {{ $invitation->expires_at->diffForHumans() }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <button wire:click="cancel('{{ $invitation->id }}')"
                                     wire:confirm="¿Estás seguro de cancelar esta invitación?"
-                                    class="text-red-600 hover:text-red-900">
-                                    Cancelar
+                                    class="text-red-600 hover:text-red-900 focus:outline-none"
+                                    title="Cancelar invitación">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
                                 </button>
                             </td>
                         </tr>
