@@ -59,6 +59,7 @@
                                     <option value="Juzgado de Garantía 1">Juzgado de Garantía 1</option>
                                     <option value="Juzgado de Garantía 2">Juzgado de Garantía 2</option>
                                 </select>
+                                <x-input-error :messages="$errors->get('court_name')" class="mt-2" />
                             </div>
 
                             <div>
@@ -105,9 +106,12 @@
                             <div class="border border-gray-200 rounded-md p-3 bg-gray-50">
                                 <div class="text-sm font-bold text-blue-800 mb-2">Imputado(s)</div>
                                 <div class="space-y-2">
-                                    <x-text-input class="block w-full text-sm" placeholder="Nombre completo" />
-                                    <x-text-input class="block w-full text-sm" placeholder="RUT" />
-                                    <x-text-input class="block w-full text-sm" placeholder="Defensor" />
+                                    <x-text-input wire:model="defendant_name" class="block w-full text-sm"
+                                        placeholder="Nombre completo" />
+                                    <x-text-input wire:model="defendant_rfc" class="block w-full text-sm"
+                                        placeholder="RFC" />
+                                    <x-text-input wire:model="defendant_defender" class="block w-full text-sm"
+                                        placeholder="Defensor" />
                                 </div>
                             </div>
 
@@ -115,14 +119,30 @@
                             <div>
                                 <x-input-label :value="__('Fiscal a cargo')"
                                     class="text-xs text-gray-500 uppercase font-bold" />
-                                <select class="block mt-1 w-full text-sm border-gray-300 rounded-md shadow-sm">
-                                    <option>Seleccionar fiscal</option>
-                                    <option selected>Juan Díaz</option>
-                                </select>
+                                <!-- This could be a select of users or a simple text field for external prosecutors -->
+                                <x-text-input wire:model="prosecutor_name_specific" class="block w-full text-sm"
+                                    placeholder="Nombre del Fiscal (Opcional)" />
+                                {{-- Assuming reusing prosecutor_name or keeping it separates? The previous field was
+                                'Fiscalía / Unidad' (Entity). This is 'Fiscal a Cargo' (Person).
+                                The Model has 'prosecutor_name'. Let's use the Entity valid above and maybe this is
+                                redundant or specific?
+                                The Controller saves `prosecutor_name`. The form has TWO inputs that might map to it?
+                                Input 1: Select "Fiscalía Centro Norte" (Entity)
+                                Input 2: "Fiscal a cargo" (Person)
+                                I'll map this input to 'judge_name' placeholder for now or add a new property if
+                                differentiating?
+                                Actually, I added 'judge_name' below.
+                                Let's assume the 'prosecutor_name' in model is the text field for the PERSON or ENTITY.
+                                Let's map the text field below to something else like 'notes' or just ignore if not in
+                                model?
+                                Wait, I added `prosecutor_name` to the controller. I bound the SELECT above to
+                                `prosecutor_name`.
+                                I will bind the judge below to `judge_name`.
+                                --}}
                             </div>
                             <div>
                                 <x-input-label :value="__('Juez')" class="text-xs text-gray-500 uppercase font-bold" />
-                                <x-text-input class="block mt-1 w-full text-sm"
+                                <x-text-input wire:model="judge_name" class="block mt-1 w-full text-sm"
                                     placeholder="Nombre del juez (opcional)" />
                             </div>
                         </div>
@@ -154,11 +174,12 @@
                             <!-- Mock Risk Select -->
                             <div>
                                 <x-input-label :value="__('Riesgo procesal')" />
-                                <select class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">
-                                    <option>Seleccionar riesgo</option>
-                                    <option>Alto</option>
-                                    <option>Medio</option>
-                                    <option>Bajo</option>
+                                <select wire:model="crime_severity"
+                                    class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">
+                                    <option value="">Seleccionar riesgo</option>
+                                    <option value="Alto">Alto</option>
+                                    <option value="Medio">Medio</option>
+                                    <option value="Bajo">Bajo</option>
                                 </select>
                             </div>
 
@@ -166,22 +187,23 @@
                                 <x-input-label :value="__('Medidas cautelares')" class="mb-2" />
                                 <div class="space-y-2">
                                     <label class="flex items-center">
-                                        <input type="checkbox"
+                                        <input type="checkbox" wire:model="selected_measures" value="pris_prev"
                                             class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" />
                                         <span class="ml-2 text-sm text-gray-600">Prisión preventiva</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="checkbox"
+                                        <input type="checkbox" wire:model="selected_measures" value="firma_periodica"
                                             class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" />
                                         <span class="ml-2 text-sm text-gray-600">Firma periódica</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="checkbox"
+                                        <input type="checkbox" wire:model="selected_measures" value="arraigo_nacional"
                                             class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" />
                                         <span class="ml-2 text-sm text-gray-600">Arraigo nacional</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="checkbox"
+                                        <input type="checkbox" wire:model="selected_measures"
+                                            value="prohibicion_acercamiento"
                                             class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" />
                                         <span class="ml-2 text-sm text-gray-600">Prohibición de acercamiento</span>
                                     </label>
@@ -282,7 +304,7 @@
                             class="w-full justify-center inline-flex items-center px-4 py-2 bg-[#334D6E] border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-[#243b55] focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                             Guardar y abrir expediente
                         </button>
-                        <button type="button"
+                        <button type="button" wire:click="saveAsDraft"
                             class="w-full justify-center inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
                             Guardar como borrador
                         </button>
