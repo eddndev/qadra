@@ -73,7 +73,7 @@
             <div>
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-xl font-bold text-[#111344]">Expedientes Recientes</h2>
-                    <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center">
+                <a href="{{ route('cases.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center">
                         Ver todos
                         <svg class="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -84,8 +84,14 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
                     @foreach($recentCases as $case)
-                        <x-case-card :caseNumber="$case->internal_folio ?? $case->nuc ?? 'Sin Folio'" :title="$case->case_alias ?? $case->crime_type ?? 'Sin Título'" :location="$case->court_name ?? 'Sin Asignar'"
-                            :date="$case->start_date ? $case->start_date->isoFormat('D MMM YYYY') : '--'" :status="$case->stage ?? $case->status ?? 'Sin Estado'" statusColor="blue" />
+                        <a href="{{ route('cases.show', $case) }}" class="block">
+                            <x-case-card :caseNumber="$case->internal_folio ?? $case->nuc ?? 'Sin Folio'" 
+                                :title="$case->case_alias ?? $case->crime_type ?? 'Sin Título'" 
+                                :location="$case->court_name ?? 'Sin Asignar'"
+                                :date="$case->start_date ? $case->start_date->isoFormat('D MMM YYYY') : '--'" 
+                                :status="$case->stage ?? $case->status ?? 'Sin Estado'" 
+                                statusColor="blue" />
+                        </a>
                     @endforeach
                 </div>
             </div>
