@@ -1,14 +1,14 @@
 <x-app-layout>
-    <!-- No Header Slot -->
+    <x-slot name="header">
+        Configuración
+    </x-slot>
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
-            <div class="flex items-center justify-between mb-4">
-                <h1 class="text-3xl font-bold text-[#111344]">Configuración</h1>
+            <div class="flex items-center justify-between mb-6">
+                <h1 class="text-3xl font-bold text-[#111344]">Gestiona tu perfil, equipo, notificaciones y preferencias de seguridad</h1>
             </div>
-
-            <p class="text-gray-500 mb-6">Gestiona tu perfil, equipo, notificaciones y preferencias de seguridad</p>
 
             <div class="bg-white shadow-sm sm:rounded-lg overflow-hidden">
                 <div class="p-8">

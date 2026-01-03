@@ -1,8 +1,8 @@
-<header class="bg-white shadow-sm h-16 flex justify-between items-center px-6">
+<header class="bg-white/90 backdrop-blur-sm shadow-sm h-16 flex justify-between items-center px-6 sticky top-0 z-40">
     <!-- Breadcrumbs / Title -->
     <div class="flex items-center">
         @isset($header)
-            <div class="text-lg font-medium text-gray-800">
+            <div class="text-2xl font-semibold text-[#111344] tracking-tight ml-4">
                 {{ $header }}
             </div>
         @else
@@ -41,12 +41,12 @@
         <livewire:components.tenant-switcher />
 
         <!-- Notification Bell -->
-        <button class="text-gray-500 hover:text-gray-700 relative">
+        <a href="{{ route('alerts.index') }}" class="text-gray-500 hover:text-gray-700 relative">
             <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
             </svg>
              <!-- Badge placeholder -->
-        </button>
+        </a>
 
         <!-- Profile Dropdown -->
         <div class="ml-3 relative">

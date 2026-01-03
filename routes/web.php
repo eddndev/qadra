@@ -12,8 +12,8 @@ Route::get('/', function () {
     return view('public.index');
 });
 
-Route::view('/features', 'public.features')->name('public.features');
-Route::view('/pricing', 'public.pricing')->name('public.pricing');
+
+
 Route::view('/security', 'public.security')->name('public.security');
 Route::view('/roadmap', 'public.roadmap')->name('public.roadmap');
 Route::view('/docs', 'public.documentation')->name('public.documentation');
