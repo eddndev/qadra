@@ -188,94 +188,106 @@
         </section>
     </div>
 
-    <!-- Pricing Section Preview -->
-    <section id="pricing" class="bg-neutral-50 py-24 sm:py-32">
+    <!-- Pricing Section (Vibrant & Compact) -->
+    <section id="pricing" class="bg-neutral-50 py-16 sm:pt-[20px] sm:pb-24 scroll-mt-24">
         <div class="container-app relative">
-            <div class="mx-auto max-w-2xl text-center">
+            <div class="mx-auto max-w-2xl text-center mb-12">
                 <h2 class="text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">Planes diseñados para crecer</h2>
-                <p class="mt-6 text-lg leading-8 text-neutral-600">
-                    Desde abogados independientes hasta grandes firmas. Elige el plan que mejor se adapte a ti.
+                <p class="mt-4 text-lg leading-snug text-neutral-600">
+                    Desde abogados independientes hasta grandes firmas.<br>
+                    Elige el plan que mejor se adapte a ti.
                 </p>
             </div>
-            <!-- Pricing Cards -->
-            <div class="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12 max-w-4xl mx-auto">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto items-start">
+                
                 <!-- Starter Plan -->
-                <div class="card p-8 bg-white flex flex-col border-t-8 border-t-neutral-400 hover:shadow-lg transition-shadow">
-                    <div class="mb-auto">
-                        <h3 class="text-xl font-bold text-neutral-900">Starter</h3>
-                        <p class="mt-4 text-sm text-neutral-600">Para despachos pequeños que inician su transformación digital.</p>
-                        <p class="mt-6 flex items-baseline gap-x-1">
-                            <span class="text-4xl font-bold tracking-tight text-neutral-900">$99</span>
-                            <span class="text-sm font-semibold leading-6 text-neutral-600">/mes</span>
-                        </p>
-                        <ul role="list" class="mt-8 space-y-3 text-sm leading-6 text-neutral-600">
-                            <li class="flex gap-x-3">
-                                <svg class="h-6 w-5 flex-none text-brand-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                                </svg>
-                                Hasta 3 usuarios
-                            </li>
-                            <li class="flex gap-x-3">
-                                <svg class="h-6 w-5 flex-none text-brand-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                                </svg>
-                                20 Casos Activos
-                            </li>
-                            <li class="flex gap-x-3">
-                                <svg class="h-6 w-5 flex-none text-brand-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                                </svg>
-                                10GB Almacenamiento
-                            </li>
-                        </ul>
+                <div class="bg-white rounded-2xl border border-slate-100 p-6 shadow-md hover:shadow-lg transition-all duration-300 relative z-0">
+                    <h3 class="text-xl font-bold text-brand-900">Starter</h3>
+                    <div class="mt-4 flex items-baseline text-brand-900">
+                        <span class="text-5xl font-black tracking-tight">$99</span>
+                        <span class="ml-1 text-xl font-semibold text-slate-400">/mes</span>
                     </div>
-                    <a href="{{ route('register') }}" class="mt-8 block rounded-md bg-neutral-100 px-3 py-2 text-center text-sm font-semibold leading-6 text-neutral-900 shadow-sm hover:bg-neutral-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-600">Comenzar</a>
+                    <p class="mt-2 text-sm text-slate-500">Para despachos pequeños que inician.</p>
+                    
+                    <ul role="list" class="mt-6 space-y-3 text-sm leading-6 text-slate-600">
+                        <li class="flex gap-x-3 items-center">
+                            <svg class="h-6 w-5 flex-none text-brand-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                            </svg>
+                            Hasta 3 usuarios
+                        </li>
+                        <li class="flex gap-x-3 items-center">
+                            <svg class="h-6 w-5 flex-none text-brand-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                            </svg>
+                            20 Casos Activos
+                        </li>
+                        <li class="flex gap-x-3 items-center">
+                            <svg class="h-6 w-5 flex-none text-brand-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                            </svg>
+                            10GB Almacenamiento
+                        </li>
+                    </ul>
+
+                    <a href="{{ route('register') }}" class="mt-6 block w-full py-3 rounded-xl bg-[#1E40AF] text-center text-sm font-bold text-white shadow-sm hover:bg-brand-900 transition-all duration-300">
+                        Comenzar
+                    </a>
                 </div>
 
-                <!-- Professional Plan -->
-                <div class="card p-8 bg-white flex flex-col border-t-8 border-t-brand-600 ring-1 ring-brand-600/10 shadow-xl scale-105 z-10">
-                    <div class="mb-auto">
-                        <h3 class="text-xl font-bold text-brand-600">Professional</h3>
-                        <p class="mt-4 text-sm text-neutral-600">Para firmas en crecimiento que requieren gestión avanzada y auditoría.</p>
-                        <p class="mt-6 flex items-baseline gap-x-1">
-                            <span class="text-4xl font-bold tracking-tight text-neutral-900">$249</span>
-                            <span class="text-sm font-semibold leading-6 text-neutral-600">/mes</span>
-                        </p>
-                        <ul role="list" class="mt-8 space-y-3 text-sm leading-6 text-neutral-600">
-                            <li class="flex gap-x-3">
+                <!-- Professional Plan (Pop & Gradient) -->
+                <div class="relative bg-white rounded-2xl border border-brand-500 shadow-2xl z-10 transform md:-translate-y-4 overflow-hidden">
+                    <div class="bg-gradient-to-r from-brand-500 to-brand-900 py-1.5 text-center">
+                        <span class="text-xs font-bold tracking-widest text-white uppercase">Más Elegido</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-brand-900">Professional</h3>
+                        <div class="mt-4 flex items-baseline text-brand-900">
+                            <span class="text-6xl font-black tracking-tight">$249</span>
+                            <span class="ml-1 text-xl font-semibold text-slate-400">/mes</span>
+                        </div>
+                        <p class="mt-2 text-sm text-slate-500">Para firmas en crecimiento.</p>
+                        
+                        <ul role="list" class="mt-6 space-y-3 text-sm leading-6 text-slate-600">
+                            <li class="flex gap-x-3 items-center">
                                 <svg class="h-6 w-5 flex-none text-brand-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                 </svg>
                                 Hasta 10 usuarios
                             </li>
-                            <li class="flex gap-x-3">
+                            <li class="flex gap-x-3 items-center">
                                 <svg class="h-6 w-5 flex-none text-brand-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                 </svg>
                                 100 Casos Activos
                             </li>
-                            <li class="flex gap-x-3">
+                            <li class="flex gap-x-3 items-center">
                                 <svg class="h-6 w-5 flex-none text-brand-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                 </svg>
                                 50GB Almacenamiento
                             </li>
-                            <li class="flex gap-x-3">
+                            <li class="flex gap-x-3 items-center">
                                 <svg class="h-6 w-5 flex-none text-brand-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                 </svg>
                                 Portal de Clientes
                             </li>
-                            <li class="flex gap-x-3">
+                            <li class="flex gap-x-3 items-center">
                                 <svg class="h-6 w-5 flex-none text-brand-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                                 </svg>
                                 Reportes Avanzados y Auditoría
                             </li>
                         </ul>
+
+                        <a href="{{ route('register') }}" class="mt-8 block w-full py-4 rounded-xl bg-[#1E40AF] text-center text-sm font-bold text-white shadow-lg hover:bg-brand-900 hover:scale-105 transition-all duration-300">
+                            Obtener Acceso
+                        </a>
                     </div>
-                    <a href="{{ route('register') }}" class="mt-8 block rounded-md bg-brand-600 px-3 py-2 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-brand-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">Obtener Acceso</a>
                 </div>
+
             </div>
         </div>
     </section>
