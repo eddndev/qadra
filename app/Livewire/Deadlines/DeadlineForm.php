@@ -3,8 +3,10 @@
 namespace App\Livewire\Deadlines;
 
 use App\Models\Deadline;
+use App\Models\DeadlineType;
 use App\Models\LegalCase;
 use Livewire\Component;
+use Carbon\Carbon;
 
 class DeadlineForm extends Component
 {
@@ -12,6 +14,7 @@ class DeadlineForm extends Component
     public ?Deadline $deadline = null;
 
     // Form Fields
+    public $selectedTypeId = ''; // New
     public $title;
     public $description;
     public $expires_at;
@@ -29,6 +32,46 @@ class DeadlineForm extends Component
     public function mount(LegalCase $case)
     {
         $this->case = $case;
+    }
+
+    public function updatedSelectedTypeId($value)
+    {
+        if (!$value) return;
+
+        $type = DeadlineType::find($value);
+        if (!$type) return;
+
+        $this->title = $type->name;
+        
+        // Auto-set fatal if it implies strictly legal term (most in catalog are)
+        // For now, let's assume all catalog types are potentially fatal/strict
+        $this->is_fatal = true;
+
+        if ($type->default_days) {
+            $daysToAdd = $type->default_days;
+            $targetDate = now();
+
+            if ($type->business_days) {
+                // Simple Business Days Logic (Monday-Friday)
+                for ($i = 0; $i < $daysToAdd; $i++) {
+                    $targetDate->addDay();
+                    while ($targetDate->isWeekend()) {
+                        $targetDate->addDay();
+                    }
+                }
+            } else {
+                // Calendar Days
+                $targetDate->addDays($daysToAdd);
+            }
+
+            // Set to end of business day (e.g., 23:59 or 15:00?)
+            // Usually terms end at 23:59:59
+            $this->expires_at = $targetDate->setTime(23, 59)->format('Y-m-d\TH:i');
+        }
+        
+        if ($type->legal_basis) {
+            $this->description = "Fundamento: " . $type->legal_basis;
+        }
     }
 
     public function loadDeadline($deadlineId)
@@ -113,6 +156,8 @@ class DeadlineForm extends Component
 
     public function render()
     {
-        return view('livewire.deadlines.deadline-form');
+        return view('livewire.deadlines.deadline-form', [
+            'deadlineTypes' => DeadlineType::orderBy('name')->get()
+        ]);
     }
 }
