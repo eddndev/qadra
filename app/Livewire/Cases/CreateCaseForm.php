@@ -51,6 +51,8 @@ class CreateCaseForm extends Component
     // Catalogues
     public $crimeTypes;
     public $deadlineTypes; // New
+    public $existingCourts = [];
+    public $existingProsecutors = [];
 
     public function getRules($isDraft = false)
     {
@@ -63,6 +65,8 @@ class CreateCaseForm extends Component
             'defendant_name' => 'nullable|string|max:255',
             'defendant_rfc' => 'nullable|string|max:20',
             'defendant_defender' => 'nullable|string|max:255',
+            'defendant_alias' => 'nullable|string|max:255',
+            'defendant_is_detained' => 'boolean',
             // Victim
             'victim_name' => 'nullable|string|max:255',
             'victim_rfc' => 'nullable|string|max:20',
@@ -92,9 +96,24 @@ class CreateCaseForm extends Component
 
     public function mount()
     {
+        $tenant = Tenant::getGlobalTenant();
         $this->start_date = now()->format('Y-m-d');
         $this->crimeTypes = CrimeType::orderBy('name')->get();
         $this->deadlineTypes = DeadlineType::orderBy('name')->get();
+
+        if ($tenant) {
+            $this->existingCourts = LegalCase::where('tenant_id', $tenant->id)
+                ->whereNotNull('court_name')
+                ->distinct()
+                ->pluck('court_name')
+                ->toArray();
+
+            $this->existingProsecutors = LegalCase::where('tenant_id', $tenant->id)
+                ->whereNotNull('prosecutor_name')
+                ->distinct()
+                ->pluck('prosecutor_name')
+                ->toArray();
+        }
     }
 
     public function saveAsDraft()

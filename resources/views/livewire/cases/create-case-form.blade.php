@@ -50,26 +50,31 @@
                                 <x-input-error :messages="$errors->get('crime_type')" class="mt-2" />
                             </div>
 
-                            <!-- Mock fields for Courts/Prosecutor to match prototype visualization -->
+                            <!-- Intelligent Autocomplete for Courts/Prosecutor -->
                             <div>
                                 <x-input-label for="court_name" :value="__('Juzgado *')" />
-                                <select wire:model="court_name" id="court_name"
-                                    class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                                    <option value="">Seleccionar juzgado</option>
-                                    <option value="Juzgado de Garantía 1">Juzgado de Garantía 1</option>
-                                    <option value="Juzgado de Garantía 2">Juzgado de Garantía 2</option>
-                                </select>
+                                <x-text-input wire:model="court_name" id="court_name"
+                                    class="block mt-1 w-full" type="text" placeholder="Ej. Juzgado de Garantía"
+                                    list="courts-list" required />
+                                <datalist id="courts-list">
+                                    @foreach($existingCourts as $court)
+                                        <option value="{{ $court }}">
+                                    @endforeach
+                                </datalist>
                                 <x-input-error :messages="$errors->get('court_name')" class="mt-2" />
                             </div>
 
                             <div>
                                 <x-input-label for="prosecutor_name" :value="__('Fiscalía / Unidad')" />
-                                <select wire:model="prosecutor_name" id="prosecutor_name"
-                                    class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                                    <option value="">Seleccionar fiscalía</option>
-                                    <option value="Fiscalía Centro Norte">Fiscalía Centro Norte</option>
-                                    <option value="Fiscalía Oriente">Fiscalía Oriente</option>
-                                </select>
+                                <x-text-input wire:model="prosecutor_name" id="prosecutor_name"
+                                    class="block mt-1 w-full" type="text" placeholder="Ej. Fiscalía Centro Norte"
+                                    list="prosecutors-list" />
+                                <datalist id="prosecutors-list">
+                                    @foreach($existingProsecutors as $prosecutor)
+                                        <option value="{{ $prosecutor }}">
+                                    @endforeach
+                                </datalist>
+                                <x-input-error :messages="$errors->get('prosecutor_name')" class="mt-2" />
                             </div>
 
                             <div>
