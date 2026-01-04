@@ -52,10 +52,10 @@ class EvidenceForm extends Component
         // Default collection time to now
         $this->collected_at = now()->format('Y-m-d\TH:i');
         
-        // Load active cases for the dropdown
-        $this->cases = LegalCase::where('status', 'activo')
+        // Load active cases for the dropdown (exclude closed/archived)
+        $this->cases = LegalCase::whereNotIn('status', ['cerrado', 'archivado'])
             ->orderBy('created_at', 'desc')
-            ->get(['id', 'internal_folio', 'case_alias']);
+            ->get(['id', 'internal_folio', 'case_alias', 'status']);
     }
 
     public function save()

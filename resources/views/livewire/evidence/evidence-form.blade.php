@@ -75,6 +75,7 @@
                                 @foreach($cases as $case)
                                     <option value="{{ $case->id }}">
                                         {{ $case->internal_folio }} - {{ $case->case_alias ?? 'Sin Alias' }}
+                                        {{ $case->status === 'borrador' ? '(Borrador)' : '' }}
                                     </option>
                                 @endforeach
                             </select>
