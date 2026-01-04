@@ -104,6 +104,9 @@
                                         class="text-indigo-600 hover:text-indigo-900 mr-3">
                                         Mover
                                     </a>
+                                    <a href="{{ route('evidence.show', $evidence) }}" class="text-gray-600 hover:text-gray-900">
+                                        Ver
+                                    </a>
                                 </td>
                             </tr>
                 @empty
