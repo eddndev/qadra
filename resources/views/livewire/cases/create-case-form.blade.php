@@ -344,12 +344,6 @@
                                 class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm resize-none"
                                 placeholder="Añade observaciones, notas importantes o contexto del caso que puedan ser útiles para el equipo..."></textarea>
                         </div>
-
-                        <div class="mt-4 flex items-start gap-2 text-xs text-gray-500">
-                            <input type="checkbox" class="mt-0.5" />
-                            <p>Estas notas solo serán visibles para miembros autorizados del equipo. No se incluyen en
-                                documentos oficiales.</p>
-                        </div>
                     </div>
 
                     <!-- Actions -->
