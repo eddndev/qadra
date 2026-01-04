@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Traits\HasTenants;
+
 use App\Models\Traits\TenantScoped;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ChainOfCustodyEntry extends Model
 {
-    use HasFactory, HasUlids, HasTenants, TenantScoped;
+    use HasFactory, HasUlids, TenantScoped;
 
     // No timestamps handling by Eloquent as we only have created_at
     public $timestamps = false;
@@ -36,7 +36,7 @@ class ChainOfCustodyEntry extends Model
     protected static function boot()
     {
         parent::boot();
-        
+
         static::creating(function ($model) {
             $model->created_at = $model->created_at ?? now();
         });

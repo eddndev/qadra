@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Traits\HasTenants;
+
 use App\Models\Traits\TenantScoped;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +13,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Activity extends Model implements HasMedia
 {
-    use HasFactory, HasUlids, HasTenants, TenantScoped, SoftDeletes, InteractsWithMedia;
+    use HasFactory, HasUlids, TenantScoped, SoftDeletes, InteractsWithMedia;
 
     protected $fillable = [
         'tenant_id',
@@ -29,11 +29,11 @@ class Activity extends Model implements HasMedia
     protected $casts = [
         'performed_at' => 'datetime',
     ];
-    
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('attachments')
-             ->useDisk('s3');
+            ->useDisk('s3');
     }
 
     // Relationships
@@ -47,11 +47,11 @@ class Activity extends Model implements HasMedia
     {
         return $this->belongsTo(User::class, 'performed_by');
     }
-    
+
     // Helper for icons based on type
     public function getIconAttribute()
     {
-        return match($this->type) {
+        return match ($this->type) {
             'Llamada Telefónica' => 'phone',
             'Email' => 'envelope',
             'Reunión' => 'users',

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Traits\HasTenants;
+
 use App\Models\Traits\TenantScoped;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Evidence extends Model
 {
-    use HasFactory, HasUlids, HasTenants, TenantScoped, SoftDeletes;
+    use HasFactory, HasUlids, TenantScoped, SoftDeletes;
 
     protected $table = 'evidence';
 
@@ -43,11 +43,11 @@ class Evidence extends Model
     {
         return $this->hasMany(ChainOfCustodyEntry::class, 'evidence_id')->orderByDesc('movement_at');
     }
-    
+
     // Helper to get current status label
     public function getStatusLabelAttribute()
     {
-        return match($this->status) {
+        return match ($this->status) {
             'en_custodia' => 'En Custodia',
             'en_fiscalia' => 'En Fiscalía',
             'en_juzgado' => 'En Juzgado',
