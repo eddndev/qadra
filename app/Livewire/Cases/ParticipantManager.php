@@ -4,7 +4,9 @@ namespace App\Livewire\Cases;
 
 use App\Models\LegalCase;
 use App\Models\Participant;
+use App\Enums\CaseParticipantRole;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rules\Enum;
 use Livewire\Component;
 
 class ParticipantManager extends Component
@@ -14,26 +16,31 @@ class ParticipantManager extends Component
     // Form Properties
     public $name;
     public $type = 'fisica';
-    public $role = 'imputado';
+    public $role = 'imputado'; // Default fallback, but will be validated against Enum
     public $alias;
     public $is_detained = false;
     public $notes;
     
     public $isCreating = false;
 
-    protected $rules = [
-        'name' => 'required|string|max:255',
-        'type' => 'required|in:fisica,moral,autoridad',
-        'role' => 'required|string|max:50',
-        'alias' => 'nullable|string|max:255',
-        'is_detained' => 'boolean',
-        'notes' => 'nullable|string',
-    ];
+    public function rules()
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'type' => 'required|in:fisica,moral,autoridad',
+            'role' => ['required', new Enum(CaseParticipantRole::class)],
+            'alias' => 'nullable|string|max:255',
+            'is_detained' => 'boolean',
+            'notes' => 'nullable|string',
+        ];
+    }
 
     public function mount(LegalCase $case)
     {
         $this->case = $case;
+        $this->role = CaseParticipantRole::IMPUTADO->value;
     }
+
 
     public function openCreateModal()
     {
@@ -50,7 +57,7 @@ class ParticipantManager extends Component
     {
         $this->name = '';
         $this->type = 'fisica';
-        $this->role = 'imputado';
+        $this->role = CaseParticipantRole::IMPUTADO->value;
         $this->alias = '';
         $this->is_detained = false;
         $this->notes = '';
@@ -95,7 +102,8 @@ class ParticipantManager extends Component
         $participants = $this->case->participants()->orderByPivot('created_at', 'desc')->get();
 
         return view('livewire.cases.participant-manager', [
-            'participants' => $participants
+            'participants' => $participants,
+            'roleOptions' => CaseParticipantRole::options(),
         ]);
     }
 }

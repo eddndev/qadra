@@ -27,9 +27,13 @@
                 @forelse($participants as $participant)
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">
+                            @php
+                                $roleEnum = \App\Enums\CaseParticipantRole::tryFrom($participant->pivot->role);
+                                $roleLabel = $roleEnum ? $roleEnum->label() : ucfirst(str_replace('_', ' ', $participant->pivot->role));
+                            @endphp
                             <span
                                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
-                                {{ ucfirst($participant->pivot->role) }}
+                                {{ $roleLabel }}
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -75,66 +79,70 @@
             </h2>
 
             <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
-                <!-- Nombre -->
+                
+                <!-- 1. Rol (Context Trigger) -->
                 <div class="sm:col-span-2">
-                    <x-input-label for="name" value="Nombre Completo *" />
+                    <x-input-label for="role" value="Rol en el Caso *" />
+                    <select wire:model.live="role"
+                        class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                        @foreach($roleOptions as $value => $label)
+                            <option value="{{ $value }}">{{ $label }}</option>
+                        @endforeach
+                    </select>
+                    <x-input-error :messages="$errors->get('role')" class="mt-2" />
+                    
+                    <!-- Helper Text based on Role -->
+                    @if($role === 'juez_control' || $role === 'juez_juicio' || $role === 'mp')
+                        <p class="mt-1 text-xs text-blue-600">
+                            💡 Solo ingresa el nombre y cargo. No requerimos datos personales sensibles para autoridades.
+                        </p>
+                    @endif
+                </div>
+
+                <!-- 2. Nombre / Razón Social -->
+                <div class="sm:col-span-2">
+                    <x-input-label for="name" :value="$type === 'moral' ? 'Razón Social *' : 'Nombre Completo *'" />
                     <x-text-input wire:model="name" id="name" class="block mt-1 w-full" type="text"
-                        placeholder="Ej. Juan Pérez" />
+                        placeholder="{{ $type === 'moral' ? 'Ej. Empresa S.A. de C.V.' : 'Ej. Juan Pérez' }}" />
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
 
-                <!-- Tipo -->
+                <!-- 3. Tipo de Persona (Ahora secundario) -->
                 <div>
                     <x-input-label for="type" value="Tipo de Persona *" />
-                    <select wire:model="type"
+                    <select wire:model.live="type"
                         class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                        <option value="fisica">Física</option>
-                        <option value="moral">Moral (Empresa)</option>
-                        <option value="autoridad">Autoridad</option>
+                        <option value="fisica">Física (Individuo)</option>
+                        <option value="moral">Moral (Empresa/Organización)</option>
+                        <option value="autoridad">Autoridad Oficial</option>
                     </select>
                     <x-input-error :messages="$errors->get('type')" class="mt-2" />
                 </div>
 
-                <!-- Rol -->
-                <div>
-                    <x-input-label for="role" value="Rol en el Caso *" />
-                    <select wire:model="role"
-                        class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                        <option value="imputado">Imputado</option>
-                        <option value="victima">Víctima / Ofendido</option>
-                        <option value="testigo">Testigo</option>
-                        <option value="defensor">Defensor</option>
-                        <option value="asesor_juridico">Asesor Jurídico</option>
-                        <option value="juez_control">Juez de Control</option>
-                        <option value="juez_juicio">Juez de Juicio</option>
-                        <option value="mp">Ministerio Público</option>
-                        <option value="perito">Perito</option>
-                        <option value="policia">Policía</option>
-                    </select>
-                    <x-input-error :messages="$errors->get('role')" class="mt-2" />
-                </div>
+                <!-- 4. Campos Contextuales para IMPUTADO -->
+                @if($role === 'imputado')
+                    <!-- Alias -->
+                    <div>
+                        <x-input-label for="alias" value="Alias / Apodo" />
+                        <x-text-input wire:model="alias" id="alias" class="block mt-1 w-full" type="text" placeholder="Ej. El Chato"/>
+                    </div>
 
-                <!-- Alias -->
-                <div>
-                    <x-input-label for="alias" value="Alias (Opcional)" />
-                    <x-text-input wire:model="alias" id="alias" class="block mt-1 w-full" type="text" />
-                </div>
+                    <!-- Detenido Checkbox -->
+                    <div class="flex items-center mt-8">
+                        <label for="is_detained" class="inline-flex items-center cursor-pointer">
+                            <input wire:model="is_detained" id="is_detained" type="checkbox"
+                                class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500">
+                            <span class="ms-2 text-sm font-bold text-gray-700">¿Se encuentra detenido actualmente?</span>
+                        </label>
+                    </div>
+                @endif
 
-                <!-- Detenido Checkbox -->
-                <div class="flex items-center mt-8">
-                    <label for="is_detained" class="inline-flex items-center">
-                        <input wire:model="is_detained" id="is_detained" type="checkbox"
-                            class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500">
-                        <span class="ms-2 text-sm text-gray-600">¿Se encuentra detenido?</span>
-                    </label>
-                </div>
-
-                <!-- Notas -->
+                <!-- Notas (Siempre visible pero al final) -->
                 <div class="sm:col-span-2">
-                    <x-input-label for="notes" value="Notas Adicionales" />
+                    <x-input-label for="notes" value="Notas / Observaciones" />
                     <textarea wire:model="notes"
                         class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                        rows="2"></textarea>
+                        rows="2" placeholder="Datos de contacto adicionales, adscripción específica, etc."></textarea>
                 </div>
             </div>
 
