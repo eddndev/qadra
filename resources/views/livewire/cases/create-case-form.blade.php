@@ -91,59 +91,102 @@
                                 </svg>
                                 <h2 class="font-bold text-lg">Personas Involucradas</h2>
                             </div>
-                            <button type="button"
-                                class="text-xs bg-[#111344] text-white px-3 py-1.5 rounded hover:bg-blue-900 flex items-center gap-1">
-                                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 4v16m8-8H4" />
-                                </svg>
-                                Agregar imputado
+                        </div>
+
+                        <!-- Tabs de Navegación -->
+                        <div class="flex space-x-1 rounded-xl bg-gray-100 p-1 mb-4">
+                            <button type="button" wire:click="$set('activeParticipantTab', 'imputado')"
+                                class="w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-[#111344] ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 {{ $activeParticipantTab === 'imputado' ? 'bg-white shadow' : 'text-gray-500 hover:bg-white/[0.12] hover:text-gray-700' }}">
+                                Imputado (Acusado)
+                            </button>
+                            <button type="button" wire:click="$set('activeParticipantTab', 'victima')"
+                                class="w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-[#111344] ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 {{ $activeParticipantTab === 'victima' ? 'bg-white shadow' : 'text-gray-500 hover:bg-white/[0.12] hover:text-gray-700' }}">
+                                Víctima / Ofendido
                             </button>
                         </div>
 
                         <div class="space-y-4">
-                            <!-- Imputado -->
-                            <div class="border border-gray-200 rounded-md p-3 bg-gray-50">
-                                <div class="text-sm font-bold text-blue-800 mb-2">Imputado(s)</div>
-                                <div class="space-y-2">
-                                    <x-text-input wire:model="defendant_name" class="block w-full text-sm"
-                                        placeholder="Nombre completo" />
-                                    <x-text-input wire:model="defendant_rfc" class="block w-full text-sm"
-                                        placeholder="RFC" />
-                                    <x-text-input wire:model="defendant_defender" class="block w-full text-sm"
-                                        placeholder="Defensor" />
+                            <!-- Formulario Imputado -->
+                            @if($activeParticipantTab === 'imputado')
+                                <div class="border border-gray-200 rounded-md p-4 bg-gray-50 animate-fade-in-up">
+                                    <div class="text-xs font-bold text-blue-800 uppercase tracking-wide mb-3">Datos del Imputado</div>
+                                    <div class="space-y-3">
+                                        <div>
+                                            <x-input-label value="Nombre Completo *" class="text-xs" />
+                                            <x-text-input wire:model="defendant_name" class="block w-full text-sm mt-1"
+                                                placeholder="Ej. Juan Pérez" />
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-3">
+                                            <div>
+                                                <x-input-label value="Alias / Apodo" class="text-xs" />
+                                                <x-text-input wire:model="defendant_alias" class="block w-full text-sm mt-1"
+                                                    placeholder="Ej. El Chato" />
+                                            </div>
+                                            <div>
+                                                <x-input-label value="RFC (Opcional)" class="text-xs" />
+                                                <x-text-input wire:model="defendant_rfc" class="block w-full text-sm mt-1"
+                                                    placeholder="RFC" />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <x-input-label value="Defensor (Opcional)" class="text-xs" />
+                                            <x-text-input wire:model="defendant_defender" class="block w-full text-sm mt-1"
+                                                placeholder="Nombre del Abogado Defensor" />
+                                        </div>
+                                        <div class="flex items-center pt-2">
+                                            <label for="defendant_is_detained" class="inline-flex items-center cursor-pointer">
+                                                <input wire:model="defendant_is_detained" id="defendant_is_detained" type="checkbox"
+                                                    class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500">
+                                                <span class="ms-2 text-sm font-bold text-red-600">⚠️ ¿Se encuentra detenido actualmente?</span>
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
 
-                            <!-- Other Roles -->
+                            <!-- Formulario Víctima -->
+                            @if($activeParticipantTab === 'victima')
+                                <div class="border border-gray-200 rounded-md p-4 bg-gray-50 animate-fade-in-up">
+                                    <div class="text-xs font-bold text-blue-800 uppercase tracking-wide mb-3">Datos de la Víctima</div>
+                                    <div class="space-y-3">
+                                        <div>
+                                            <x-input-label value="Nombre Completo" class="text-xs" />
+                                            <x-text-input wire:model="victim_name" class="block w-full text-sm mt-1"
+                                                placeholder="Ej. María López" />
+                                        </div>
+                                        <div>
+                                            <x-input-label value="RFC (Opcional)" class="text-xs" />
+                                            <x-text-input wire:model="victim_rfc" class="block w-full text-sm mt-1"
+                                                placeholder="RFC" />
+                                        </div>
+                                    </div>
+                                    <p class="mt-3 text-[10px] text-gray-500 text-center">
+                                        💡 Si hay múltiples víctimas, podrás agregarlas en la gestión del caso.
+                                    </p>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <!-- Autoridades del Caso -->
+                    <div class="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
+                        <div class="flex items-center gap-2 mb-4 text-[#111344]">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+                            </svg>
+                            <h2 class="font-bold text-lg">Autoridades Asignadas</h2>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <x-input-label :value="__('Fiscal a cargo')"
-                                    class="text-xs text-gray-500 uppercase font-bold" />
-                                <!-- This could be a select of users or a simple text field for external prosecutors -->
-                                <x-text-input wire:model="prosecutor_name_specific" class="block w-full text-sm"
-                                    placeholder="Nombre del Fiscal (Opcional)" />
-                                {{-- Assuming reusing prosecutor_name or keeping it separates? The previous field was
-                                'Fiscalía / Unidad' (Entity). This is 'Fiscal a Cargo' (Person).
-                                The Model has 'prosecutor_name'. Let's use the Entity valid above and maybe this is
-                                redundant or specific?
-                                The Controller saves `prosecutor_name`. The form has TWO inputs that might map to it?
-                                Input 1: Select "Fiscalía Centro Norte" (Entity)
-                                Input 2: "Fiscal a cargo" (Person)
-                                I'll map this input to 'judge_name' placeholder for now or add a new property if
-                                differentiating?
-                                Actually, I added 'judge_name' below.
-                                Let's assume the 'prosecutor_name' in model is the text field for the PERSON or ENTITY.
-                                Let's map the text field below to something else like 'notes' or just ignore if not in
-                                model?
-                                Wait, I added `prosecutor_name` to the controller. I bound the SELECT above to
-                                `prosecutor_name`.
-                                I will bind the judge below to `judge_name`.
-                                --}}
+                                <x-input-label :value="__('Fiscal a cargo')" />
+                                <x-text-input wire:model="prosecutor_name_specific" class="block w-full text-sm mt-1"
+                                    placeholder="Nombre del Fiscal responsable" />
                             </div>
                             <div>
-                                <x-input-label :value="__('Juez')" class="text-xs text-gray-500 uppercase font-bold" />
+                                <x-input-label :value="__('Juez de la causa')" />
                                 <x-text-input wire:model="judge_name" class="block mt-1 w-full text-sm"
-                                    placeholder="Nombre del juez (opcional)" />
+                                    placeholder="Nombre del Juez" />
                             </div>
                         </div>
                     </div>

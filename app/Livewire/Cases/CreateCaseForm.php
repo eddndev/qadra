@@ -9,6 +9,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
+use App\Enums\CaseParticipantRole;
+
 class CreateCaseForm extends Component
 {
     // Authorities
@@ -32,9 +34,18 @@ class CreateCaseForm extends Component
     public $defendant_name;
     public $defendant_rfc;
     public $defendant_defender;
+    public $defendant_alias; // New
+    public $defendant_is_detained = false; // New
+
+    // Victim (Víctima) - NEW
+    public $victim_name;
+    public $victim_rfc;
 
     // Measures
     public $selected_measures = []; // ['pris_prev', 'firma', ...]
+    
+    // UI State
+    public $activeParticipantTab = 'imputado'; // imputado | victima
 
     // Catalogues
     public $crimeTypes;
@@ -50,6 +61,9 @@ class CreateCaseForm extends Component
             'defendant_name' => 'nullable|string|max:255',
             'defendant_rfc' => 'nullable|string|max:20',
             'defendant_defender' => 'nullable|string|max:255',
+            // Victim
+            'victim_name' => 'nullable|string|max:255',
+            'victim_rfc' => 'nullable|string|max:20',
         ];
 
         if (!$isDraft) {
@@ -149,8 +163,24 @@ class CreateCaseForm extends Component
             $participantId = $participant->id;
 
             $case->participants()->attach($participant->id, [
-                'role' => 'imputado',
+                'role' => CaseParticipantRole::IMPUTADO->value,
                 'defense_attorney_name' => $this->defendant_defender,
+                'alias' => $this->defendant_alias,
+                'is_detained' => $this->defendant_is_detained,
+            ]);
+        }
+
+        // Save Victim (Participant) - NEW
+        if ($this->victim_name) {
+            $victim = \App\Models\Participant::create([
+                'tenant_id' => $tenant->id,
+                'name' => $this->victim_name,
+                'rfc' => $this->victim_rfc,
+                'type' => 'physical', // Assuming individual for simplicity, could be moral
+            ]);
+
+            $case->participants()->attach($victim->id, [
+                'role' => CaseParticipantRole::VICTIMA->value,
             ]);
         }
 
