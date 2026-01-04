@@ -1,7 +1,8 @@
 import './bootstrap';
+import Alpine from 'alpinejs';
 
-// Livewire 3 handles Alpine automatically. 
-// If you need to register Alpine plugins or global data, do it here:
-// document.addEventListener('alpine:init', () => {
-//     Alpine.plugin(SomePlugin);
-// });
+if (!window.Alpine) {
+    window.Alpine = Alpine;
+    Alpine.start();
+}
+
