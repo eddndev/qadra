@@ -41,7 +41,7 @@
                         $globalTenant = \App\Models\Tenant::getGlobalTenant();
                     @endphp
 
-                    @if($globalTenant && $globalTenant->onTrial() && !$globalTenant->subscribed('default'))
+                    @if($globalTenant && $globalTenant->onTrial())
                         <div class="mb-6 rounded-md bg-[#111344] p-4 border border-blue-900 shadow-sm">
                             <div class="flex items-center">
                                 <div class="flex-shrink-0">
@@ -50,15 +50,20 @@
                                     </svg>
                                 </div>
                                 <div class="ml-4 flex-1 md:flex md:justify-between md:items-center">
-                                    <p class="text-sm text-blue-100">
-                                        Estás disfrutando de tu periodo de prueba gratuito. 
-                                        Te quedan <span class="font-bold text-white">{{ (int) ceil(now()->floatDiffInDays($globalTenant->trial_ends_at)) }} días</span>.
+                                    <p class="text-sm text-white">
+                                        @if($globalTenant->subscribed('default'))
+                                            Tu periodo de prueba finaliza en <span class="font-bold">{{ (int) ceil(now()->floatDiffInDays($globalTenant->trial_ends_at)) }} días</span>. Después se aplicará el cargo de tu plan.
+                                        @else
+                                            Estás en tu periodo de prueba gratuito. Te quedan <span class="font-bold">{{ (int) ceil(now()->floatDiffInDays($globalTenant->trial_ends_at)) }} días</span>.
+                                        @endif
                                     </p>
-                                    <p class="mt-3 text-sm md:mt-0 md:ml-6">
-                                        <a href="{{ route('billing.index') }}" class="inline-flex items-center px-4 py-2 bg-[#1E40AF] border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 shadow-md whitespace-nowrap">
-                                            Suscribirme ahora 
-                                        </a>
-                                    </p>
+                                    @if(!$globalTenant->subscribed('default'))
+                                        <p class="mt-3 text-sm md:mt-0 md:ml-6">
+                                            <a href="{{ route('billing.index') }}" class="inline-flex items-center px-4 py-2 bg-[#1E40AF] border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 shadow-md whitespace-nowrap">
+                                                Seleccionar un plan
+                                            </a>
+                                        </p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
