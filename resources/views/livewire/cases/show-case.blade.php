@@ -298,12 +298,6 @@
             @elseif($activeTab === 'activities')
                 <livewire:activities.activity-timeline :case="$case" />
             @elseif($activeTab === 'evidence')
-                <div class="flex justify-end mb-4">
-                    <a href="{{ route('evidence.create', ['case_id' => $case->id]) }}"
-                        class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded text-sm">
-                        + Nueva Evidencia
-                    </a>
-                </div>
                 <livewire:evidence.evidence-table :caseId="$case->id" />
             @elseif($activeTab === 'documents')
                 <div class="space-y-6">
