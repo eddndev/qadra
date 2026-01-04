@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Evidence extends Model
+class Evidence extends Model implements HasMedia
 {
-    use HasFactory, HasUlids, TenantScoped, SoftDeletes;
+    use HasFactory, HasUlids, TenantScoped, SoftDeletes, InteractsWithMedia;
 
     protected $table = 'evidence';
 
@@ -31,6 +33,14 @@ class Evidence extends Model
     protected $casts = [
         'collected_at' => 'datetime',
     ];
+
+    // Media Library Configuration
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('evidence_photos')
+            ->useDisk(config('filesystems.default', 'public')); // Use default disk (likely s3 in prod, public in local)
+            // Or force S3 if required: ->useDisk('s3');
+    }
 
     // Relationships
 

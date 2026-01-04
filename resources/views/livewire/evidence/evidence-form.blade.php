@@ -185,7 +185,7 @@
                             <div class="flex text-sm text-gray-600 justify-center">
                                 <label for="file-upload" @click.stop class="relative cursor-pointer bg-transparent rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
                                     <span>Sube un archivo</span>
-                                    <input id="file-upload" x-ref="fileInput" name="file-upload" type="file" class="sr-only" multiple>
+                                    <input id="file-upload" x-ref="fileInput" wire:model="photos" name="file-upload" type="file" class="sr-only" multiple accept="image/png, image/jpeg, image/gif">
                                 </label>
                                 <p class="pl-1">o arrastra y suelta</p>
                             </div>
@@ -194,6 +194,19 @@
                             </p>
                         </div>
                     </div>
+                    @error('photos.*') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
+                    
+                    <!-- Image Previews -->
+                    @if ($photos)
+                        <div class="mt-4 grid grid-cols-3 md:grid-cols-5 gap-4">
+                            @foreach ($photos as $photo)
+                                <div class="relative group">
+                                    <img src="{{ $photo->temporaryUrl() }}" class="h-20 w-full object-cover rounded-lg border border-gray-200 shadow-sm">
+                                    <!-- Optional: Remove button logic could go here -->
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
 
                 <!-- Notas -->

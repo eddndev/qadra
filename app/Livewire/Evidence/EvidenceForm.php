@@ -8,9 +8,12 @@ use App\Models\LegalCase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class EvidenceForm extends Component
 {
+    use WithFileUploads;
+
     public $case_id;
     public $description;
     public $type;
@@ -18,6 +21,7 @@ class EvidenceForm extends Component
     public $collected_at;
     public $collected_by;
     public $notes;
+    public $photos = []; // For multiple file uploads
     
     // For UI
     public $cases;
@@ -31,6 +35,7 @@ class EvidenceForm extends Component
         'collected_at' => 'required|date',
         'collected_by' => 'nullable|string|max:255',
         'notes' => 'nullable|string|max:65535',
+        'photos.*' => 'image|max:10240', // 10MB max per image
     ];
 
     public function mount($caseId = null)
@@ -107,10 +112,16 @@ class EvidenceForm extends Component
                 'registered_by' => Auth::id(),
             ]);
 
+            // 4. Save Photos
+            foreach ($this->photos as $photo) {
+                $evidence->addMedia($photo)
+                    ->toMediaCollection('evidence_photos');
+            }
+
             session()->flash('message', "Evidencia registrada exitosamente con folio: {$folio}");
             
             // Reset form or redirect
-            $this->reset(['description', 'type', 'current_location', 'notes']);
+            $this->reset(['description', 'type', 'current_location', 'notes', 'photos']);
             $this->collected_at = now()->format('Y-m-d\TH:i');
             
             // If we want to redirect to the case or evidence list:
