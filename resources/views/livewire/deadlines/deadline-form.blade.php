@@ -7,6 +7,21 @@
         <form wire:submit.prevent="save">
             <div class="grid grid-cols-1 gap-6">
 
+                <!-- Catálogo de Tipos -->
+                <div>
+                    <x-input-label for="selectedTypeId" value="Tipo de Plazo (Catálogo)" />
+                    <select wire:model.live="selectedTypeId" id="selectedTypeId"
+                        class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                        <option value="">-- Personalizado / Manual --</option>
+                        @foreach($deadlineTypes as $dt)
+                            <option value="{{ $dt->id }}">
+                                {{ $dt->name }} 
+                                ({{ $dt->default_days ? $dt->default_days . ' días' : 'Manual' }} - {{ $dt->business_days ? 'Hábiles' : 'Naturales' }})
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <!-- Título -->
                 <div>
                     <x-input-label for="deadline_title" value="Título del Plazo" />

@@ -289,7 +289,13 @@
                                     <div>
                                         <x-input-label :value="__('Tipo de plazo')" class="text-xs" />
                                         <select class="block w-full text-sm border-gray-300 rounded shadow-sm py-1">
-                                            <option>Seleccionar tipo</option>
+                                            <option value="">Seleccionar tipo</option>
+                                            @foreach($deadlineTypes as $dt)
+                                                <option value="{{ $dt->id }}">
+                                                    {{ $dt->name }} 
+                                                    ({{ $dt->default_days ? $dt->default_days . ' días' : 'Manual' }})
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div>

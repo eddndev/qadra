@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 use App\Enums\CaseParticipantRole;
+use App\Models\DeadlineType;
 
 class CreateCaseForm extends Component
 {
@@ -49,6 +50,7 @@ class CreateCaseForm extends Component
 
     // Catalogues
     public $crimeTypes;
+    public $deadlineTypes; // New
 
     public function getRules($isDraft = false)
     {
@@ -92,6 +94,7 @@ class CreateCaseForm extends Component
     {
         $this->start_date = now()->format('Y-m-d');
         $this->crimeTypes = CrimeType::orderBy('name')->get();
+        $this->deadlineTypes = DeadlineType::orderBy('name')->get();
     }
 
     public function saveAsDraft()
