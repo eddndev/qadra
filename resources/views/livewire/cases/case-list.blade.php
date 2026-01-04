@@ -4,7 +4,8 @@
         <!-- Header & Actions -->
         <div class="sm:flex sm:items-center sm:justify-between mb-8">
             <div>
-                <h1 class="text-2xl font-bold text-[#111344]">Expedientes</h1>
+                <x-slot name="header">Expedientes</x-slot>
+                <h1 class="text-2xl font-bold text-[#111344]">Expedientes Penales</h1>
                 <p class="mt-2 text-sm text-gray-700">Lista completa de casos y su estado procesal.</p>
             </div>
             <div class="mt-4 sm:mt-0 flex gap-3">

@@ -36,7 +36,7 @@
                             @if($onTrial)
                                 <span
                                     class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                                    Periodo de Prueba ({{ $tenant->trial_ends_at->diffForHumans(['parts' => 2]) }})
+                                    Periodo de Prueba (finaliza el {{ $tenant->trial_ends_at->format('d/m/Y') }})
                                 </span>
                             @else
                                 <span

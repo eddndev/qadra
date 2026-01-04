@@ -1,13 +1,14 @@
 <x-app-layout>
-    <!-- No Header Slot -->
+    <x-slot name="header">
+        Reportes
+    </x-slot>
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             
             <div class="flex items-center justify-between mb-2">
                 <div>
-                    <h1 class="text-3xl font-bold text-[#111344]">Reportes</h1>
-                    <p class="text-sm text-gray-500 mt-1">Análisis de desempeño y métricas de expedientes</p>
+                    <h1 class="text-3xl font-bold text-[#111344]">Análisis de desempeño y métricas de expedientes</h1>
                 </div>
                 
                 <div class="flex gap-2">

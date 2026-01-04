@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Traits\HasTenants;
+use App\Models\Traits\TenantScoped;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +12,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class LegalCase extends Model implements HasMedia
 {
-    use HasFactory, HasUlids, HasTenants, SoftDeletes, InteractsWithMedia;
+    use HasFactory, HasUlids, TenantScoped, SoftDeletes, InteractsWithMedia;
 
     protected $table = 'legal_cases';
 
@@ -52,7 +52,7 @@ class LegalCase extends Model implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('documents')
-             ->useDisk('s3'); // Enforce S3 for documents
+            ->useDisk('s3'); // Enforce S3 for documents
     }
 
     // Relationships
@@ -93,7 +93,7 @@ class LegalCase extends Model implements HasMedia
     {
         return $this->hasMany(Deadline::class, 'case_id');
     }
-    
+
     public function evidence()
     {
         return $this->hasMany(Evidence::class, 'case_id');

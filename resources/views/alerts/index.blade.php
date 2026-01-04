@@ -1,12 +1,12 @@
 <x-app-layout>
-    <!-- No Header Slot as per custom design -->
+    <x-slot name="header">
+        Alertas
+    </x-slot>
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             
-            <div class="flex items-center justify-between mb-4">
-                <h1 class="text-3xl font-bold text-[#111344]">Alertas</h1>
-            </div>
+
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <!-- Left Column: Deadlines -->

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Traits\HasTenants;
+
 use App\Models\Traits\TenantScoped;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PrecautionaryMeasure extends Model
 {
-    use HasFactory, HasUlids, HasTenants, TenantScoped, SoftDeletes;
+    use HasFactory, HasUlids, TenantScoped, SoftDeletes;
 
     protected $fillable = [
         'tenant_id',
@@ -61,9 +61,12 @@ class PrecautionaryMeasure extends Model
 
         $days = now()->diffInDays($this->review_date, false);
 
-        if ($days < 0) return 'expired'; // Vencida
-        if ($days <= 30) return 'critical'; // Urgente (preparar audiencia)
-        if ($days <= 60) return 'warning'; // Atención
+        if ($days < 0)
+            return 'expired'; // Vencida
+        if ($days <= 30)
+            return 'critical'; // Urgente (preparar audiencia)
+        if ($days <= 60)
+            return 'warning'; // Atención
 
         return 'ok';
     }

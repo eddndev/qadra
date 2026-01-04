@@ -2,11 +2,21 @@
     <table class="min-w-full divide-y divide-gray-300">
         <thead class="bg-[#eef2ff]">
             <tr>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-gray-900 sm:pl-6 uppercase tracking-wider">Caso</th>
-                <th scope="col" class="px-3 py-3.5 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Tipo de Plazo</th>
-                <th scope="col" class="px-3 py-3.5 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Fecha Límite</th>
-                <th scope="col" class="px-3 py-3.5 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Estado</th>
-                <th scope="col" class="px-3 py-3.5 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Acción</th>
+                <th scope="col"
+                    class="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-gray-900 sm:pl-6 uppercase tracking-wider">
+                    Caso</th>
+                <th scope="col"
+                    class="px-3 py-3.5 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Tipo de
+                    Plazo</th>
+                <th scope="col"
+                    class="px-3 py-3.5 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Fecha
+                    Límite</th>
+                <th scope="col"
+                    class="px-3 py-3.5 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Estado
+                </th>
+                <th scope="col"
+                    class="px-3 py-3.5 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Acción
+                </th>
             </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 bg-white">
@@ -21,7 +31,7 @@
                     @php
                         $isPast = $deadline->expires_at->isPast();
                         $daysLeft = now()->diffInDays($deadline->expires_at, false);
-                        
+
                         // Styling logic based on urgency
                         $rowClass = 'hover:bg-gray-50';
                         $dateColor = 'text-gray-700 font-medium';
@@ -35,15 +45,15 @@
                         } elseif ($daysLeft <= 3) {
                             $dateColor = 'text-[#A52A2A] font-bold';
                             $statusColor = 'text-[#A52A2A] font-semibold';
-                             // Format hours if less than 1 day? Or just "X días"
-                             if ($daysLeft < 1) {
+                            // Format hours if less than 1 day? Or just "X días"
+                            if ($daysLeft < 1) {
                                 $hours = now()->diffInHours($deadline->expires_at);
                                 $statusText = "Vence en {$hours}h";
-                             } else {
-                                $statusText = (int)$daysLeft . ' días';
-                             }
+                            } else {
+                                $statusText = (int) $daysLeft . ' días';
+                            }
                         } else {
-                            $statusText = (int)$daysLeft . ' días';
+                            $statusText = (int) $daysLeft . ' días';
                         }
                     @endphp
 
@@ -63,13 +73,14 @@
                             {{ $deadline->expires_at->format('d M Y') }}
                         </td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-center">
-                           <span class="{{ $statusColor }}">
+                            <span class="{{ $statusColor }}">
                                 {{ $statusText }}
-                           </span>
+                            </span>
                         </td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-center">
                             {{-- Assuming there is a route to view the case or deadline. Using '#' for now as closest link --}}
-                            <a href="#" class="text-[#1E40AF] hover:text-[#111344] flex justify-center items-center gap-1 text-xs font-medium">
+                            <a href="{{ route('cases.show', $deadline->case) }}"
+                                class="text-[#1E40AF] hover:text-[#111344] flex justify-center items-center gap-1 text-xs font-medium">
                                 Ver <span aria-hidden="true">&rarr;</span>
                             </a>
                         </td>

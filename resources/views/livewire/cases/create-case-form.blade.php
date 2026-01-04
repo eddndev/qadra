@@ -59,6 +59,7 @@
                                     <option value="Juzgado de Garantía 1">Juzgado de Garantía 1</option>
                                     <option value="Juzgado de Garantía 2">Juzgado de Garantía 2</option>
                                 </select>
+                                <x-input-error :messages="$errors->get('court_name')" class="mt-2" />
                             </div>
 
                             <div>
@@ -90,40 +91,102 @@
                                 </svg>
                                 <h2 class="font-bold text-lg">Personas Involucradas</h2>
                             </div>
-                            <button type="button"
-                                class="text-xs bg-[#111344] text-white px-3 py-1.5 rounded hover:bg-blue-900 flex items-center gap-1">
-                                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 4v16m8-8H4" />
-                                </svg>
-                                Agregar imputado
+                        </div>
+
+                        <!-- Tabs de Navegación -->
+                        <div class="flex space-x-1 rounded-xl bg-gray-100 p-1 mb-4">
+                            <button type="button" wire:click="$set('activeParticipantTab', 'imputado')"
+                                class="w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-[#111344] ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 {{ $activeParticipantTab === 'imputado' ? 'bg-white shadow' : 'text-gray-500 hover:bg-white/[0.12] hover:text-gray-700' }}">
+                                Imputado (Acusado)
+                            </button>
+                            <button type="button" wire:click="$set('activeParticipantTab', 'victima')"
+                                class="w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-[#111344] ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 {{ $activeParticipantTab === 'victima' ? 'bg-white shadow' : 'text-gray-500 hover:bg-white/[0.12] hover:text-gray-700' }}">
+                                Víctima / Ofendido
                             </button>
                         </div>
 
                         <div class="space-y-4">
-                            <!-- Imputado -->
-                            <div class="border border-gray-200 rounded-md p-3 bg-gray-50">
-                                <div class="text-sm font-bold text-blue-800 mb-2">Imputado(s)</div>
-                                <div class="space-y-2">
-                                    <x-text-input class="block w-full text-sm" placeholder="Nombre completo" />
-                                    <x-text-input class="block w-full text-sm" placeholder="RUT" />
-                                    <x-text-input class="block w-full text-sm" placeholder="Defensor" />
+                            <!-- Formulario Imputado -->
+                            @if($activeParticipantTab === 'imputado')
+                                <div class="border border-gray-200 rounded-md p-4 bg-gray-50 animate-fade-in-up">
+                                    <div class="text-xs font-bold text-blue-800 uppercase tracking-wide mb-3">Datos del Imputado</div>
+                                    <div class="space-y-3">
+                                        <div>
+                                            <x-input-label value="Nombre Completo *" class="text-xs" />
+                                            <x-text-input wire:model="defendant_name" class="block w-full text-sm mt-1"
+                                                placeholder="Ej. Juan Pérez" />
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-3">
+                                            <div>
+                                                <x-input-label value="Alias / Apodo" class="text-xs" />
+                                                <x-text-input wire:model="defendant_alias" class="block w-full text-sm mt-1"
+                                                    placeholder="Ej. El Chato" />
+                                            </div>
+                                            <div>
+                                                <x-input-label value="RFC (Opcional)" class="text-xs" />
+                                                <x-text-input wire:model="defendant_rfc" class="block w-full text-sm mt-1"
+                                                    placeholder="RFC" />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <x-input-label value="Defensor (Opcional)" class="text-xs" />
+                                            <x-text-input wire:model="defendant_defender" class="block w-full text-sm mt-1"
+                                                placeholder="Nombre del Abogado Defensor" />
+                                        </div>
+                                        <div class="flex items-center pt-2">
+                                            <label for="defendant_is_detained" class="inline-flex items-center cursor-pointer">
+                                                <input wire:model="defendant_is_detained" id="defendant_is_detained" type="checkbox"
+                                                    class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500">
+                                                <span class="ms-2 text-sm font-bold text-red-600">⚠️ ¿Se encuentra detenido actualmente?</span>
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
 
-                            <!-- Other Roles -->
+                            <!-- Formulario Víctima -->
+                            @if($activeParticipantTab === 'victima')
+                                <div class="border border-gray-200 rounded-md p-4 bg-gray-50 animate-fade-in-up">
+                                    <div class="text-xs font-bold text-blue-800 uppercase tracking-wide mb-3">Datos de la Víctima</div>
+                                    <div class="space-y-3">
+                                        <div>
+                                            <x-input-label value="Nombre Completo" class="text-xs" />
+                                            <x-text-input wire:model="victim_name" class="block w-full text-sm mt-1"
+                                                placeholder="Ej. María López" />
+                                        </div>
+                                        <div>
+                                            <x-input-label value="RFC (Opcional)" class="text-xs" />
+                                            <x-text-input wire:model="victim_rfc" class="block w-full text-sm mt-1"
+                                                placeholder="RFC" />
+                                        </div>
+                                    </div>
+                                    <p class="mt-3 text-[10px] text-gray-500 text-center">
+                                        💡 Si hay múltiples víctimas, podrás agregarlas en la gestión del caso.
+                                    </p>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <!-- Autoridades del Caso -->
+                    <div class="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
+                        <div class="flex items-center gap-2 mb-4 text-[#111344]">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+                            </svg>
+                            <h2 class="font-bold text-lg">Autoridades Asignadas</h2>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <x-input-label :value="__('Fiscal a cargo')"
-                                    class="text-xs text-gray-500 uppercase font-bold" />
-                                <select class="block mt-1 w-full text-sm border-gray-300 rounded-md shadow-sm">
-                                    <option>Seleccionar fiscal</option>
-                                    <option selected>Juan Díaz</option>
-                                </select>
+                                <x-input-label :value="__('Fiscal a cargo')" />
+                                <x-text-input wire:model="prosecutor_name_specific" class="block w-full text-sm mt-1"
+                                    placeholder="Nombre del Fiscal responsable" />
                             </div>
                             <div>
-                                <x-input-label :value="__('Juez')" class="text-xs text-gray-500 uppercase font-bold" />
-                                <x-text-input class="block mt-1 w-full text-sm"
-                                    placeholder="Nombre del juez (opcional)" />
+                                <x-input-label :value="__('Juez de la causa')" />
+                                <x-text-input wire:model="judge_name" class="block mt-1 w-full text-sm"
+                                    placeholder="Nombre del Juez" />
                             </div>
                         </div>
                     </div>
@@ -154,11 +217,12 @@
                             <!-- Mock Risk Select -->
                             <div>
                                 <x-input-label :value="__('Riesgo procesal')" />
-                                <select class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">
-                                    <option>Seleccionar riesgo</option>
-                                    <option>Alto</option>
-                                    <option>Medio</option>
-                                    <option>Bajo</option>
+                                <select wire:model="crime_severity"
+                                    class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">
+                                    <option value="">Seleccionar riesgo</option>
+                                    <option value="Alto">Alto</option>
+                                    <option value="Medio">Medio</option>
+                                    <option value="Bajo">Bajo</option>
                                 </select>
                             </div>
 
@@ -166,22 +230,23 @@
                                 <x-input-label :value="__('Medidas cautelares')" class="mb-2" />
                                 <div class="space-y-2">
                                     <label class="flex items-center">
-                                        <input type="checkbox"
+                                        <input type="checkbox" wire:model="selected_measures" value="pris_prev"
                                             class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" />
                                         <span class="ml-2 text-sm text-gray-600">Prisión preventiva</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="checkbox"
+                                        <input type="checkbox" wire:model="selected_measures" value="firma_periodica"
                                             class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" />
                                         <span class="ml-2 text-sm text-gray-600">Firma periódica</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="checkbox"
+                                        <input type="checkbox" wire:model="selected_measures" value="arraigo_nacional"
                                             class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" />
                                         <span class="ml-2 text-sm text-gray-600">Arraigo nacional</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="checkbox"
+                                        <input type="checkbox" wire:model="selected_measures"
+                                            value="prohibicion_acercamiento"
                                             class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" />
                                         <span class="ml-2 text-sm text-gray-600">Prohibición de acercamiento</span>
                                     </label>
@@ -282,7 +347,7 @@
                             class="w-full justify-center inline-flex items-center px-4 py-2 bg-[#334D6E] border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-[#243b55] focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                             Guardar y abrir expediente
                         </button>
-                        <button type="button"
+                        <button type="button" wire:click="saveAsDraft"
                             class="w-full justify-center inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
                             Guardar como borrador
                         </button>

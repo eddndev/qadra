@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Traits\HasTenants;
+
 use App\Models\Traits\TenantScoped;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AlternativeSolution extends Model
 {
-    use HasFactory, HasUlids, HasTenants, TenantScoped, SoftDeletes;
+    use HasFactory, HasUlids, TenantScoped, SoftDeletes;
 
     protected $fillable = [
         'tenant_id',
@@ -46,7 +46,7 @@ class AlternativeSolution extends Model
     // Helpers
     public function getStatusLabelAttribute()
     {
-        return match($this->status) {
+        return match ($this->status) {
             'propuesta' => 'Propuesta',
             'aprobada' => 'Aprobada / En Curso',
             'cumplida' => 'Cumplida Totalmente',

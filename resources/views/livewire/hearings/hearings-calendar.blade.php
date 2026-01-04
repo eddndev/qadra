@@ -11,6 +11,7 @@
                         <li><span class="text-sm font-medium text-indigo-600">Calendario</span></li>
                     </ol>
                 </nav>
+                <x-slot name="header">Audiencias</x-slot>
                 <h1 class="mt-1 text-2xl font-bold tracking-tight text-slate-800">Calendario de Audiencias</h1>
             </div>
             <button class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white transition-colors bg-indigo-600 rounded-lg shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
