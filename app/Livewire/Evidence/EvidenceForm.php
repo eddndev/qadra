@@ -21,6 +21,7 @@ class EvidenceForm extends Component
     
     // For UI
     public $cases;
+    public $preselectedCase = null;
 
     protected $rules = [
         'case_id' => 'required|exists:legal_cases,id',
@@ -34,7 +35,20 @@ class EvidenceForm extends Component
 
     public function mount($caseId = null)
     {
+        // Capture URL query parameter if passed as 'case_id' (Laravel handles this via DI or request, 
+        // but Livewire mount parameters usually come from the route {parameter}). 
+        // If query string ?case_id=... is used, we must capture it via request() if not passed as argument.
+        
+        if (!$caseId) {
+            $caseId = request()->query('case_id');
+        }
+
         $this->case_id = $caseId;
+        
+        if ($this->case_id) {
+            $this->preselectedCase = LegalCase::find($this->case_id);
+        }
+
         // Default collection time to now
         $this->collected_at = now()->format('Y-m-d\TH:i');
         
