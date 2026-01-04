@@ -62,6 +62,7 @@ Route::middleware(['auth', 'verified', IdentifyTenant::class, EnsureTenantScope:
     // Evidence Management
     Route::view('/evidence', 'evidence.index')->name('evidence.index');
     Route::get('/evidence/create', EvidenceForm::class)->name('evidence.create');
+    Route::get('/evidence/{evidence}', App\Livewire\Evidence\ShowEvidence::class)->name('evidence.show'); // New Route
     Route::get('/evidence/{evidence}/move', CustodyMovementForm::class)->name('evidence.move');
 
     // Stats & Reports

@@ -35,23 +35,53 @@
                 <!-- Caso Vinculado -->
                 <div class="col-span-1 md:col-span-2">
                     <x-input-label for="case_id" :value="__('Caso Vinculado *')" class="mb-1" />
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />
-                            </svg>
+                    
+                    @if($preselectedCase)
+                        <!-- Locked State (Contextual) -->
+                        <div class="relative bg-slate-50 border border-indigo-100 rounded-md p-3 flex items-center gap-3">
+                            <div class="p-2 bg-indigo-100 rounded-full text-indigo-700">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-bold text-gray-900">
+                                    {{ $preselectedCase->internal_folio }}
+                                </p>
+                                <p class="text-xs text-gray-500">
+                                    {{ $preselectedCase->case_alias ?? 'Sin Alias' }}
+                                </p>
+                            </div>
+                            <div class="text-xs text-gray-400 flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
+                                Vinculado
+                            </div>
+                            <!-- Hidden input to ensure data binding works if needed, though $case_id is locked in component -->
+                            {{-- <input type="hidden" wire:model="case_id"> --}}
                         </div>
-                        <select wire:model="case_id" id="case_id"
-                            class="pl-10 w-full border-slate-300 rounded-md shadow-sm focus:border-[#1E40AF] focus:ring-[#1E40AF] sm:text-sm px-4">
-                            <option value="">-- Seleccionar Caso --</option>
-                            @foreach($cases as $case)
-                                <option value="{{ $case->id }}">
-                                    {{ $case->internal_folio }} - {{ $case->case_alias ?? 'Sin Alias' }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    @error('case_id') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                    @else
+                        <!-- Select State (Global) -->
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />
+                                </svg>
+                            </div>
+                            <select wire:model="case_id" id="case_id"
+                                class="pl-10 w-full border-slate-300 rounded-md shadow-sm focus:border-[#1E40AF] focus:ring-[#1E40AF] sm:text-sm px-4">
+                                <option value="">-- Seleccionar Caso --</option>
+                                @foreach($cases as $case)
+                                    <option value="{{ $case->id }}">
+                                        {{ $case->internal_folio }} - {{ $case->case_alias ?? 'Sin Alias' }}
+                                        {{ $case->status === 'borrador' ? '(Borrador)' : '' }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @error('case_id') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                    @endif
                 </div>
 
                 <!-- Tipo de Evidencia -->
@@ -145,15 +175,17 @@
                 <!-- Carga de Archivos (Fotos) -->
                 <div class="col-span-1 md:col-span-2">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Fotografías de la Evidencia</label>
-                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-md bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer group">
+                    <div x-data 
+                        @click="$refs.fileInput.click()"
+                        class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-md bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer group">
                         <div class="space-y-1 text-center">
                             <svg class="mx-auto h-12 w-12 text-gray-400 group-hover:text-blue-500 transition-colors" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                                 <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                             <div class="flex text-sm text-gray-600 justify-center">
-                                <label for="file-upload" class="relative cursor-pointer bg-transparent rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                                <label for="file-upload" @click.stop class="relative cursor-pointer bg-transparent rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
                                     <span>Sube un archivo</span>
-                                    <input id="file-upload" name="file-upload" type="file" class="sr-only" multiple>
+                                    <input id="file-upload" x-ref="fileInput" wire:model="photos" name="file-upload" type="file" class="sr-only" multiple accept="image/png, image/jpeg, image/gif">
                                 </label>
                                 <p class="pl-1">o arrastra y suelta</p>
                             </div>
@@ -162,6 +194,19 @@
                             </p>
                         </div>
                     </div>
+                    @error('photos.*') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
+                    
+                    <!-- Image Previews -->
+                    @if ($photos)
+                        <div class="mt-4 grid grid-cols-3 md:grid-cols-5 gap-4">
+                            @foreach ($photos as $photo)
+                                <div class="relative group">
+                                    <img src="{{ $photo->temporaryUrl() }}" class="h-20 w-full object-cover rounded-lg border border-gray-200 shadow-sm">
+                                    <!-- Optional: Remove button logic could go here -->
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
 
                 <!-- Notas -->

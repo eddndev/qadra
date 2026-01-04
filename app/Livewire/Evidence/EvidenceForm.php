@@ -8,9 +8,12 @@ use App\Models\LegalCase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class EvidenceForm extends Component
 {
+    use WithFileUploads;
+
     public $case_id;
     public $description;
     public $type;
@@ -18,9 +21,11 @@ class EvidenceForm extends Component
     public $collected_at;
     public $collected_by;
     public $notes;
+    public $photos = []; // For multiple file uploads
     
     // For UI
     public $cases;
+    public $preselectedCase = null;
 
     protected $rules = [
         'case_id' => 'required|exists:legal_cases,id',
@@ -30,18 +35,32 @@ class EvidenceForm extends Component
         'collected_at' => 'required|date',
         'collected_by' => 'nullable|string|max:255',
         'notes' => 'nullable|string|max:65535',
+        'photos.*' => 'image|max:10240', // 10MB max per image
     ];
 
     public function mount($caseId = null)
     {
+        // Capture URL query parameter if passed as 'case_id' (Laravel handles this via DI or request, 
+        // but Livewire mount parameters usually come from the route {parameter}). 
+        // If query string ?case_id=... is used, we must capture it via request() if not passed as argument.
+        
+        if (!$caseId) {
+            $caseId = request()->query('case_id');
+        }
+
         $this->case_id = $caseId;
+        
+        if ($this->case_id) {
+            $this->preselectedCase = LegalCase::find($this->case_id);
+        }
+
         // Default collection time to now
         $this->collected_at = now()->format('Y-m-d\TH:i');
         
-        // Load active cases for the dropdown
-        $this->cases = LegalCase::where('status', 'activo')
+        // Load active cases for the dropdown (exclude closed/archived)
+        $this->cases = LegalCase::whereNotIn('status', ['cerrado', 'archivado'])
             ->orderBy('created_at', 'desc')
-            ->get(['id', 'internal_folio', 'case_alias']);
+            ->get(['id', 'internal_folio', 'case_alias', 'status']);
     }
 
     public function save()
@@ -93,10 +112,16 @@ class EvidenceForm extends Component
                 'registered_by' => Auth::id(),
             ]);
 
+            // 4. Save Photos
+            foreach ($this->photos as $photo) {
+                $evidence->addMedia($photo)
+                    ->toMediaCollection('evidence_photos');
+            }
+
             session()->flash('message', "Evidencia registrada exitosamente con folio: {$folio}");
             
             // Reset form or redirect
-            $this->reset(['description', 'type', 'current_location', 'notes']);
+            $this->reset(['description', 'type', 'current_location', 'notes', 'photos']);
             $this->collected_at = now()->format('Y-m-d\TH:i');
             
             // If we want to redirect to the case or evidence list:

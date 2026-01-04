@@ -1,24 +1,37 @@
-<div class="max-w-7xl mx-auto p-6">
-    <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-        <h2 class="text-2xl font-bold text-gray-800">
-            Inventario Global de Evidencias
-        </h2>
-        <a href="{{ route('evidence.create') }}"
-            class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium transition">
-            + Nueva Evidencia
-        </a>
-    </div>
+<div class="max-w-7xl mx-auto {{ $caseId ? '' : 'p-6' }}">
+    
+    <!-- Header: Show full header only if global, otherwise just the action button if needed -->
+    @if(!$caseId)
+        <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+            <h2 class="text-2xl font-bold text-gray-800">
+                Inventario Global de Evidencias
+            </h2>
+            <a href="{{ route('evidence.create') }}"
+                class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium transition">
+                + Nueva Evidencia
+            </a>
+        </div>
+    @else
+        <!-- Case Context Header: Just the button, aligned right -->
+        <div class="flex justify-end mb-4">
+            <a href="{{ route('evidence.create', ['case_id' => $caseId]) }}"
+                class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium transition flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                Nueva Evidencia
+            </a>
+        </div>
+    @endif
 
     <!-- Filtros -->
-    <div class="bg-white p-4 rounded-lg shadow-sm mb-6 grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div class="bg-white p-4 rounded-lg shadow-sm mb-6 grid grid-cols-1 md:grid-cols-4 gap-4 border border-gray-100">
         <div class="md:col-span-2">
             <input wire:model.live.debounce.300ms="search" type="text"
-                placeholder="Buscar por folio, descripción o caso..."
-                class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                placeholder="{{ $caseId ? 'Buscar por folio o descripción...' : 'Buscar por folio, descripción o caso...' }}"
+                class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
         </div>
         <div>
             <select wire:model.live="statusFilter"
-                class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
                 <option value="">Todos los Estados</option>
                 <option value="en_custodia">En Custodia</option>
                 <option value="en_fiscalia">En Fiscalía</option>
@@ -29,7 +42,7 @@
         </div>
         <div>
             <select wire:model.live="typeFilter"
-                class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
                 <option value="">Todos los Tipos</option>
                 <option value="arma">Arma</option>
                 <option value="documento_original">Documento</option>
@@ -42,14 +55,15 @@
     </div>
 
     <!-- Tabla -->
-    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="bg-white shadow-sm rounded-lg overflow-hidden border border-gray-200">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Folio
                     </th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Descripción / Caso</th>
+                        {{ $caseId ? 'Descripción' : 'Descripción / Caso' }}
+                    </th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ubicación
                     </th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado
@@ -67,10 +81,12 @@
                                         {{ ucfirst(str_replace('_', ' ', $evidence->type)) }}</div>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <div class="text-sm text-gray-900">{{ Str::limit($evidence->description, 50) }}</div>
-                                    <div class="text-xs text-indigo-600">
-                                        {{ $evidence->legalCase->internal_folio ?? 'Sin Caso' }}
-                                    </div>
+                                    <div class="text-sm text-gray-900">{{ Str::limit($evidence->description, 60) }}</div>
+                                    @if(!$caseId)
+                                        <div class="text-xs text-indigo-600 mt-1">
+                                            {{ $evidence->legalCase->internal_folio ?? 'Sin Caso' }}
+                                        </div>
+                                    @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $evidence->current_location }}
@@ -88,22 +104,35 @@
                                         class="text-indigo-600 hover:text-indigo-900 mr-3">
                                         Mover
                                     </a>
-                                    <!-- TODO: Link to Detail View -->
-                                    <a href="#" class="text-gray-600 hover:text-gray-900">
+                                    <a href="{{ route('evidence.show', $evidence) }}" class="text-gray-600 hover:text-gray-900">
                                         Ver
                                     </a>
                                 </td>
                             </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="px-6 py-10 text-center text-gray-500">
-                            No se encontraron evidencias con los filtros seleccionados.
+                        <td colspan="5" class="px-6 py-12 text-center">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                            </svg>
+                            <h3 class="mt-2 text-sm font-medium text-gray-900">No hay evidencias</h3>
+                            <p class="mt-1 text-sm text-gray-500">No se encontraron registros con los filtros actuales.</p>
+                            @if($caseId)
+                                <div class="mt-6">
+                                    <a href="{{ route('evidence.create', ['case_id' => $caseId]) }}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none">
+                                        <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                                        </svg>
+                                        Registrar Primera Evidencia
+                                    </a>
+                                </div>
+                            @endif
                         </td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
-        <div class="p-4">
+        <div class="p-4 border-t border-gray-200">
             {{ $evidences->links() }}
         </div>
     </div>
