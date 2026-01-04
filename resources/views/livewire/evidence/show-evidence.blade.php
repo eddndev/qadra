@@ -96,8 +96,8 @@
                     @if($evidence->getMedia('evidence_photos')->count() > 0)
                         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                             @foreach($evidence->getMedia('evidence_photos') as $media)
-                                <a href="{{ $media->getUrl() }}" target="_blank" class="block group relative aspect-w-1 aspect-h-1 rounded-lg overflow-hidden bg-gray-100">
-                                    <img src="{{ $media->getUrl() }}" alt="Evidencia" class="object-cover w-full h-full group-hover:opacity-75 transition">
+                                <a href="{{ $media->getTemporaryUrl(now()->addMinutes(60)) }}" target="_blank" class="block group relative aspect-w-1 aspect-h-1 rounded-lg overflow-hidden bg-gray-100">
+                                    <img src="{{ $media->getTemporaryUrl(now()->addMinutes(60)) }}" alt="Evidencia" class="object-cover w-full h-full group-hover:opacity-75 transition">
                                 </a>
                             @endforeach
                         </div>
