@@ -51,7 +51,7 @@
             </div>
 
             <div class="mt-6 flex justify-end">
-                <x-secondary-button wire:click="$set('showModal', false)">
+                <x-secondary-button x-on:click="$dispatch('close')">
                     Cancelar
                 </x-secondary-button>
 
