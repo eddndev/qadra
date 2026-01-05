@@ -52,17 +52,63 @@
                 x-data="{
                     step: 1,
                     register_firm: null,
-                    nextStep() {
+                    isLoading: false,
+                    emailError: '',
+                    passwordError: '',
+                    async nextStep() {
+                        this.emailError = '';
+                        this.passwordError = '';
+
                         if (this.step === 1) {
-                            // Validate Step 1 (Basic HTML5 validation handled by browser on submit, but for wizard we simulate)
-                            if (!document.getElementById('name').checkValidity() ||
-                                !document.getElementById('email').checkValidity() ||
-                                !document.getElementById('password').checkValidity() ||
-                                !document.getElementById('password_confirmation').checkValidity()) {
-                                // Trigger browser validation UI
+                            // 1. Basic HTML5 Validity
+                            const nameValid = document.getElementById('name').checkValidity();
+                            const emailValid = document.getElementById('email').checkValidity();
+                            const passwordValid = document.getElementById('password').checkValidity();
+                            const confirmValid = document.getElementById('password_confirmation').checkValidity();
+                            
+                            if (!nameValid || !emailValid || !passwordValid || !confirmValid) {
                                 document.getElementById('registerForm').reportValidity();
                                 return;
                             }
+
+                            // 2. Password Match Check
+                            const password = document.getElementById('password').value;
+                            const confirm = document.getElementById('password_confirmation').value;
+                            
+                            if (password !== confirm) {
+                                this.passwordError = 'Las contraseñas no coinciden.';
+                                return;
+                            }
+
+                            // 3. Server-side Email Availability Check
+                            this.isLoading = true;
+                            try {
+                                const email = document.getElementById('email').value;
+                                const response = await fetch('{{ route('check.email') }}', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                    },
+                                    body: JSON.stringify({ email: email })
+                                });
+                                
+                                const data = await response.json();
+                                
+                                if (!data.available) {
+                                    this.emailError = data.message;
+                                    this.isLoading = false;
+                                    return;
+                                }
+                            } catch (error) {
+                                console.error('Error checking email:', error);
+                                // In case of network error, we might choose to let them proceed or block. 
+                                // Blocking is safer to avoid frustration later.
+                                this.emailError = 'Error al verificar el correo. Intenta de nuevo.';
+                                this.isLoading = false;
+                                return;
+                            }
+                            this.isLoading = false;
                         }
                         this.step++;
                     },
@@ -73,8 +119,6 @@
                         this.register_firm = option;
                         if (option === false) {
                             // User chose NOT to register a firm, submit form immediately
-                            // We need to ensure required firm fields are NOT required in this case
-                            // But since we are submitting, we handle validation server-side for optionality
                             document.getElementById('registerForm').submit();
                         } else {
                             this.nextStep();
@@ -148,6 +192,7 @@
                                 <x-input-label for="email" class="mb-1 !text-gray-900 !font-bold" :value="__('Correo Electrónico')" />
                                 <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
                                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                <div x-show="emailError" x-text="emailError" class="text-sm text-red-600 space-y-1 mt-2" style="display: none;"></div>
                             </div>
 
                             <!-- Password -->
@@ -190,10 +235,18 @@
                                     </div>
                                 </div>
                                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                                <div x-show="passwordError" x-text="passwordError" class="text-sm text-red-600 space-y-1 mt-2" style="display: none;"></div>
                             </div>
 
-                            <x-primary-button type="button" @click="nextStep()" class="w-full justify-center">
-                                Siguiente
+                            <x-primary-button type="button" @click="nextStep()" class="w-full justify-center" ::disabled="isLoading" ::class="{'opacity-75 cursor-not-allowed': isLoading}">
+                                <span x-show="!isLoading">Siguiente</span>
+                                <span x-show="isLoading" style="display: none;">
+                                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    Verificando...
+                                </span>
                             </x-primary-button>
                         </div>
 

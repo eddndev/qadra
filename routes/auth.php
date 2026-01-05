@@ -41,6 +41,8 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
+    Route::post('check-email', \App\Http\Controllers\Auth\CheckEmailAvailabilityController::class)
+        ->name('check.email');
 });
 
 Route::middleware('auth')->group(function () {
