@@ -826,7 +826,7 @@ class Case extends Model
 
 #### **5.2.2 Middleware de Tenant Identification**
 
-Crear middleware que identifique y cargue el tenant actual del usuario:
+Crear middleware que identifique y cargue el tenant actual del usuario. Es importante notar que el middleware utiliza el **Service Container de Laravel** para registrar el tenant actual como un **Singleton**, lo que asegura que la instancia sea inmutable y accesible globalmente durante todo el ciclo de vida de la petición:
 
 ```php
 // app/Http/Middleware/IdentifyTenant.php
@@ -1080,7 +1080,7 @@ DB::table('crime_types')->insert([
 
 #### **6.2.2 Alertas de Plazos con Laravel Queue**
 
-Crear un job que verifique plazos próximos a vencer:
+Crear un job que verifique plazos próximos a vencer. Este proceso se define como un **job de fondo despachado por el Scheduler de Laravel** y gestionado mediante **colas de Redis**, lo que permite escalar el sistema de manera eficiente incluso si existen miles de expedientes con plazos fatales venciendo simultáneamente:
 
 ```php
 // app/Jobs/CheckDeadlinesJob.php

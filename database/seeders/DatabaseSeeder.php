@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             PermissionsAndRolesSeeder::class,
             CrimeTypesSeeder::class,
             PrecautionaryMeasureTypesSeeder::class,
+            DeadlineTypesSeeder::class,
         ]);
         
         // User::factory(10)->create();

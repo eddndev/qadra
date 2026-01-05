@@ -11,10 +11,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements MustVerifyEmail
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
+class User extends Authenticatable implements MustVerifyEmail, HasMedia
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasUlids, SoftDeletes, HasTenants, HasRoles;
+    use HasFactory, Notifiable, HasUlids, SoftDeletes, HasTenants, HasRoles, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +32,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'professional_license',
         'phone',
+        'position',
         'avatar_path',
     ];
 
@@ -51,5 +57,34 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('thumb')
+            ->fit(Fit::Crop, 100, 100)
+            ->nonQueued()
+            ->format('webp');
+
+        $this
+            ->addMediaConversion('preview')
+            ->fit(Fit::Crop, 400, 400)
+            ->nonQueued()
+            ->format('webp');
+    }
+
+    public function getAvatarUrl(): ?string
+    {
+        $media = $this->getFirstMedia('avatar');
+
+        if (! $media) {
+            return null;
+        }
+
+        if ($media->disk === 's3') {
+            return $media->getTemporaryUrl(now()->addMinutes(20), 'thumb');
+        }
+
+        return $media->getUrl('thumb');
     }
 }

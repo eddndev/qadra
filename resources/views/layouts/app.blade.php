@@ -15,10 +15,6 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        
-        <!-- FilePond -->
-        <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
-        <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
     </head>
     <body class="h-full font-sans antialiased text-gray-900 bg-gray-50">
         <div class="min-h-screen flex bg-gray-50">
@@ -75,9 +71,6 @@
         </div>
 
         <!-- FilePond Scripts -->
-        <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-        <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-        <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
-        <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+        <!-- FilePond Scripts (Loaded via app.js) -->
     </body>
 </html>

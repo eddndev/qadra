@@ -42,12 +42,20 @@ class DeadlineTypesSeeder extends Seeder
             [
                 'name' => 'Acusación del MP (tras cierre investigación)',
                 'default_days' => 15,
-                'business_days' => false, // "Dentro de los 15 días siguientes" (Generalmente naturales salvo excepción) - CNPP Art 94 dice hábiles salvo que afecte libertad? Art 324. Mejor poner false (naturales) y que el abogado ajuste si aplica regla especial, o true si aplica regla general.
-                // Corrección: Art 94 CNPP: "No se computarán los sábados, los domingos ni los días inhábiles".
-                // Por tanto, los plazos en días son HÁBILES por defecto salvo libertad personal.
-                // La acusación no implica libertad inmediata. Se considera HÁBIL.
                 'business_days' => true,
                 'legal_basis' => 'Art. 324 CNPP',
+            ],
+            [
+                'name' => 'Coadyuvancia (Víctima/Ofendido)',
+                'default_days' => 3,
+                'business_days' => true,
+                'legal_basis' => 'Art. 338 CNPP',
+            ],
+            [
+                'name' => 'Contestación Acusación (Defensa)',
+                'default_days' => 10,
+                'business_days' => true,
+                'legal_basis' => 'Art. 340 CNPP',
             ],
             [
                 'name' => 'Audiencia Intermedia (Señalamiento)',
@@ -62,6 +70,12 @@ class DeadlineTypesSeeder extends Seeder
                 'default_days' => 20, // Min 20, Max 60
                 'business_days' => false, // Naturales (Art 349)
                 'legal_basis' => 'Art. 349 CNPP',
+            ],
+            [
+                'name' => 'Redacción de Sentencia',
+                'default_days' => 5,
+                'business_days' => true,
+                'legal_basis' => 'Art. 403 CNPP',
             ],
 
             // Recursos
@@ -85,6 +99,12 @@ class DeadlineTypesSeeder extends Seeder
             ],
             
             // Amparo
+            [
+                'name' => 'Amparo Indirecto',
+                'default_days' => 15,
+                'business_days' => true,
+                'legal_basis' => 'Art. 17 Ley de Amparo',
+            ],
             [
                 'name' => 'Amparo Directo (General)',
                 'default_days' => 15,
