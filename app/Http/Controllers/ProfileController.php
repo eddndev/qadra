@@ -34,6 +34,11 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
+        if ($request->hasFile('avatar')) {
+            $request->user()->addMediaFromRequest('avatar')
+                ->toMediaCollection('avatar');
+        }
+
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
