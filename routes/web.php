@@ -80,3 +80,13 @@ Route::middleware(['auth', 'verified', IdentifyTenant::class, EnsureTenantScope:
 Route::get('/team/join/{token}', [TeamInvitationController::class, 'accept'])->name('team.join');
 
 require __DIR__ . '/auth.php';
+
+Route::get('/check-nova-license', function () {
+    \Illuminate\Support\Facades\Cache::forget('nova_valid_license_key');
+    $valid = \Laravel\Nova\Nova::checkLicenseValidity();
+    return response()->json([
+        'host' => request()->getHost(),
+        'valid' => $valid,
+        'license_key_last_4' => substr(config('nova.license_key'), -4),
+    ]);
+});

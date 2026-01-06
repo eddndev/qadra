@@ -1,0 +1,4 @@
+/* Hide Laravel Nova Unregistered Badge */
+a[href="https://nova.laravel.com/licenses"] {
+    display: none !important;
+}
