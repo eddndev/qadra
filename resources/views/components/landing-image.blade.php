@@ -6,7 +6,7 @@
 @endphp
 
 @if ($media)
-    <picture class="{{ $class }}">
+    <picture>
         @if($media->hasGeneratedConversion('avif'))
             <source srcset="{{ $media->getTemporaryUrl(now()->addMinutes(60), 'avif') }}" type="image/avif">
         @endif
@@ -14,7 +14,7 @@
             <source srcset="{{ $media->getTemporaryUrl(now()->addMinutes(60), 'webp') }}" type="image/webp">
         @endif
         <img src="{{ $media->getTemporaryUrl(now()->addMinutes(60)) }}" alt="{{ $alt ?: $asset->description }}"
-            class="{{ $class }} object-cover w-full h-full" loading="lazy">
+            class="{{ $class }}" loading="lazy">
     </picture>
 @else
     <!-- Fallback if asset key not found or no media attached -->

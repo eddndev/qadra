@@ -50,9 +50,9 @@
                     class="-mx-6 md:mx-0 md:-m-2 md:rounded-2xl md:bg-white/5 md:p-2 md:ring-1 md:ring-inset md:ring-white/10 lg:-m-4 lg:rounded-3xl lg:p-4 perspective-1000">
                     <!-- This would be a screenshot of the dashboard -->
                     <div
-                        class="aspect-[16/9] w-full bg-neutral-800 shadow-2xl shadow-brand-900/40 ring-1 ring-white/10 overflow-hidden md:rounded-xl transform transition-all duration-700 hover:scale-[1.01] hover:shadow-brand-900/60">
-                        <x-landing-image key="dashboard_preview"
-                            class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-700"
+                        class="w-full bg-neutral-800 shadow-2xl shadow-brand-900/40 ring-1 ring-white/10 overflow-hidden md:rounded-xl transform transition-all duration-700 hover:scale-[1.01] hover:shadow-brand-900/60">
+                        <x-landing-image key="hero_bg"
+                            class="w-full h-auto object-contain opacity-90 hover:opacity-100 transition-opacity duration-700"
                             alt="Dashboard Preview" />
                     </div>
                 </div>
