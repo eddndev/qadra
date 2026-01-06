@@ -67,7 +67,9 @@ Route::middleware(['auth', 'verified', IdentifyTenant::class, EnsureTenantScope:
 
     // Stats & Reports
     Route::get('/alerts', [\App\Http\Controllers\AlertsController::class, 'index'])->name('alerts.index');
-    Route::get('/reports', [\App\Http\Controllers\ReportsController::class, 'index'])->name('reports.index');
+    Route::get('/reports', [\App\Http\Controllers\ReportsController::class, 'index'])
+        ->middleware('can:reports.advanced')
+        ->name('reports.index');
 
     // Billing (BillingPortal.php handles internally permissions for managing)
     // Note: Billing route is allowed by middleware exception, but we keep it inside group for tenant scope

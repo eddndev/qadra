@@ -86,6 +86,8 @@ class ReportsController extends Controller
 
         // --- Case Details Table ---
         if ($request->get('export') === 'pdf') {
+            abort_unless(auth()->user()->can('reports.export'), 403, 'No tienes permiso para exportar reportes.');
+
             $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('reports.pdf', [
                 'totalCases' => $totalCases,
                 'closedCases' => $closedCases,
@@ -93,13 +95,15 @@ class ReportsController extends Controller
                 'hearingsRealized' => $hearingsRealized,
                 'cases' => $baseQuery->get(),
             ]);
-            return $pdf->download('reporte-expedientes-' . now()->format('Y-m-d') . '.pdf');
+            return $pdf->download('reporte-expedientes-' . now()->format('Y-m-D') . '.pdf');
         }
 
         if ($request->get('export') === 'excel') {
+            abort_unless(auth()->user()->can('reports.export'), 403, 'No tienes permiso para exportar reportes.');
+
             return \Maatwebsite\Excel\Facades\Excel::download(
                 new \App\Exports\CasesExport($baseQuery),
-                'reporte-expedientes-' . now()->format('Y-m-d') . '.xlsx'
+                'reporte-expedientes-' . now()->format('Y-m-D') . '.xlsx'
             );
         }
 
