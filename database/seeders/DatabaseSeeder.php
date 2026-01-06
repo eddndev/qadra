@@ -19,8 +19,9 @@ class DatabaseSeeder extends Seeder
             CrimeTypesSeeder::class,
             PrecautionaryMeasureTypesSeeder::class,
             DeadlineTypesSeeder::class,
+            HearingTypesSeeder::class,
         ]);
-        
+
         // User::factory(10)->create();
 
         // User::factory()->create([
