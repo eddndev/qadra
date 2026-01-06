@@ -55,6 +55,9 @@ class IdentifyTenant
 
         // Set Spatie Permission Team ID for scoped roles/permissions
         setPermissionsTeamId($tenant->id);
+        
+        // Force Spatie to reload permissions for this new scope (critical for correct @can checks)
+        app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
 
         // If a user is logged in, ensure they belong to this tenant
         if (auth()->check()) {
