@@ -85,6 +85,24 @@ class ReportsController extends Controller
         ];
 
         // --- Case Details Table ---
+        if ($request->get('export') === 'pdf') {
+            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('reports.pdf', [
+                'totalCases' => $totalCases,
+                'closedCases' => $closedCases,
+                'alertCases' => $alertCases,
+                'hearingsRealized' => $hearingsRealized,
+                'cases' => $baseQuery->get(),
+            ]);
+            return $pdf->download('reporte-expedientes-' . now()->format('Y-m-d') . '.pdf');
+        }
+
+        if ($request->get('export') === 'excel') {
+            return \Maatwebsite\Excel\Facades\Excel::download(
+                new \App\Exports\CasesExport($baseQuery),
+                'reporte-expedientes-' . now()->format('Y-m-d') . '.xlsx'
+            );
+        }
+
         $cases = $baseQuery->with('deadlines')
             ->orderBy('created_at', 'desc')
             ->paginate(10)
