@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'domain' => env('NOVA_DOMAIN_NAME', null),
+    'domain' => env('NOVA_DOMAIN_NAME', 'admin.qadra.test'),
 
     /*
     |--------------------------------------------------------------------------

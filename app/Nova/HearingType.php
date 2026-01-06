@@ -3,24 +3,20 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Auth\PasswordValidationRules;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class HearingType extends Resource
 {
-    use PasswordValidationRules;
-
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\User>
+     * @var class-string<\App\Models\HearingType>
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\HearingType::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -37,7 +33,7 @@ class User extends Resource
     public static $search = [
         'id',
         'name',
-        'email',
+        'slug',
     ];
 
     /**
@@ -50,24 +46,18 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-            Gravatar::make()->maxWidth(50),
-
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
+            Slug::make('Slug')
+                ->from('Name')
+                ->rules('required', 'max:255')
+                ->creationRules('unique:hearing_types,slug')
+                ->updateRules('unique:hearing_types,slug,{{resourceId}}'),
 
-            Boolean::make('Super Admin', 'is_super_admin'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules($this->passwordRules())
-                ->updateRules($this->optionalPasswordRules()),
+            Textarea::make('Description')
+                ->alwaysShow(),
         ];
     }
 }

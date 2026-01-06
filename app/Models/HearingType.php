@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class HearingType extends Model
 {
-    //
+    protected $fillable = ['name', 'slug', 'description'];
 }

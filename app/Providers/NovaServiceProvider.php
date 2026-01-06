@@ -17,7 +17,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         parent::boot();
 
-        //
+        Nova::mainLogo(function () {
+            return '<img src="/img/logo.svg" alt="Qadra Logo" class="h-8 w-auto">';
+        });
+
+        Nova::footer(function ($request) {
+            return '<p class="text-center text-xs">© ' . date('Y') . ' Qadra - Administración Global</p>';
+        });
     }
 
     /**
