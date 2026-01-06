@@ -22,6 +22,9 @@ class DemoDataSeeder extends Seeder
     public function run(): void
     {
         $proTier = SubscriptionTier::where('slug', 'professional')->first();
+        
+        // Disable mass assignment protection for seeding
+        \Illuminate\Database\Eloquent\Model::unguard();
 
         // --- BUFETE 1: García & Asociados ---
         $user1 = User::updateOrCreate(
@@ -224,5 +227,8 @@ class DemoDataSeeder extends Seeder
                 'courtroom' => 'Sala 1 Oralidad',
             ]
         );
+        
+        // Re-enable mass assignment protection
+        \Illuminate\Database\Eloquent\Model::reguard();
     }
 }
