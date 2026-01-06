@@ -26,6 +26,15 @@ class AppServiceProvider extends ServiceProvider
         // Tell Cashier to use Tenant model instead of User
         Cashier::useCustomerModel(Tenant::class);
 
+        // Sync Tenant Permissions on Subscription Change
+        \Illuminate\Support\Facades\Event::listen(
+            [
+                \Laravel\Cashier\Events\SubscriptionCreated::class,
+                \Laravel\Cashier\Events\SubscriptionUpdated::class,
+            ],
+            \App\Listeners\UpdateTenantPermissionsOnSubscriptionChange::class
+        );
+
         Hearing::observe(HearingObserver::class);
 
         // Customize Email Verification URL to match Tenant Subdomain

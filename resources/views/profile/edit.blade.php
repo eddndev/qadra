@@ -7,8 +7,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
             <div class="flex items-center justify-between mb-6">
-                <h1 class="text-3xl font-bold text-[#111344]">Gestiona tu perfil, equipo, notificaciones y preferencias
-                    de seguridad</h1>
+                <h1 class="text-3xl font-bold text-[#111344]">Gestiona tu perfil</h1>
             </div>
 
             <div class="bg-white shadow-sm sm:rounded-lg overflow-hidden">

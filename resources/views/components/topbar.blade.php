@@ -12,21 +12,7 @@
         @endisset
     </div>
 
-    <!-- Search Bar -->
-    <div class="flex-1 max-w-lg mx-auto hidden md:flex">
-        <div class="relative w-full">
-            <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
-                <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                        clip-rule="evenodd" />
-                </svg>
-            </span>
-            <input type="text"
-                class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-full leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:border-blue-300 focus:ring focus:ring-blue-200 sm:text-sm"
-                placeholder="Buscar expediente o imputado">
-        </div>
-    </div>
+
 
     <!-- Mobile menu button -->
     <div class="flex items-center lg:hidden mr-4">

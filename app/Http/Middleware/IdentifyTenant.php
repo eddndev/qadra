@@ -55,6 +55,9 @@ class IdentifyTenant
 
         // Set Spatie Permission Team ID for scoped roles/permissions
         setPermissionsTeamId($tenant->id);
+        
+        // Force Spatie to reload permissions for this new scope (critical for correct @can checks)
+        app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
 
         // If a user is logged in, ensure they belong to this tenant
         if (auth()->check()) {
@@ -62,6 +65,14 @@ class IdentifyTenant
                 auth()->logout(); // Log out if user does not belong to this tenant
                 return redirect(config('app.url') . '/login')->withErrors('You do not have access to this workspace.');
             }
+
+            // DEBUG: Trace Permission State
+            \Illuminate\Support\Facades\Log::info("DEBUG: IdentifyTenant Middleware", [
+                'user_id' => auth()->id(),
+                'tenant_id' => $tenant->id,
+                'team_id_permission_check' => getPermissionsTeamId(),
+                'has_reports_advanced' => auth()->user()->hasPermissionTo('reports.advanced')
+            ]);
         }
 
         return $next($request);

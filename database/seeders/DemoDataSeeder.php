@@ -22,6 +22,9 @@ class DemoDataSeeder extends Seeder
     public function run(): void
     {
         $proTier = SubscriptionTier::where('slug', 'professional')->first();
+        
+        // Disable mass assignment protection for seeding
+        \Illuminate\Database\Eloquent\Model::unguard();
 
         // --- BUFETE 1: García & Asociados ---
         $user1 = User::updateOrCreate(
@@ -55,8 +58,9 @@ class DemoDataSeeder extends Seeder
                 'stage' => 'investigacion_complementaria',
                 'status' => 'activo',
                 'lead_lawyer_id' => $user1->id,
-                'start_date' => now()->subMonths(2),
+                'start_date' => $d = now()->subDays(rand(0, 180))->setTime(rand(8,18), rand(0,59)),
                 'notes' => 'El cliente mantiene que actuó en defensa propia. Se requiere peritaje de balística urgente antes de la próxima audiencia.',
+                'created_at' => $d,
             ]
         );
 
@@ -208,7 +212,8 @@ class DemoDataSeeder extends Seeder
                 'stage' => 'juicio_oral',
                 'status' => 'activo',
                 'lead_lawyer_id' => $user2->id,
-                'start_date' => now()->subMonths(1),
+                'start_date' => $d2 = now()->subDays(rand(0, 180))->setTime(rand(8,18), rand(0,59)),
+                'created_at' => $d2,
             ]
         );
 
@@ -222,5 +227,8 @@ class DemoDataSeeder extends Seeder
                 'courtroom' => 'Sala 1 Oralidad',
             ]
         );
+        
+        // Re-enable mass assignment protection
+        \Illuminate\Database\Eloquent\Model::reguard();
     }
 }

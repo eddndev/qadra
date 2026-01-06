@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             DeadlineTypesSeeder::class,
             HearingTypesSeeder::class,
             SuperAdminSeeder::class,
+            LandingPageSeeder::class,
             DemoDataSeeder::class,
             DemoCasesSeeder::class,
         ]);
