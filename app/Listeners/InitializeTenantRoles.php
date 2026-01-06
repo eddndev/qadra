@@ -97,18 +97,16 @@ class InitializeTenantRoles
                     'settings.edit',
                 ];
 
-                // Conditional Permissions based on Features JSON
-                if (!empty($features['advanced_reports'])) {
-                    $ownerPermissions[] = 'reports.advanced';
-                    $ownerPermissions[] = 'reports.export';
-                }
-
                 foreach ($ownerPermissions as $permName) {
                     $permission = Permission::where('name', $permName)->first();
                     if ($permission) {
                         $role->givePermissionTo($permission);
                     }
                 }
+
+                // Sync conditional permissions (e.g. reports.advanced based on tier)
+                $tenantService = new \App\Services\TenantService();
+                $tenantService->syncPermissions($tenant);
             }
         }
     }
