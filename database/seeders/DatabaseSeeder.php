@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             HearingTypesSeeder::class,
             SuperAdminSeeder::class,
             DemoDataSeeder::class,
+            DemoCasesSeeder::class,
         ]);
 
         // User::factory(10)->create();

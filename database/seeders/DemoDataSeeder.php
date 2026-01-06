@@ -3,8 +3,11 @@
 namespace Database\Seeders;
 
 use App\Events\TenantCreated;
+use App\Models\Activity;
+use App\Models\Evidence;
 use App\Models\Hearing;
 use App\Models\LegalCase;
+use App\Models\Participant;
 use App\Models\SubscriptionTier;
 use App\Models\Tenant;
 use App\Models\User;
@@ -53,8 +56,114 @@ class DemoDataSeeder extends Seeder
                 'status' => 'activo',
                 'lead_lawyer_id' => $user1->id,
                 'start_date' => now()->subMonths(2),
+                'notes' => 'El cliente mantiene que actuó en defensa propia. Se requiere peritaje de balística urgente antes de la próxima audiencia.',
             ]
         );
+
+        // --- ACTUACIONES Y ACTIVIDADES (GARCIA) ---
+        Activity::create([
+            'tenant_id' => $tenant1->id,
+            'case_id' => $case1->id,
+            'performed_by' => $user1->id,
+            'type' => 'Llamada Telefónica',
+            'title' => 'Llamada con el Cliente',
+            'description' => 'Se explicó la estrategia para la audiencia de vinculación. El cliente está tranquilo.',
+            'performed_at' => now()->subDays(2)->setTime(16, 30),
+            'duration_minutes' => 15,
+        ]);
+
+        Activity::create([
+            'tenant_id' => $tenant1->id,
+            'case_id' => $case1->id,
+            'performed_by' => $user1->id,
+            'type' => 'Visita a Juzgado',
+            'title' => 'Revisión de Expediente',
+            'description' => 'Se verificó que el MP haya integrado el informe policial homologado. Faltan las fotos de la escena.',
+            'performed_at' => now()->subDays(5)->setTime(10, 0),
+            'duration_minutes' => 45,
+        ]);
+
+        // --- PARTICIPANTES (GARCIA) ---
+        // 1. Imputado
+        $imputado = Participant::create([
+            'tenant_id' => $tenant1->id,
+            'type' => 'Persona Física',
+            'name' => 'Juan Pérez Gómez',
+            'gender' => 'Masculino',
+            'notes' => 'Primer ingreso al sistema penal.',
+        ]);
+        $case1->participants()->attach($imputado->id, [
+            'role' => 'imputado',
+            'alias' => 'El Juancho',
+            'is_detained' => true,
+            'defense_attorney_name' => 'Lic. Roberto García',
+        ]);
+
+        // 2. Víctima
+        $victima = Participant::create([
+            'tenant_id' => $tenant1->id,
+            'type' => 'Persona Física',
+            'name' => 'María López Torres',
+            'gender' => 'Femenino',
+        ]);
+        $case1->participants()->attach($victima->id, [
+            'role' => 'victima',
+            'notes' => 'Solicita reparación del daño por 500k.',
+        ]);
+
+        // 3. Juez
+        $juez = Participant::create([
+            'tenant_id' => $tenant1->id,
+            'type' => 'Funcionario Público',
+            'name' => 'Lic. Carlos Ruiz',
+            'gender' => 'Masculino',
+        ]);
+        $case1->participants()->attach($juez->id, [
+            'role' => 'juez',
+            'notes' => 'Juez de Control del Quinto Distrito.',
+        ]);
+
+        // 4. Fiscal
+        $fiscal = Participant::create([
+            'tenant_id' => $tenant1->id,
+            'type' => 'Funcionario Público',
+            'name' => 'Lic. Ana Torres',
+            'gender' => 'Femenino',
+        ]);
+        $case1->participants()->attach($fiscal->id, [
+            'role' => 'fiscal',
+            'notes' => 'Ministerio Público adscrito a la Unidad de Investigación.',
+        ]);
+
+        // Update simple field for compatibility
+        $case1->update(['prosecutor_name' => 'Lic. Ana Torres']);
+
+        // --- EVIDENCIA (GARCIA) ---
+        Evidence::create([
+            'tenant_id' => $tenant1->id,
+            'case_id' => $case1->id,
+            'chain_of_custody_folio' => 'CC-2024-001',
+            'description' => 'Cuchillo de cocina con mango de madera (Presunta arma)',
+            'type' => 'Objeto',
+            'status' => 'en_fiscalia',
+            'current_location' => 'Bodega de Evidencias Fiscalía',
+            'collected_at' => now()->subMonths(2)->subDays(1),
+            'collected_by' => 'Perito Juan N.',
+            'notes' => 'Recuperado en la escena del crimen.',
+        ]);
+
+        Evidence::create([
+            'tenant_id' => $tenant1->id,
+            'case_id' => $case1->id,
+            'chain_of_custody_folio' => 'CC-2024-002',
+            'description' => 'Ticket de compra de tienda "El Sol"',
+            'type' => 'Documento',
+            'status' => 'en_custodia',
+            'current_location' => 'Caja fuerte del despacho',
+            'collected_at' => now()->subMonths(1),
+            'collected_by' => 'Lic. Roberto García',
+            'notes' => 'Prueba de coartada del imputado.',
+        ]);
 
         Hearing::updateOrCreate(
             ['case_id' => $case1->id, 'type' => 'Audiencia de Vinculación'],
