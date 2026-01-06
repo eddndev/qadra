@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             PrecautionaryMeasureTypesSeeder::class,
             DeadlineTypesSeeder::class,
             HearingTypesSeeder::class,
+            SuperAdminSeeder::class,
+            DemoDataSeeder::class,
         ]);
 
         // User::factory(10)->create();
