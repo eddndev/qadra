@@ -65,6 +65,14 @@ class IdentifyTenant
                 auth()->logout(); // Log out if user does not belong to this tenant
                 return redirect(config('app.url') . '/login')->withErrors('You do not have access to this workspace.');
             }
+
+            // DEBUG: Trace Permission State
+            \Illuminate\Support\Facades\Log::info("DEBUG: IdentifyTenant Middleware", [
+                'user_id' => auth()->id(),
+                'tenant_id' => $tenant->id,
+                'team_id_permission_check' => getPermissionsTeamId(),
+                'has_reports_advanced' => auth()->user()->hasPermissionTo('reports.advanced')
+            ]);
         }
 
         return $next($request);
