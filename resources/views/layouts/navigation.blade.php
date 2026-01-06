@@ -39,7 +39,7 @@
                     <x-slot name="trigger">
                         <button
                             class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-hidden transition ease-in-out duration-150">
-                            @php $freshUser = Auth::user()->fresh(); $avatarUrl = $freshUser?->getAvatarUrl(); @endphp
+                            @php $freshUser = Auth::user()->fresh(['media']); $avatarUrl = $freshUser?->getAvatarUrl(); @endphp
                             @if($avatarUrl)
                                 <img class="h-8 w-8 rounded-full object-cover me-2" src="{{ $avatarUrl }}" alt="{{ $freshUser->name }}" />
                             @else
@@ -114,7 +114,7 @@
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4 flex items-center gap-3">
-                @php $freshUser = Auth::user()->fresh(); $avatarUrl = $freshUser?->getAvatarUrl(); @endphp
+                @php $freshUser = Auth::user()->fresh(['media']); $avatarUrl = $freshUser?->getAvatarUrl(); @endphp
                 @if($avatarUrl)
                      <img class="h-10 w-10 rounded-full object-cover" src="{{ $avatarUrl }}" alt="{{ $freshUser->name }}" />
                 @else
