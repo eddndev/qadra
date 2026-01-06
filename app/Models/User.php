@@ -34,6 +34,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         'phone',
         'position',
         'avatar_path',
+        'is_super_admin',
     ];
 
     /**
@@ -56,6 +57,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_super_admin' => 'boolean',
         ];
     }
 
