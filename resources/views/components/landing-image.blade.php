@@ -7,9 +7,9 @@
 
 @if ($media)
     <picture class="{{ $class }}">
-        <source srcset="{{ $media->getUrl('avif') }}" type="image/avif">
-        <source srcset="{{ $media->getUrl('webp') }}" type="image/webp">
-        <img src="{{ $media->getUrl() }}" alt="{{ $alt ?: $asset->description }}"
+        <source srcset="{{ $media->getTemporaryUrl(now()->addMinutes(60), 'avif') }}" type="image/avif">
+        <source srcset="{{ $media->getTemporaryUrl(now()->addMinutes(60), 'webp') }}" type="image/webp">
+        <img src="{{ $media->getTemporaryUrl(now()->addMinutes(60)) }}" alt="{{ $alt ?: $asset->description }}"
             class="{{ $class }} object-cover w-full h-full" loading="lazy">
     </picture>
 @else
