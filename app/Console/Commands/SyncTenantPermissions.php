@@ -67,6 +67,31 @@ class SyncTenantPermissions extends Command
             $tenantService->syncPermissions($tenant);
             
             $this->info("    - Permissions synced.");
+
+            // Sync Users Role Assignment
+            // Users might be attached to tenant (pivot) but miss the Spatie Role assignment for this team
+            $this->info("    - Syncing User Roles...");
+            
+            // Set scope for role assignment
+            setPermissionsTeamId($tenant->id);
+
+            foreach ($tenant->users as $user) {
+                $pivotRoleName = $user->pivot->role; // 'owner' etc.
+                
+                // Only sync if it's a valid Spatie role for this tenant
+                $spatieRole = Role::where('name', $pivotRoleName)
+                    ->where('tenant_id', $tenant->id)
+                    ->first();
+
+                if ($spatieRole) {
+                    if (!$user->hasRole($pivotRoleName)) {
+                        $user->assignRole($pivotRoleName);
+                        $this->info("      + Assigned role '{$pivotRoleName}' to user {$user->email}");
+                    }
+                } else {
+                    $this->warn("      ! Pivot role '{$pivotRoleName}' does not exist as Spatie Role for this tenant.");
+                }
+            }
         }
 
         $this->info('Tenant permission sync completed.');
