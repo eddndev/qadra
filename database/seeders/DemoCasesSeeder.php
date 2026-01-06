@@ -51,7 +51,6 @@ class DemoCasesSeeder extends Seeder
             'duration_minutes' => 90,
             'status' => 'programada',
             'courtroom' => 'Sala 2 Oralidad',
-            'notes' => 'Audiencia crítica para determinar vinculación.',
         ]);
 
         // --- CASO 2: Robo Simple (Plazo Fatal Hoy) ---
