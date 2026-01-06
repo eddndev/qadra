@@ -58,6 +58,13 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
             'password' => 'hashed',
         ];
     }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatar')
+            ->useDisk('s3')
+            ->singleFile();
+    }
     public function registerMediaConversions(?Media $media = null): void
     {
         $this
@@ -77,7 +84,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     {
         $media = $this->getFirstMedia('avatar');
 
-        if (! $media) {
+        if (!$media) {
             return null;
         }
 
