@@ -68,6 +68,7 @@ class Tenant extends Resource
                 'active' => 'success',
                 'inactive' => 'danger',
                 'suspended' => 'warning',
+                'trial' => 'info',
             ]),
 
             DateTime::make('Trial Ends At')
