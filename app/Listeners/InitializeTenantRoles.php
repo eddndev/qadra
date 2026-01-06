@@ -103,10 +103,6 @@ class InitializeTenantRoles
                     $ownerPermissions[] = 'reports.export';
                 }
 
-                if (!empty($features['audit_logs'])) {
-                    $ownerPermissions[] = 'reports.basic'; // Use basic for simple logs if needed, or map elsewhere
-                }
-
                 foreach ($ownerPermissions as $permName) {
                     $permission = Permission::where('name', $permName)->first();
                     if ($permission) {
