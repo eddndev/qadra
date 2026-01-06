@@ -17,7 +17,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         parent::boot();
 
-        //
+        Nova::footer(function ($request) {
+            return '<p class="text-center text-xs">© ' . date('Y') . ' Qadra - Administración Global</p>';
+        });
     }
 
     /**
@@ -54,9 +56,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate(): void
     {
         Gate::define('viewNova', function (User $user) {
-            return in_array($user->email, [
-                //
-            ]);
+            return $user->is_super_admin === true;
         });
     }
 

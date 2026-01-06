@@ -42,14 +42,77 @@ class InitializeTenantRoles
                 'tenant_id' => $tenant->id, // Scoped to tenant (using team_foreign_key logic)
             ]);
 
-            // Optional: Assign default permissions to roles here
-            // For example, give 'owner' all permissions
+            // Assign default permissions based on the Subscription Tier features
             if ($roleName === 'owner') {
-                // We assign all available permissions to the owner role
-                // Note: Permissions are global (team_id=null) in our setup, but role assignment handles the scope.
-                // Or if permissions were tenant-specific, we would create them too.
-                // Here we assume permissions are global constants.
-                $role->givePermissionTo(Permission::all());
+                $tier = $tenant->subscriptionTier;
+                $features = $tier->features ?? [];
+
+                // Base permissions (always granted to owner)
+                $ownerPermissions = [
+                    'cases.view_all',
+                    'cases.view_assigned',
+                    'cases.create',
+                    'cases.edit',
+                    'cases.delete',
+                    'cases.close',
+                    'cases.assign',
+                    'participants.view',
+                    'participants.create',
+                    'participants.edit',
+                    'participants.delete',
+                    'documents.view',
+                    'documents.upload',
+                    'documents.delete',
+                    'documents.share_with_client',
+                    'hearings.view',
+                    'hearings.create',
+                    'hearings.edit',
+                    'hearings.delete',
+                    'hearings.record_result',
+                    'activities.view',
+                    'activities.create',
+                    'activities.edit',
+                    'activities.delete',
+                    'evidence.view',
+                    'evidence.create',
+                    'evidence.edit',
+                    'evidence.custody_manage',
+                    'deadlines.view',
+                    'deadlines.create',
+                    'deadlines.edit',
+                    'deadlines.complete',
+                    'measures.view',
+                    'measures.create',
+                    'measures.edit',
+                    'solutions.view',
+                    'solutions.create',
+                    'solutions.edit',
+                    'team.view',
+                    'team.invite',
+                    'team.edit_roles',
+                    'team.remove',
+                    'subscription.view',
+                    'subscription.manage',
+                    'settings.view',
+                    'settings.edit',
+                ];
+
+                // Conditional Permissions based on Features JSON
+                if (!empty($features['advanced_reports'])) {
+                    $ownerPermissions[] = 'reports.advanced';
+                    $ownerPermissions[] = 'reports.export';
+                }
+
+                if (!empty($features['audit_logs'])) {
+                    $ownerPermissions[] = 'reports.basic'; // Use basic for simple logs if needed, or map elsewhere
+                }
+
+                foreach ($ownerPermissions as $permName) {
+                    $permission = Permission::where('name', $permName)->first();
+                    if ($permission) {
+                        $role->givePermissionTo($permission);
+                    }
+                }
             }
         }
     }

@@ -1,7 +1,7 @@
 <div>
     <div class="flex justify-between items-center mb-4">
         <h3 class="text-lg font-medium text-gray-900">Audiencias del Caso</h3>
-        <button x-data="" x-on:click.prevent="$dispatch('open-modal', 'hearing-form-modal')"
+        <button wire:click="$dispatch('create-hearing', { caseId: '{{ $case->id }}' })"
             class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
             Nueva Audiencia
         </button>
@@ -69,11 +69,8 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span
                                         class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                                        {{ $hearing->status === 'programada' ? 'bg-blue-100 text-blue-800' : '' }}
-                                                        {{ $hearing->status === 'celebrada' ? 'bg-green-100 text-green-800' : '' }}
-                                                        {{ $hearing->status === 'cancelada' ? 'bg-red-100 text-red-800' : '' }}
-                                                        {{ $hearing->status === 'reprogramada' ? 'bg-yellow-100 text-yellow-800' : '' }}">
-                                        {{ ucfirst($hearing->status) }}
+                                                                {{ $hearing->status_config['bg_class'] }} {{ $hearing->status_config['text_class'] }}">
+                                        {{ $hearing->status_config['label'] }}
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

@@ -7,13 +7,28 @@
         <form wire:submit.prevent="save">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
+                <!-- Selección de Caso (Si no hay contexto) -->
+                @if(!$case)
+                    <div class="col-span-2">
+                        <x-input-label for="case_id" value="Seleccionar Caso/Expediente" />
+                        <select wire:model.live="case_id" id="case_id"
+                            class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                            <option value="">-- Seleccionar Caso --</option>
+                            @foreach($cases as $c)
+                                <option value="{{ $c->id }}">[{{ $c->internal_folio }}] {{ $c->case_alias }}</option>
+                            @endforeach
+                        </select>
+                        <x-input-error :messages="$errors->get('case_id')" class="mt-2" />
+                    </div>
+                @endif
+
                 <!-- Tipo de Audiencia -->
                 <div class="col-span-2">
                     <x-input-label for="hearing_type" value="Tipo de Audiencia" />
                     <select wire:model="type" id="hearing_type"
                         class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                        @foreach($types as $option)
-                            <option value="{{ $option }}">{{ $option }}</option>
+                        @foreach($hearingTypes as $typeOption)
+                            <option value="{{ $typeOption->name }}">{{ $typeOption->name }}</option>
                         @endforeach
                     </select>
                     <x-input-error :messages="$errors->get('type')" class="mt-2" />
@@ -53,7 +68,7 @@
                             <option value="{{ $judge->id }}">{{ $judge->name }}</option>
                         @endforeach
                     </select>
-                    @if($judges->isEmpty())
+                    @if($judges->isEmpty() && ($case || $case_id))
                         <p class="text-xs text-yellow-600 mt-1">No hay jueces asignados al caso. Agrega uno en la pestaña
                             Participantes.</p>
                     @endif

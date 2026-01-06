@@ -107,7 +107,7 @@ class RegisterWizard extends Component
             $tenant = DB::transaction(function () use ($user) {
                 $slug = Str::slug($this->company_name);
                 if (Tenant::where('slug', $slug)->exists()) {
-                    $slug = $slug . '-' . Str::random(4);
+                    $slug = $slug . '-' . strtolower(Str::random(4));
                 }
 
                 $tenant = Tenant::create([

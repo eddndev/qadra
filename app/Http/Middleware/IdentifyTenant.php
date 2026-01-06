@@ -17,17 +17,17 @@ class IdentifyTenant
     public function handle(Request $request, Closure $next): Response
     {
         $hostname = $request->getHost();
-        
+
         // Get central domain host from config
         // Removes protocol (http://) and path, keeps only host (domain.test.com)
         $centralDomain = parse_url(config('app.url'), PHP_URL_HOST) ?? config('app.url');
 
-        // If we are on the central domain, skip tenant identification
-        if ($hostname === $centralDomain) {
+        // If we are on the central domain or admin subdomain, skip tenant identification
+        if ($hostname === $centralDomain || str_starts_with($hostname, 'admin.')) {
             session()->forget('current_tenant_id');
             session()->forget('current_tenant_slug');
             Tenant::setGlobalTenant(null);
-            
+
             return $next($request);
         }
 
@@ -49,9 +49,12 @@ class IdentifyTenant
         // Set the current tenant in the session
         session()->put('current_tenant_id', $tenant->id);
         session()->put('current_tenant_slug', $tenant->slug);
-        
+
         // Also set a global static property for easy access throughout the app
         Tenant::setGlobalTenant($tenant);
+
+        // Set Spatie Permission Team ID for scoped roles/permissions
+        setPermissionsTeamId($tenant->id);
 
         // If a user is logged in, ensure they belong to this tenant
         if (auth()->check()) {
