@@ -55,8 +55,9 @@ class DemoDataSeeder extends Seeder
                 'stage' => 'investigacion_complementaria',
                 'status' => 'activo',
                 'lead_lawyer_id' => $user1->id,
-                'start_date' => now()->subMonths(2),
+                'start_date' => now()->subMonths(rand(2, 6))->subDays(rand(1, 28)),
                 'notes' => 'El cliente mantiene que actuó en defensa propia. Se requiere peritaje de balística urgente antes de la próxima audiencia.',
+                'created_at' => now()->subMonths(rand(2, 6))->subDays(rand(1, 28)),
             ]
         );
 
@@ -208,7 +209,8 @@ class DemoDataSeeder extends Seeder
                 'stage' => 'juicio_oral',
                 'status' => 'activo',
                 'lead_lawyer_id' => $user2->id,
-                'start_date' => now()->subMonths(1),
+                'start_date' => now()->subMonths(rand(1, 5))->subDays(rand(1, 28)),
+                'created_at' => now()->subMonths(rand(1, 5))->subDays(rand(1, 28)),
             ]
         );
 
