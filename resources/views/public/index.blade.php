@@ -10,10 +10,7 @@
             </div>
         </div>
 
-        <!-- Hero Background Asset -->
-        <div class="absolute inset-0 -z-20 overflow-hidden opacity-10">
-            <x-landing-image key="hero_bg" class="w-full h-full object-cover" alt="Background" />
-        </div>
+
 
         <div class="container-app py-24 sm:py-32 lg:pb-40">
             <div class="mx-auto max-w-2xl text-center">
