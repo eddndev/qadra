@@ -9,3 +9,6 @@
 /.github export-ignore
 CHANGELOG.md export-ignore
 .styleci.yml export-ignore
+
+*.php linguist-detectable=false
+*.blade.php linguist-detectable=false
